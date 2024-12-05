@@ -11,6 +11,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { MessageComponent } from '../message/message.component';
+import { TokenService } from '../../services/token/token.service';
 
 @Component({
   selector: 'app-reset-code',
@@ -28,7 +29,7 @@ export class ResetCodeComponent {
   state: 'sent' | 'enter' = 'sent';
   codeExpiryTime = '10:00';
   private readonly EXPIRY_TIME_IN_SECONDS = 600;
-  private timeRemaining = this.EXPIRY_TIME_IN_SECONDS;
+  timeRemaining = this.EXPIRY_TIME_IN_SECONDS;
   isExpired = false;
   private destroy$ = new Subject<void>();
 
@@ -40,11 +41,12 @@ export class ResetCodeComponent {
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private tokenService: TokenService
   ) {}
 
   otp: FormGroup = this.fb.group({
-    otp: ['', Validators.required],
+    otp: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
   });
 
   ngOnInit(): void {
@@ -55,7 +57,7 @@ export class ResetCodeComponent {
     this.startCountdown();
   }
 
-  private startCountdown() {
+  startCountdown() {
     this.timeRemaining = this.EXPIRY_TIME_IN_SECONDS;
     this.isExpired = false;
     this.codeExpiryTime = '10:00';
@@ -68,7 +70,7 @@ export class ResetCodeComponent {
         if (this.timeRemaining <= 0) {
           this.timeRemaining = 0;
           this.isExpired = true;
-          this.codeExpiryTime = '00:00';
+          this.codeExpiryTime = 'Code has expired';
           return;
         }
 
@@ -88,6 +90,7 @@ export class ResetCodeComponent {
 
   onVerifyCode() {
     this.isLoading = true;
+    this.showErrorMessage = false;
 
     if (this.otp.valid) {
       const { otp } = this.otp.value;
@@ -116,20 +119,27 @@ export class ResetCodeComponent {
   }
 
   onResendCode() {
-    const decodedToken = JSON.parse(
-      localStorage.getItem('decodedToken') || '{}'
-    );
-    const email = decodedToken.email;
+    this.startCountdown();
 
-    if (email) {
+    const decodedToken = this.tokenService.getDecodedTokenValue();
+    const email = decodedToken?.email;
+    if (!email) {
+      console.error('Email not found in token. Unable to resend code.');
+      return;
+    } else {
       this.authService.resetPassword(email).subscribe({
         next: () => {
-          this.startCountdown();
+          // this.startCountdown();
         },
         error: (err) => {
           console.error('Error resending OTP', err);
         },
       });
     }
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -15,18 +15,13 @@ export const adminRoutes: Routes = [
     data: { role: 'admin' }
   },
   {
-    path: 'specialization',
+    path: 'specialization-management',
     loadComponent: () => import('../../views/admin/specializations/specialization-management.component')
       .then(m => m.SpecializationManagementComponent),
     data: { role: 'admin' },
     children: [
       {
         path:'',
-        redirectTo: 'list',
-        pathMatch: 'full'
-      },
-      {
-        path:'list',
         loadComponent:()=> import('../../features/admin/specializations/list/specialization-list.component')
         .then( m => m.SpecializationListComponent)
       },

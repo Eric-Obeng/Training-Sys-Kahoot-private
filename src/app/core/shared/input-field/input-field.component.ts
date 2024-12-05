@@ -54,7 +54,7 @@ export class InputFieldComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  setDisabledState?(isDisabled: boolean): void {
+  setDisabledState(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
   }
 

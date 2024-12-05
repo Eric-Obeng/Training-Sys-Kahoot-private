@@ -118,7 +118,6 @@ export class UserCreationComponent implements OnInit, OnDestroy {
     const token = localStorage.getItem('token');
     if (!token) {
       this.isLoading = false;
-      this.errorMessage = 'Token not found. Please try again!';
       return;
     }
 

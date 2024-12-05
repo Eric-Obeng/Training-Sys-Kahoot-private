@@ -1,29 +1,42 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment.development';
 import { DecodedToken, LoginResponse, User } from '../../models/iuser';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
+import { UserRoleService } from '../user-role/user-role.service';
+import { UserRole } from '@core/models/user-role.interface';
+import { TokenService } from '../token/token.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private userRoleService: UserRoleService,
+    private tokenService: TokenService
+  ) {}
 
   login(
     email: string,
     password: string
   ): Observable<{ success: boolean; token?: string; message?: string }> {
     return this.http
-      .post<LoginResponse>(`${environment.BaseUrl}/login`, { email, password })
+      .post<LoginResponse>(`${environment.BaseUrl}/auth/login`, {
+        email,
+        password,
+      })
       .pipe(
         map((response: LoginResponse) => {
-          console.log(response.firstTime);
           if (response) {
-            localStorage.setItem('token', response.token);
+            this.tokenService.setToken(response.token);
             const decodedToken = this.decodeToken(response.token);
+
+            this.userRoleService.setUserRole(decodedToken.role as UserRole);
 
             if (response.firstTime) {
               this.router.navigate(['/auth']);
@@ -34,17 +47,20 @@ export class AuthService {
           } else {
             return { success: false, message: 'Invalid credentials' };
           }
+        }),
+        catchError((error) => {
+          return throwError(() => new Error(error.error.message || 'Login failed'));
         })
       );
   }
 
   resetPassword(email: string): Observable<any> {
-    const url = `${environment.BaseUrl}/send-otp?email=${email}`;
+    const url = `${environment.BaseUrl}/auth/send-otp?email=${email}`;
     return this.http.post(url, {});
   }
 
   verifyOtp(otp: string): Observable<any> {
-    const url = `${environment.BaseUrl}/verify-otp?otp=${otp}`;
+    const url = `${environment.BaseUrl}/auth/verify-otp?otp=${otp}`;
     return this.http.post(url, {}, { responseType: 'text' }).pipe(
       map((response) => {
         try {
@@ -62,12 +78,19 @@ export class AuthService {
   }
 
   private routeUser(role: string): void {
-    if (role === 'ADMIN') {
-      this.router.navigate(['/home/admin']);
-    } else if (role === 'TRAINER') {
-      this.router.navigate(['/home/admin/cohorts']);
-    } else {
-      this.router.navigate(['/home/admin/user-management']);
+    switch (role) {
+      case 'TRAINER':
+        this.router.navigate(['/home/trainer']);
+        break;
+      case 'TRAINEE':
+        this.router.navigate(['/home/trainee']);
+        break;
+      case 'ADMIN':
+        this.router.navigate(['/home/admin']);
+        break;
+      default:
+        this.router.navigate(['/auth/login']);
+        break;
     }
   }
 }

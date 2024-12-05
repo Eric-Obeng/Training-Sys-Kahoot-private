@@ -40,6 +40,8 @@ export class ResetPasswordComponent {
 
   onSubmit() {
     this.isLoading = true;
+    this.showError = false;
+
 
     if (this.resetPasswordForm.valid) {
       this.isLoading = true;

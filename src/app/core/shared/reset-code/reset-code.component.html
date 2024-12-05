@@ -57,8 +57,12 @@
 
     <div *ngIf="state === 'enter'" class="resend-info">
       <p>Didn't receive the code? <a (click)="onResendCode()">Resend</a></p>
-      <p>
+
+      <p *ngIf="timeRemaining >= 1">
         Code expires in <span>{{ codeExpiryTime }}</span>
+      </p>
+      <p *ngIf="timeRemaining <= 0">
+        {{ codeExpiryTime }}
       </p>
     </div>
 

@@ -13,6 +13,6 @@ export class NoSpecializationAddedComponent {
   constructor(private router: Router) {}
 
   navigateToCreate() {
-    this.router.navigate(['home', 'admin', 'specialization', 'create']);
+    this.router.navigate(['home', 'admin', 'specialization-management', 'create']);
   }
 }
