@@ -17,8 +17,6 @@ export class CurriculumFacadeService {
   readonly searchTerm$ = this.searchTermSubject.asObservable();
   readonly sortDirection$ = this.sortDirectionSubject.asObservable();
 
-
-
   constructor(
     private errorService: ErrorHandleService,
     private curriculumCrud: CurriculumCrudService
@@ -50,7 +48,6 @@ export class CurriculumFacadeService {
     this.curriculumCrud.getAllCurriculums().subscribe({
       next: (curriculums) => this.curriculumSubject.next(curriculums),
       error: (error) => {
-        console.error('Error occurred while fetching curriculums:', error);
         this.errorService.handleError(error);
       }
     });
@@ -73,8 +70,7 @@ export class CurriculumFacadeService {
 
   getSelectedCurriculum(id:number){
     return this.curriculumCrud.getCurriculumById(id).pipe(
-      tap((data) => {
-        console.log(data);
+      tap(() => {
         this.loadCurriculum();
       }),
       catchError(this.errorService.handleError)
