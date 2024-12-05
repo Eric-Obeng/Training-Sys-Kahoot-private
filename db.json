@@ -1,0 +1,144 @@
+{
+  "curriculums": [
+    {
+      "id": 6,
+      "createdAt": "2024-06-10T09:30:00Z",
+      "title": "Artificial Intelligence Essentials",
+      "description": "Explore the basics of artificial intelligence, including machine learning and neural networks.",
+      "assignedSpecialization": "AI Development",
+      "assignedCohort": "Cohort 2024",
+      "learningObjectives": [
+        "Understand the fundamentals of AI",
+        "Learn how machine learning algorithms work",
+        "Build and train simple neural networks"
+      ],
+      "thumbnail": "https://example.com/thumbnails/ai.png",
+      "modules": [
+        {
+          "title": "Introduction to AI",
+          "description": "Learn the principles of artificial intelligence and its real-world applications.",
+          "topics": ["History of AI", "Applications of AI", "Ethics in AI"],
+          "moduleFile": ["https://example.com/files/intro-to-ai.pdf"]
+        },
+        {
+          "title": "Machine Learning Basics",
+          "description": "Understand key concepts in machine learning, including supervised and unsupervised learning.",
+          "topics": ["Supervised Learning", "Unsupervised Learning", "Clustering"],
+          "moduleFile": ["https://example.com/files/ml-basics.pdf"]
+        },
+        {
+          "title": "Neural Networks 101",
+          "description": "Get started with building simple neural networks using Python.",
+          "topics": ["Perceptrons", "Activation Functions", "Backpropagation"],
+          "moduleFile": ["https://example.com/files/neural-networks.pdf"]
+        }
+      ],
+      "topics": ["AI Basics", "Machine Learning", "Neural Networks", "AI Ethics", "Python"]
+    },
+    {
+      "id": 7,
+      "createdAt": "2024-05-15T14:00:00Z",
+      "title": "Game Development",
+      "description": "Learn the fundamentals of designing and developing games using modern engines.",
+      "assignedSpecialization": "Game Design",
+      "assignedCohort": "Cohort 2024",
+      "learningObjectives": [
+        "Understand game mechanics and dynamics",
+        "Learn to use game engines like Unity",
+        "Create interactive and immersive games"
+      ],
+      "thumbnail": "https://example.com/thumbnails/game-dev.png",
+      "modules": [
+        {
+          "title": "Game Mechanics and Dynamics",
+          "description": "Understand the core principles behind engaging gameplay.",
+          "topics": ["Game Loops", "Player Motivation", "Feedback Systems"],
+          "moduleFile": ["https://example.com/files/game-mechanics.pdf"]
+        },
+        {
+          "title": "Unity Basics",
+          "description": "Learn the basics of game development with Unity.",
+          "topics": ["Unity Interface", "Assets and Scenes", "Physics Engine"],
+          "moduleFile": ["https://example.com/files/unity-basics.pdf"]
+        },
+        {
+          "title": "Scripting with C#",
+          "description": "Learn how to script interactive behaviors using C# in Unity.",
+          "topics": ["MonoBehaviour", "Event Systems", "AI Behavior"],
+          "moduleFile": ["https://example.com/files/csharp-scripting.pdf"]
+        }
+      ],
+      "topics": ["Game Mechanics", "Unity", "C#", "Game Loops", "AI Behavior"]
+    },
+    {
+      "id": 8,
+      "createdAt": "2024-03-12T11:00:00Z",
+      "title": "Cloud Computing",
+      "description": "Understand the principles of cloud computing and how to leverage it for scalable applications.",
+      "assignedSpecialization": "Cloud Engineering",
+      "assignedCohort": "Cohort 2024",
+      "learningObjectives": [
+        "Understand cloud architecture",
+        "Learn about cloud services (IaaS, PaaS, SaaS)",
+        "Deploy applications on cloud platforms"
+      ],
+      "thumbnail": "https://example.com/thumbnails/cloud.png",
+      "modules": [
+        {
+          "title": "Introduction to Cloud Computing",
+          "description": "Learn about cloud computing models and their advantages.",
+          "topics": ["What is Cloud Computing?", "Types of Cloud Services", "Deployment Models"],
+          "moduleFile": ["https://example.com/files/cloud-intro.pdf"]
+        },
+        {
+          "title": "AWS Basics",
+          "description": "Explore Amazon Web Services and its core features.",
+          "topics": ["EC2 Instances", "S3 Buckets", "IAM Roles"],
+          "moduleFile": ["https://example.com/files/aws-basics.pdf"]
+        },
+        {
+          "title": "Deploying Applications",
+          "description": "Learn how to deploy and manage applications on cloud platforms.",
+          "topics": ["Docker Containers", "Kubernetes", "CI/CD Pipelines"],
+          "moduleFile": ["https://example.com/files/cloud-deployment.pdf"]
+        }
+      ],
+      "topics": ["Cloud Architecture", "AWS", "Kubernetes", "Docker", "CI/CD"]
+    },
+    {
+      "id": 9,
+      "createdAt": "2024-02-25T08:00:00Z",
+      "title": "DevOps Practices",
+      "description": "Learn how to implement DevOps practices to streamline software delivery.",
+      "assignedSpecialization": "DevOps Engineering",
+      "assignedCohort": "Cohort 2024",
+      "learningObjectives": [
+        "Understand the DevOps lifecycle",
+        "Learn automation tools for CI/CD",
+        "Monitor and maintain applications"
+      ],
+      "thumbnail": "https://example.com/thumbnails/devops.png",
+      "modules": [
+        {
+          "title": "Introduction to DevOps",
+          "description": "Learn the principles and practices of DevOps.",
+          "topics": ["DevOps Culture", "Agile and DevOps", "DevOps Tools"],
+          "moduleFile": ["https://example.com/files/devops-intro.pdf"]
+        },
+        {
+          "title": "CI/CD Pipelines",
+          "description": "Implement continuous integration and continuous delivery pipelines.",
+          "topics": ["Jenkins Basics", "GitLab CI/CD", "Automated Testing"],
+          "moduleFile": ["https://example.com/files/cicd-pipelines.pdf"]
+        },
+        {
+          "title": "Monitoring and Logging",
+          "description": "Monitor and log application performance using industry tools.",
+          "topics": ["Prometheus", "Grafana", "Logstash"],
+          "moduleFile": ["https://example.com/files/monitoring-logging.pdf"]
+        }
+      ],
+      "topics": ["DevOps Culture", "CI/CD", "Monitoring", "Automation", "Agile"]
+    }
+  ]
+}
