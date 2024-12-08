@@ -2,16 +2,20 @@
 
 .assessment-card {
     @include assessment-card;
+    width: 100%;
 
     & .title-quiz-count {
         @include title-count;
+        width: 100%;
     }
 
     & .table-header {
         @include table-header;
+        width: 100%;
     }
 
     & .table-items {
         @include table-items;
+        width: 100%;
     }
 }

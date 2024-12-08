@@ -3,9 +3,9 @@
 
 .assessment-card {
     // @include assessment-card;
-    width: 96.6rem;
+    width: 100%;
     border: none;
-    background: #fcfcfc;
+    background: #fdfdfd;
 
     app-searchbar {
         margin-bottom: 3.1rem;
@@ -26,10 +26,12 @@
 
 .table-header {
     @include table-header-for-images;
+    width: 100%;
 }
 
 .table-items-with-images {
     @include table-items-with-images;
+    width: 100%;
 }
 
 
