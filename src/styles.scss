@@ -104,3 +104,49 @@ span.p-tabview-title {
 .p-tabview .p-tabview-nav li .p-tabview-nav-link {
   background: none;
 }
+
+
+// Calendar styles for PrimeNg
+.p-datepicker .p-datepicker-header {
+  height: fit-content;
+  margin-bottom: 1rem;
+}
+
+#pn_id_1_panel {
+  width: 241.35px;
+  height: 238px;
+  padding: 20px;
+  border-radius: .8rem;
+  border: 1px solid $clr-gray-50;
+}
+
+.p-datepicker-header {
+  border: none;
+}
+
+button.p-ripple {
+  width: 2.765rem;
+  height: 2.765rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+//edit calendar date heading 
+.p-datepicker-title {
+  font-family: $font-lato;
+  color: #222222;
+  display: flex;
+  gap: .5rem;
+}
+
+thead.ng-tns-c1685646730-0 {
+  font-family: $font-lato;
+  color: #AAAAAA;
+  font-weight: 400;
+  margin-bottom: 1.6rem;
+}
+
+span.p-ripple.p-element.ng-tns-c1685646730-0.p-highlight.p-datepicker-current-day.ng-star-inserted {
+  background: #1A75FF;
+  color: $clr-white;
+}
+
