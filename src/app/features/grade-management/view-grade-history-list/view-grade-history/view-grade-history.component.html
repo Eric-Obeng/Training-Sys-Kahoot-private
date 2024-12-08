@@ -216,5 +216,9 @@
         </tr>
         <div class="divider"></div>
     </table>
-    <app-paginator />
+    <app-paginator 
+        [currentPage$]="currentPage$"
+        [totalPages]="totalPages"
+        [pageSize]="pageSize"
+    />
 </div>

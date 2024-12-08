@@ -1,5 +1,6 @@
 
 import { Routes } from '@angular/router';
+import { AssessmentTabsSecondComponent } from '@features/grade-management/assessment-tabs-second/assessment-tabs-second.component';
 import { WelcomePageComponent } from '@features/grade-management/welcome-page/welcome-page.component';
 
 
