@@ -256,9 +256,6 @@
             align-items: center;
             gap: 1rem;
 
-            & img {
-
-            }
         }
         & td:nth-child(3) {
             width: 13rem;
@@ -332,6 +329,8 @@
         p {
             color: $clr-primary-500;
         }
+    }
+}
 
 
 // Welcome page mixins 
