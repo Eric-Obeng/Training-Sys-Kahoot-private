@@ -27,5 +27,99 @@
     align-items: center;
     gap: 2.4rem;
 
+}
+
+
+@mixin cardTitle {
+    display: flex;
+    gap: 1rem;
+    font-size: $font-size-body;
+    font-weight: 600;
+    color: $clr-gray-700;
+    align-items: center;
+    padding: 0 2.4rem;
+}
+
+@mixin tableHeader{
+    width: 100%;
+    height: 2.7rem;
+
+    tr {
+        width: 100%;
+        height: 2.7rem;
+        background: #f8f8f8;
+        display: flex;
+        color: $clr-gray-800;
+        font-weight: 600;
+        font-size: $font-size-body;
+    }
+
+    & td:nth-child(1) {
+        width: 18.1rem;
+    }
+
+    & td:nth-child(2) {
+        width: 36.8rem;
+    }
+
+    & td:nth-child(3) {
+        width: 26.1rem;   
+    }
+
+    & td:nth-child(4) {
+        width: 10.6rem;
+    }
+}
+
+
+@mixin tableTraineeList {
+    width: 100%;
+    height: 4.4rem;
+
+    tr {
+        width: 100%;
+        height: 4.4rem;
+        color: $clr-gray-500;
+        font-size: $font-size-body;
+        display: flex;
+        align-items: center;
+
+        & td:nth-child(1) {
+            width: 18.1rem;
+        }
     
+        & td:nth-child(2) {
+            width: 36.8rem;
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+            color: $clr-gray-500;
+            font-size: $font-size-body;
+
+            & img {
+                width: 4rem;
+                height: 4rem;
+                border-radius: 50%;
+            }
+        }
+    
+        & td:nth-child(3) {
+            width: 26.1rem;   
+        }
+    
+        & td:nth-child(4) {
+            width: 10.6rem;
+            display: flex;
+            align-items: center;
+            gap: 1.27rem;
+        }
+    }
+}
+
+
+@mixin divider {
+    width: 100%;
+    height: .1rem;
+    background: $clr-gray-100;
+    margin: 1.2rem 0;
 }
