@@ -113,4 +113,10 @@ export class ViewAssignmentsComponent {
     this.router.navigate(['home/trainer/grade-management/trainee-list'])
   }
 
+  goToGradedTrainees(assignmentType: string) {
+    if(assignmentType === 'Graded Assignments') {
+      this.router.navigate(['/home/trainer/grade-management/graded-trainees-list'])
+    }
+  }
+
 } 

@@ -22,6 +22,7 @@
     </table>
 
     <table class="table-items" *ngFor="let assignments of filteredAssignments"
+        (click)="goToGradedTrainees(cardType)"
     >
         <tr>
             <td>#{{ assignments.id }}</td>
