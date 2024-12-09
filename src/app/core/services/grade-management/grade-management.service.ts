@@ -15,7 +15,7 @@ export class GradeManagementService {
 
 
   // grademanagementUrl: string = environment.BaseUrl;
-  grademanagementUrl: string = "https://e411-196-61-35-158.ngrok-free.app/api/v1";
+  grademanagementUrl: string = "https://e6d2-154-161-127-190.ngrok-free.app/api/v1";
 
   constructor(
     private http: HttpClient

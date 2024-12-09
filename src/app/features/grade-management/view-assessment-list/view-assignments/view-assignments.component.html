@@ -1,4 +1,15 @@
 
+<div class="no-data-container"
+*ngIf="!(gradedAssignments$ | async)?.length && !(ungradedAssignments$ | async)?.length"
+>
+    <div class="no-data">
+        <img src="../../../../assets/Images/png/add-trainee.png" alt="no assessment">
+        <h2>No Assessments to grade</h2>
+        <p>There are currently no accessments to grade. Kindly create assessments in the assessment panel</p>
+    </div>
+</div>
+
+
 <!-- Graded assignments  -->
 <div class="assessment-card"
     *ngIf="(gradedAssignments$ | async)?.length || 0 > 0"
@@ -81,12 +92,3 @@
     <div class="spinner" *ngIf="isUngradedLoading$ | async"></div>
 </div>
 
-<div class="no-data-container"
-*ngIf="!(gradedAssignments$ | async)?.length && !(ungradedAssignments$ | async)?.length"
->
-    <div class="no-data">
-        <img src="../../../../assets/Images/png/add-trainee.png" alt="no assessment">
-        <h2>No Assessments to grade</h2>
-        <p>There are currently no accessments to grade. Kindly create assessments in the assessment panel</p>
-    </div>
-</div>
