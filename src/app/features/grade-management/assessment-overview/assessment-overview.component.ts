@@ -9,4 +9,16 @@ import { Component } from '@angular/core';
 })
 export class AssessmentOverviewComponent {
 
+  ellipsisClicked: boolean = false;
+
+  constructor() {
+
+  }
+
+  toggleEllipsis() {
+    this.ellipsisClicked = !this.ellipsisClicked;
+    console.log(this.ellipsisClicked)
+  }
+
+
 }
