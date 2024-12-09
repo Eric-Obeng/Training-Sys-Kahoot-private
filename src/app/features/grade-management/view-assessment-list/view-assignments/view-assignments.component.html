@@ -36,6 +36,8 @@
         </tr>
         <div class="divider"></div>
     </table>
+
+    <div class="spinner" *ngIf="isGradedLoading$ | async"></div>
 </div>
 
 <!-- Ungraded assignments  -->
@@ -75,6 +77,8 @@
         </tr>
         <div class="divider"></div>
     </table>
+
+    <div class="spinner" *ngIf="isUngradedLoading$ | async"></div>
 </div>
 
 <div class="no-data-container"

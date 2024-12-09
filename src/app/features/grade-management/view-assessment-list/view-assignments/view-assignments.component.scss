@@ -1,4 +1,5 @@
 @import '../../../../../styleSheet/grade_management_mixins';
+@import '../../../../../styleSheet/loading_animation';
 
 .assessment-card {
     @include assessment-card;
@@ -27,4 +28,9 @@
         @include modal-like-card;
         width: 59.5rem;
     }
+}
+
+
+.spinner {
+    @include spinner;
 }

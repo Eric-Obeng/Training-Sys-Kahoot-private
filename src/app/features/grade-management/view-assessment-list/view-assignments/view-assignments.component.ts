@@ -15,6 +15,8 @@ export class ViewAssignmentsComponent {
 
   gradedAssignments$!: Observable<AssessmentList[]>;
   ungradedAssignments$!: Observable<AssessmentList[]>;
+  isGradedLoading$!: Observable<boolean>;
+  isUngradedLoading$!: Observable<boolean>;
 
 
   constructor(
@@ -29,17 +31,15 @@ export class ViewAssignmentsComponent {
 
 
   init() {
-    this.gradedAssignments$ = this.gradeManagementService.getGradedAssessments()
-    this.gradedAssignments$.subscribe({
-      next: (res) => console.log("Get Graded response: ", res),
-      error: (err) => console.log("Get all assessments error: ", err)
-    })
+    this.isGradedLoading$ = of(true);
+    this.gradedAssignments$ = this.gradeManagementService.getGradedAssessments().pipe(
+      tap(() => (this.isGradedLoading$ = of(false)))
+    );
 
-    this.ungradedAssignments$ = this.gradeManagementService.getUngradedAssessments()
-    this.ungradedAssignments$.subscribe({
-      next: (res) => console.log("Get ungraded response: ", res),
-      error: (err) => console.log("Get ungraded assessment err: ", err)
-    })
+    this.isUngradedLoading$ = of(true);
+    this.ungradedAssignments$ = this.gradeManagementService.getUngradedAssessments().pipe(
+      tap(() => (this.isUngradedLoading$ = of(false)))
+    );
   }
   
 } 
