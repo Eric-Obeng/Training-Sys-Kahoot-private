@@ -13,8 +13,9 @@
 }
 
 p-tabPanel {
+
     & div {
-        height: fit-content;
+        height: 80vh;
         overflow-y: scroll;
     }
 
