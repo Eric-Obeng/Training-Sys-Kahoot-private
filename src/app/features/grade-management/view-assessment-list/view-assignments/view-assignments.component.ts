@@ -1,6 +1,7 @@
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { Observable, of, map } from 'rxjs';
+import { GradeManagementService } from '@core/services/grade-management/grade-management.service';
+import { Observable, of, map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-view-assignments',
@@ -13,6 +14,7 @@ export class ViewAssignmentsComponent {
 
   @Input() cardType = ''; // set component to graded or ungraded
   filteredAssignments: any[] = []; // holds the filtered data
+  assigments$!: Observable<any>;
 
 
   // Sample data to use for assessment (to be removed)
@@ -87,13 +89,24 @@ export class ViewAssignmentsComponent {
     }
   ];
 
-  ngOnInit() {
+  constructor(
+    private gradeManagementService: GradeManagementService,
+  ) {
 
+  }
+
+  ngOnInit() {
+    this.init()
   }
 
 
   init() {
-    
+    this.assigments$ = this.gradeManagementService.getAllAssessments()
+
+    this.assigments$.subscribe({
+      next: (res) => console.log("Get all assessments response: ", res),
+      error: (err) => console.log("Get all assessments error: ", err)
+    })
   }
 
   ngOnChanges(changes: SimpleChanges): void {
