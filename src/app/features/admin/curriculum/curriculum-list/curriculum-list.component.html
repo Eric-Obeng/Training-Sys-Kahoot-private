@@ -1,0 +1,9 @@
+<main class="curriculum-container">
+  <ng-container *ngIf="curriculum.length == 0">
+    <app-empty-hint/>
+  </ng-container>
+  <ng-container *ngIf="curriculum.length > 0">
+    <app-header/>
+    <app-list-item/>
+  </ng-container>
+</main>

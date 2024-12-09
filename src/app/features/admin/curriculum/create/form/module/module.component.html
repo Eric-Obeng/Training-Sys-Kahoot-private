@@ -1,0 +1,174 @@
+<section>
+  <a class="nav" (click)="navigateToCreateCurriculum()">
+    <img src="../../../../assets/Images/svg/backicon.svg" alt="">
+    <p class="back-link">Back</p>
+  </a>
+
+  <div class="modules-section">
+    <form class="module" [formGroup]="parentForm" *ngIf="parentForm">
+      <div class="create-module-head">
+        <h3>Module Creation</h3>
+        <p>
+          Create a new module by providing a title, description,
+          and relevant learning materials. Modules can be linked
+          to specific curriculum items to break down content into
+          manageable sections
+        </p>
+      </div>
+
+      <div class="scrollable-content" formArrayName="modules">
+        <p-accordion [multiple]="true" styleClass="modules-accordion">
+          <p-accordionTab *ngFor="let module of modules.controls; let moduleIndex = index"
+                         [formGroupName]="moduleIndex"
+                         [selected]="moduleIndex === activeModuleIndex"
+                         [header]="'Module ' + (moduleIndex + 1)">
+            <div class="modules-container">
+              <!-- Module Title Input -->
+              <div class="type-field form-section">
+                <div class="field-title">
+                  <h4>Title</h4>
+                  <span>*</span>
+                </div>
+                <input
+                  type="text"
+                  formControlName="title"
+                  placeholder="Enter module name here">
+              </div>
+
+              <!-- Module Description -->
+              <div class="type-field form-section">
+                <div class="field-title">
+                  <h4>Description</h4>
+                  <span>*</span>
+                </div>
+                <textarea
+                  formControlName="description"
+                  placeholder="Enter Module description"
+                  rows="8">
+                </textarea>
+              </div>
+
+              <!-- Module Topics -->
+              <div class="type-field form-section">
+                <div class="field-title">
+                  <h4>Topics</h4>
+                  <span>*</span>
+                </div>
+                <div formArrayName="topics">
+                  <div *ngFor="let topic of getTopics(moduleIndex).controls; let topicIndex = index">
+                    <div class="topic-section">
+                      <input
+                        [formControlName]="topicIndex"
+                        type="text"
+                        placeholder="Enter topic">
+                      <img
+                        *ngIf="getTopics(moduleIndex).length > 1"
+                        class="close"
+                        src="../../../../../assets/Images/svg/delete.svg"
+                        alt="Remove topic"
+                        (click)="removeTopic(moduleIndex, topicIndex)">
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  matRipple
+                  class="add-topic-btn"
+                  (click)="addTopic(moduleIndex)">
+                  + Add Topic
+                </button>
+              </div>
+
+              <!-- Module File Upload -->
+              <div class="thumbnail-file form-section type-field">
+                <div class="field-title">
+                  <h4>Module file Upload</h4>
+                  <p class="optional-txt">(Optional)</p>
+                </div>
+                <div class="file-field"
+                     (dragover)="onDragOver($event, moduleIndex)"
+                     (dragleave)="onDragLeave($event, moduleIndex)"
+                     (drop)="onFileDropped($event, moduleIndex)"
+                     [class.drag-over]="dragOver[moduleIndex]"
+                     [class.has-files]="getFileList(moduleIndex).length > 0"
+                     (click)="fileInput.click()">
+                  <input
+                    #fileInput
+                    hidden
+                    type="file"
+                    [accept]="allowedFileTypes.join(',')"
+                    (change)="onFileSelected($event, moduleIndex)">
+
+                  <div class="file-hint" *ngIf="getFileList(moduleIndex).length === 0">
+                    <img src="../../../../../assets/Images/png/photo-fill.svg" alt="">
+                    <p class="file-inst">Click or drop image/files here</p>
+                    <p class="">Supports: PNG, JPG, JPEG, WEBP, PDF</p>
+                  </div>
+
+                  <div *ngIf="getFileList(moduleIndex).length > 0" class="file-list">
+                    <div class="upload-more">
+                      <img src="../../../../../assets/Images/png/photo-fill.svg" alt="">
+                      <p>Drop more files or click to browse</p>
+                    </div>
+
+                    <div class="files-container">
+                      <div *ngFor="let file of getFileList(moduleIndex); let fileIndex = index"
+                           class="file-item">
+                        <div class="file-info">
+                          <img [src]="getFileIcon(file.type)" alt="file type icon" class="file-type-icon">
+                          <div class="file-details">
+                            <p class="file-name" [title]="file.name">{{ file.name }}</p>
+                            <span class="file-size">{{ file.size }}</span>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          class="remove-file"
+                          (click)="removeFile(moduleIndex, fileIndex); $event.stopPropagation()">
+                          ✕
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                *ngIf="modules.length > 1"
+                matRipple
+                class="remove-module-btn"
+                (click)="removeModule(moduleIndex)">
+                Remove Module
+              </button>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+
+
+      <div class="button-container">
+        <button
+          type="button"
+          matRipple
+          class="form-section add-btn"
+          (click)="addModule()">
+          Add Module
+        </button>
+
+
+      </div>
+    </form>
+
+    <app-module-list
+      [modules]="modules"
+      [activeModuleIndex]="activeModuleIndex"
+      [parentFormValid]="parentForm.valid || false"
+      (moduleSelected)="onModuleSelected($event)"
+      (moduleRemoved)="onModuleRemoved($event)"
+      (createCurriculum)="onCreateCurriculum()">
+    </app-module-list>
+
+  </div>
+</section>

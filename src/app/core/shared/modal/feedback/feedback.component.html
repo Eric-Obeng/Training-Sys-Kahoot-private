@@ -1,0 +1,17 @@
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="true"
+  [showHeader]="true"
+  [style]="{ width: '627px' }"
+  [contentStyle]="{ padding: '2rem' }"
+  (onHide)="onClose()"
+>
+  <div class="add-container">
+    <div class="add-info feedback-info">
+      <img [src]="imageSrc" alt="Feedback Image" />
+      <h3>{{ title }}</h3>
+      <p>{{ message }}</p>
+    </div>
+  </div>
+</p-dialog>

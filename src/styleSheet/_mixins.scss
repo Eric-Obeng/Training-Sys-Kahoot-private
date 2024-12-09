@@ -119,9 +119,31 @@
   }
 }
 
-@mixin gradient-card($height: 14rem, $width: 30.5rem, $radius: 1.6rem, $start-color: #2FB4AC, $end-color: #0F7670CC) {
-  height: $height;
-  width: $width;
-  border-radius: $radius;
-  background: linear-gradient(90deg, $start-color 3.92%, $end-color 100%);
+
+@mixin custom-scrollbar($thumb-color: #F98416, $track-color: #f5f5f5) {
+  overflow-y: auto;
+  padding-right: 2rem;
+  &::-webkit-scrollbar {
+    width: 8px;
+    background-color: $track-color;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: $thumb-color;
+
+    &:hover {
+      background-color: darken($thumb-color, 10%);
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: $track-color;
+  }
+
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
+
+

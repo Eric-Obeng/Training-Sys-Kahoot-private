@@ -1,1 +1,39 @@
-<p>trainer dasboard</p>
+<main>
+  <section class="track-card-section">
+    <app-track-info-card/>
+    <app-track-info-card
+    [count]="5"
+    [subtitle]="'Assigned Assesment'"
+    [imageUrl]="'../../../../assets/Images/svg/assessment-icon.svg'"
+    [imageAlt]="'assessment-icon'"
+    [colors]="{startColor: '#37a5f5', endColor: '#2d82c0'}"
+    />
+    <app-track-info-card
+      [count]="0"
+      [subtitle]="'Courses Completed'"
+      [imageUrl]="'../../../../assets/Images/svg/completed.svg'"
+      [imageAlt]="'completed'"
+      [colors]="{startColor: '#f4af2a', endColor: '#b97e0b'}"
+    />
+  </section>
+  <mat-divider></mat-divider>
+  <section class="notification-section">
+    <app-notification-card [title]="'Cohort'"
+      [alt]="'cohort-icon'"
+      [subtitle]="'Graduate Training Program 2024'"
+      [icon]="'../../../../assets/Images/svg/cohort-trainee-icon.svg'"
+    />
+    <app-notification-card [title]="'Specialization'"
+      [alt]="'specialization-icon'"
+      [subtitle]="'UI/UX Design'"
+      [icon]="'../../../../assets/Images/svg/spec-trainee-icon.svg'"
+    />
+    <app-notification-card [title]="'Programs Details'"
+      [alt]="'programs-calendar-icon'"
+      [subtitle]="'Duration: 12 weeks'"
+      [icon]="'../../../../assets/Images/svg/calender-trainee.svg'"
+    />
+  </section>
+
+</main>
+

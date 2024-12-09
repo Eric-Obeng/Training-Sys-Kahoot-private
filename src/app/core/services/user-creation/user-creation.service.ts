@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class UserCreationService {
-  private apiUrl = `${environment.BaseUrl}/reset-password`;
+  private apiUrl = `${environment.BaseUrl}/auth/reset-password`;
 
   constructor(private http: HttpClient) {}
 
@@ -17,10 +17,9 @@ export class UserCreationService {
     confirmPassword: string,
     token: string
   ): Observable<any> {
-    const headers = { Authorization: `Bearer ${token}` };
     const body = { newPassword: password, confirmPassword };
-    return this.http.put(this.apiUrl, body, { headers, responseType: 'text' }).pipe(
-      map(response => {
+    return this.http.put(this.apiUrl, body, { responseType: 'text' }).pipe(
+      map((response) => {
         try {
           return JSON.parse(response);
         } catch (e) {

@@ -35,6 +35,7 @@ export class SearchbarComponent implements OnInit {
   @Input() placeholder!: string; //eg name
   @Input() buttonContent: string = 'Add Cohort';
   @Input() hide!: boolean;
+  @Input() showAddButton!: boolean;
 
   searchValue: string = '';
   filterVisible: boolean = false;

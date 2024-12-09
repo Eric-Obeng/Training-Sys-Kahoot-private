@@ -6,7 +6,7 @@ nav {
     min-width: 100%;
     height: 8.1rem;
     border: none;
-    border-bottom: 0.1rem solid $clr-gray-50; 
+    border-bottom: 0.1rem solid $clr-gray-50;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -29,8 +29,8 @@ nav {
             display: flex;
             align-items: center;
             gap: 1.2rem;
-    
-    
+
+
             & .notification-container {
                 width: 2.836rem;
                 height: 2.836rem;
@@ -44,8 +44,8 @@ nav {
             & .notification-container:hover {
                 background: $clr-gray-50;
             }
-            
-    
+
+
             & .search-container {
                 width: 2.836rem;
                 height: 2.836rem;
@@ -59,7 +59,7 @@ nav {
             & .search-container:hover {
                 background: $clr-gray-50;
             }
-    
+
         } // End of Icons element
 
         & .divider {
@@ -81,7 +81,7 @@ nav {
                 display: flex;
                 flex-direction: column;
                 margin-right: 2.2rem;
-                
+
                 & #user-name {
                     color: $clr-gray-800;
                     font-weight: 700;
@@ -95,19 +95,19 @@ nav {
             }
 
             & .more-option-icon {
-                position: relative;  
+                position: relative;
                 cursor: pointer;
-                transition: $btn-transition;  
+                transition: $btn-transition;
 
                 & svg {
                     width: 1.331rem;
                 }
 
             }
-        } 
+        }
     }
 }
-  
+
 // Enabling/Disabling plus btn
 .btnEnabled {
     width: 2.836rem;
@@ -116,8 +116,8 @@ nav {
     background: $clr-primary-500;
     display: grid;
     place-items: center;
-    cursor: pointer;  
-    transition: $btn-transition; 
+    cursor: pointer;
+    transition: $btn-transition;
 }
 .btnEnabled:hover {
     background: $clr-primary-400;
@@ -130,7 +130,7 @@ nav {
     background: $clr-gray-400;
     display: grid;
     place-items: center;
-    cursor: not-allowed; 
+    cursor: not-allowed;
 }
 
 // dropDown visibility

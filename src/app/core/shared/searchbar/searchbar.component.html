@@ -50,6 +50,6 @@
             </svg>    
             <span>Sort</span>
         </div>
-        <button [textContent]="buttonContent" (click)="onAddClick()">Add Cohort</button>
+        <button *ngIf="showAddButton" [textContent]="buttonContent" (click)="onAddClick()">Add Cohort</button>
     </div>
 </div>

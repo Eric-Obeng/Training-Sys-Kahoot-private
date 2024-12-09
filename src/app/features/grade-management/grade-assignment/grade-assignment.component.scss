@@ -9,6 +9,8 @@
 
 .title-and-trainee-name {
     @include title-and-trainee-name;
+    width: 100%;
+    background: red;
 }
 
 .score {

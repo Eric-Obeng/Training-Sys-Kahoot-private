@@ -1,0 +1,28 @@
+<div class="modules-list">
+  <div class="modules">
+    <div
+      class="module-item"
+      *ngFor="let module of modules.controls; let moduleIndex = index"
+      [class.active]="moduleIndex === activeModuleIndex"
+      (click)="selectModule(moduleIndex)"
+    >
+      Module {{ moduleIndex + 1 }}
+
+      <ng-container *ngIf="modules.controls.length > 1">
+        <img
+          src="../../../../../../../assets/Images/svg/close-del.svg"
+          alt="Remove Module"
+          (click)="removeModule(moduleIndex, $event)"
+        >
+      </ng-container>
+    </div>
+  </div>
+  <button
+    type="button"
+    matRipple
+    class="form-section complete-btn"
+    [disabled]="!modules.valid"
+    (click)="onComplete()">
+    create curriculum
+  </button>
+</div>

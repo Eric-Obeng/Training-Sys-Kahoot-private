@@ -14,7 +14,7 @@ export const adminRoutes: Routes = [
     data: { role: 'admin' }
   },
   {
-    path: 'specialization',
+    path: 'specialization-management',
     loadComponent: () => import('../../views/admin/specializations/specialization-management.component')
       .then(m => m.SpecializationManagementComponent),
     data: { role: 'admin' },
@@ -88,7 +88,7 @@ export const adminRoutes: Routes = [
     data: { role: 'admin' }
   },
   {
-    path: 'progress-tracking',
+    path: 'progression-tracking',
     loadComponent: () => import('@views/admin/progress-tracking/progress-tracking.component')
     .then(m => m.ProgressTrackingComponent)
   },

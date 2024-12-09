@@ -1,0 +1,147 @@
+<main>
+  <a class="nav" (click)="navigateToList()">
+    <img src="../../../../assets/Images/svg/backicon.svg" alt="">
+    <p class="back-link">Back</p>
+  </a>
+
+  <section class="curriculum-container" [formGroup]="curriculumForm">
+    <ng-container >
+      <form class="curriculum-form">
+        <div class="create-info-head">
+          <h3>Curriculum Creation</h3>
+          <p>
+            Create a new curriculum by providing a title, description, and any associated materials. Assign it to the appropriate specializations
+            and cohorts to ensure targeted learning for trainees
+          </p>
+        </div>
+        <div class="scrollable-content">
+          <!-- curriculum title input field -->
+          <div class="type-field form-section">
+            <div class="field-title">
+              <h4>Curriculum Title</h4>
+              <span>*</span>
+            </div>
+            <input
+              type="text"
+              formControlName="title"
+              placeholder="Enter curriculum name here">
+          </div>
+
+          <!-- curriculum desc input field -->
+          <div class="type-field form-section">
+            <div class="field-title">
+              <h4>Description</h4>
+              <span>*</span>
+            </div>
+            <textarea
+              formControlName="description"
+              placeholder="Enter Curriculum description Here"
+              rows="8">
+            </textarea>
+          </div>
+
+          <!-- curriculum assigned specialization select field -->
+          <div class="type-field form-section">
+            <div class="field-title">
+              <h4>Assign to specialization</h4>
+              <span>*</span>
+            </div>
+            <select class="custom-select"  formControlName="assignedSpecialization">
+              <option value="" disabled selected>Select specialization</option>
+              <option value="frontend">Frontend Development</option>
+              <option value="backend">Backend Development</option>
+              <option value="fullstack">Full Stack Development</option>
+              <option value="mobile">Mobile Development</option>
+            </select>
+          </div>
+
+          <!-- curriculum assigned cohort select field -->
+          <div class="type-field form-section">
+            <div class="field-title">
+              <h4>Assign to Cohort</h4>
+              <span>*</span>
+            </div>
+            <select class="custom-select" formControlName="assignedCohort">
+              <option value="" disabled selected>Select Cohort</option>
+              <option value="cohort1">Cohort 1</option>
+              <option value="cohort2">Cohort 2</option>
+              <option value="cohort3">Cohort 3</option>
+              <option value="cohort4">Cohort 4</option>
+            </select>
+          </div>
+
+          <!-- curriculum objectives input field -->
+          <div class="type-field form-section">
+            <div class="field-title">
+              <h4>Learning Objectives</h4>
+              <span class="required-index">*</span>
+            </div>
+
+            <div formArrayName="learningObjectives">
+              <div *ngFor="let obj of learningObjectives.controls; let i = index"
+                class="obj-input-container">
+                <input
+                  [formControlName]="i"
+                  type="text"
+                  placeholder="Enter Objectives here">
+                <img
+                  *ngIf="learningObjectives.length > 1"
+                  class="close"
+                  src="../../../../../assets/Images/svg/delete.svg"
+                  alt="Remove objective"
+                  (click)="removeLearningObjective(i)">
+              </div>
+            </div>
+
+            <button
+              matRipple
+              type="button"
+              class="add-obj-btn"
+              (click)="addLearningObjective()">
+              + Add Objectives
+            </button>
+          </div>
+
+          <!-- curriculum thumbnail input field -->
+          <div class="thumbnail-file form-section type-field">
+            <div class="field-title">
+              <h4>Thumbnail image</h4>
+              <p class="optional-txt">(Optional)</p>
+            </div>
+            <input
+              type="file"
+              #fileInput
+              hidden
+              accept="image/png,image/jpeg,image/jpg,image/webp"
+              (change)="onFileSelected($event)">
+            <div
+              class="file-field"
+              (click)="fileInput.click()"
+              (dragover)="onDragOver($event)"
+              (dragleave)="onDragLeave($event)"
+              (drop)="onFileDropped($event)">
+              <div *ngIf="!previewImage">
+                <img src="../../../../../assets/Images/png/photo-fill.svg" alt="">
+                <p class="file-inst">Click or drop image/files here</p>
+                <p>Supports: PNG, JPG, JPEG, WEBP</p>
+              </div>
+              <div *ngIf="previewImage" class="preview-container">
+                <img [src]="previewImage" alt="Preview" class="preview-image">
+                <button class="remove-btn" (click)="removeImage(); $event.stopPropagation()">
+                  <img src="../../../../../assets/Images/svg/delete.svg" alt="Remove">
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="button-container">
+          <button (click)="onContinue()" type="button" matRipple class="form-section add-btn">
+            Continue
+          </button>
+        </div>
+      </form>
+    </ng-container>
+  </section>
+</main>
+

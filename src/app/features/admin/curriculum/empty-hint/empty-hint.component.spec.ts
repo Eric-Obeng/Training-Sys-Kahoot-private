@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CurriculumComponent } from './curriculum.component';
+import { EmptyHintComponent } from './empty-hint.component';
 
-describe('CurriculumComponent', () => {
-  let component: CurriculumComponent;
-  let fixture: ComponentFixture<CurriculumComponent>;
+describe('EmptyHintComponent', () => {
+  let component: EmptyHintComponent;
+  let fixture: ComponentFixture<EmptyHintComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CurriculumComponent]
+      imports: [EmptyHintComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(CurriculumComponent);
+    fixture = TestBed.createComponent(EmptyHintComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

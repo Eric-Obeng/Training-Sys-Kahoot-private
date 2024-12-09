@@ -1,6 +1,8 @@
 
 import { Routes } from '@angular/router';
-import { DashboardComponent } from '@views/trainer/dashboard/dashboard.component';
+import { AssessmentTabsSecondComponent } from '@features/grade-management/assessment-tabs-second/assessment-tabs-second.component';
+import { WelcomePageComponent } from '@features/grade-management/welcome-page/welcome-page.component';
+
 
 export const trainerRoutes: Routes = [
   {
@@ -10,7 +12,7 @@ export const trainerRoutes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardComponent,
+    component: WelcomePageComponent,
     data: { role: 'trainer' }
   },
   {
@@ -40,6 +42,11 @@ export const trainerRoutes: Routes = [
             loadComponent: () => import('../../features/grade-management/view-ungraded-trainees-list/trainees-list/trainees-list.component')
             .then(m => m.TraineesListComponent),
           },
+          {
+            path: 'graded-trainees-list',
+            loadComponent: () => import('../../features/grade-management/graded-trainees-list/graded-trainees-list.component')
+            .then(m => m.GradedTraineesListComponent),
+          },
         ]
       },
       {
@@ -64,7 +71,7 @@ export const trainerRoutes: Routes = [
   },
   {
     path: 'curriculum',
-    loadComponent: () => import('@views/trainer/curriculum/curriculum.component')
+    loadComponent: () => import('@views/admin/curriculum/curriculum.component')
     .then(m => m.CurriculumComponent),
     data: { role: 'trainer' }
   },

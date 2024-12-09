@@ -1,0 +1,326 @@
+@import  '../../../../../../../styleSheet/typography';
+@import '../../../../../../../styleSheet/mixins' ;
+@import '../../../../../../../styleSheet/variables';
+
+section{
+  display: flex;
+  flex-direction: column;
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    img {
+      width: 1.4rem;
+      height: 1.4rem;
+    }
+    .back-link {
+      cursor: pointer;
+      p {
+        padding-bottom: 5px;
+      }
+      text-decoration: underline;
+    }
+  }
+
+  .modules-section{
+    display: flex;
+    gap: 3.3rem;
+    flex: 1;
+    form {
+      @include flexbox($direction: column);
+      margin-top: 2.8rem;
+      max-height: 80vh;
+      font-family: $font-lato;
+
+      .scrollable-content {
+        @include flexbox($direction: column);
+        flex: 1;
+        overflow-y: auto;
+        padding: 2rem 0;
+        gap: 3rem;
+        padding-bottom: 5.6rem;
+        width: 66.2rem;
+        @include custom-scrollbar;
+        ::ng-deep .modules-accordion {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+          .p-accordion-header {
+            .p-accordion-header-link {
+              width: 63.2rem;
+              background: #fff;
+              border-bottom: 1px solid #E0E0E0 ;
+              border-radius: .8rem;
+              padding: 1.6rem;
+              font-family: $font-lato;
+              font-size: 1.6rem;
+              font-weight: 600;
+              color: #676767;
+
+              .p-accordion-toggle-icon {
+                color: #F98416;
+                margin-right: .8rem;
+              }
+
+              &:focus {
+                box-shadow: none;
+                border-color: #F98416;
+              }
+
+              &:not(.p-disabled):hover {
+                background: #f8f8f8;
+              }
+            }
+
+            &.p-highlight {
+              .p-accordion-header-link {
+                background: #fff;
+                border-color: #F98416;
+                color: #F98416;
+              }
+            }
+          }
+
+          .p-accordion-content {
+            border: none;
+            background: transparent;
+            padding: 2rem 0;
+          }
+
+          .p-accordion-toggle-icon {
+            color: #F98416;
+          }
+        }
+
+        .modules-container{
+          @include flexbox($direction: column);
+          gap: 1.6rem;
+          .type-field {
+            h4{
+              font-size: $font-size-subtitle-2;
+            }
+
+            .field-title{
+              @include flexbox($justify: space-between);
+              margin-bottom: 1rem;
+            }
+
+            span {
+              align-self: flex-end;
+              position: relative;
+              color: #E42514;
+              font-weight: 600;
+              font-size: 2rem;
+              z-index: 0 !important;
+            }
+
+            input {
+              height: 5.5rem;
+            }
+          }
+
+          .topic-section{
+            @include flexbox($align: center);
+            flex: 1;
+            width: 100%;
+            margin-bottom: 1.6rem;
+          }
+        }
+      }
+
+      .button-container {
+        padding: 2rem 0 2rem;
+        background-color: transparent;
+        margin-top: auto;
+        .add-btn {
+          color: #F98416;
+          background-color: transparent;
+          border: 1.5px solid #F98416;
+          font-weight: 700;
+          font-size: 1.5rem;
+          transition: color,background-color .3s ease;
+
+          &:hover {
+            background-color: #F98416;
+            color: #fff;
+          }
+
+        }
+      }
+
+      .form-section {
+        width: 63.2rem;
+      }
+
+      .create-module-head{
+        @include flexbox($direction: column);
+        gap: 1.6rem;
+        padding-bottom: 1.7rem;
+        width: 63.2rem;
+      }
+
+      textarea, input {
+        font-size: 1.6rem;
+        color: #a3a3a3;
+        width: 100% !important;
+        border-radius: .8rem;
+        padding: 1.2rem;
+        border: 1px solid #E0E0E0;
+        &:focus-within {
+          outline: none;
+          border-color: darken(#F98416, 5%);
+        }
+
+        &::placeholder {
+          color: #a3a3a3;
+          font-family: $font-lato !important;
+          font-size: 1.4rem !important;
+        }
+      }
+
+      .thumbnail-file {
+        .optional-txt{
+          font-style: italic;
+          color: #a3a3a3;
+        }
+        .file-field{
+          border: 2px dashed #c2c2c2;
+          height: 20.7rem !important;
+          @include flexbox($justify:center,$align:center);
+          background-color: #fff;
+          border-radius: .9rem;
+          cursor: pointer;
+          transition: border .3s ease-in-out;
+
+          .file-hint{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            img{
+              width: 5.8rem;
+              height: 4.5rem;
+              margin-bottom: 1.4rem;
+            }
+
+            p{
+              font-size: 1.2rem;
+              padding-bottom: .25rem;
+              color: #676767;
+            }
+            .file-inst{
+              color:#F98416;
+            }
+          }
+
+          &:hover {
+            border: 2px dashed #F98416 !important;
+          }
+
+          &.drag-over {
+            border: 2px dashed #F98416 !important;
+            background-color: rgba(249, 132, 22, 0.05);
+          }
+
+          &.has-files {
+            border: 2px solid dashed #F98416;
+            height: auto !important;
+            min-height: 20.7rem;
+
+            .upload-more {
+              width: 100%;
+              display: flex;
+              align-items: center;
+              gap: 1rem;
+              padding: 1.5rem;
+              border-bottom: 1px solid #E0E0E0;
+
+              img {
+                width: 2.4rem !important;
+                height: 2.4rem !important;
+                margin-bottom: 0 !important;
+              }
+
+              p {
+                color: #F98416;
+                margin: 0;
+                font-size: 1.4rem;
+              }
+            }
+          }
+
+          .file-list {
+            width: 100%;
+            .files-container {
+              max-height: 20rem;
+              overflow-y: auto;
+              padding: 0.5rem;
+            }
+
+            .file-item {
+              @include flexbox($justify: space-between,$align:center );
+              padding: 1rem;
+              margin: 0.5rem;
+              background-color: #f8f8f8;
+              border-radius: 0.6rem;
+
+              &:hover {
+                background-color: #f0f0f0;
+              }
+
+              .file-info {
+                @include flexbox($align:center);
+                gap: 1rem;
+                flex: 1;
+                min-width: 0;
+
+                .file-type-icon {
+                  width: 2rem;
+                  height: 2rem;
+                  flex-shrink: 0;
+                }
+
+                .file-name {
+                  margin: 0;
+                  font-size: 1.4rem;
+                  color: #676767;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                }
+              }
+
+              .remove-file {
+                background: none;
+                border: none;
+                color: #676767;
+                cursor: pointer;
+                padding: 0.5rem;
+                height: auto !important;
+                width: auto !important;
+                font-size: 1.4rem;
+                flex-shrink: 0;
+
+                &:hover {
+                  color: #E42514;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+
+    button {
+      width: 100%;
+      border-radius: .8rem;
+      border: none;
+      height: 5.5rem !important;
+      cursor: pointer;
+      color: #676767;
+    }
+  }
+}
+

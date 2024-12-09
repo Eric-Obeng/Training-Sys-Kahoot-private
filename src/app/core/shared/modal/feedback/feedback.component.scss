@@ -1,0 +1,51 @@
+::ng-deep {
+  .delete-dialog {
+    .p-dialog-header {
+      display: none;
+    }
+
+    .p-dialog-content {
+      padding: 1.6rem;
+      border-radius: 0.8rem;
+    }
+  }
+
+  .p-dialog-mask.p-component-overlay {
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+  }
+}
+
+.add-container {
+  display: flex;
+  padding: 1.6rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4.1rem;
+  background-color: #fff;
+  border-radius: 0.8rem;
+
+  .add-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.6rem;
+
+    h3 {
+      font-size: 2.4rem;
+    }
+
+    p {
+      font-size: 1.6rem !important;
+      color: #676767;
+    }
+  }
+
+  .delete-actions {
+    .cancel-btn {
+      margin-right: 2.7rem;
+    }
+  }
+}

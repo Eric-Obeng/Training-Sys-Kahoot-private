@@ -1,4 +1,4 @@
-<!-- form.component.html -->
+
 <form [formGroup]="specializationForm">
   <div class="create-info-head">
     <h3>Specialization Information</h3>
@@ -8,65 +8,77 @@
     </p>
   </div>
 
-  <div class="spec-type-field">
-    <h4>Type of specialization</h4>
-    <span>*</span>
-    <p>A clear and concise name for the specialization</p>
-    <input
-      type="text"
-      placeholder="Enter specialization name"
-      formControlName="name">
-  </div>
-
-  <div class="spec-type-field">
-    <h4>Description</h4>
-    <span>*</span>
-    <p>
-      A brief description of the specialization outlining its focus areas, objectives,
-      or the skills/competencies that trainees will gain
-    </p>
-    <textarea
-      placeholder="Enter specialization description"
-      rows="8"
-      formControlName="description">
-    </textarea>
-  </div>
-
-  <div class="spec-type-field">
-    <h4>Prerequisites</h4>
-    <span>*</span>
-    <p>
-      Any prerequisite knowledge or skills required
-      before a trainee can be assigned to the specialization
-    </p>
-
-    <div formArrayName="prerequisites">
-      <div class="skill-input-container" *ngFor="let prerequisite of prerequisites.controls; let i = index">
-        <input
-          [formControlName]="i"
-          type="text"
-          placeholder="Add prerequisite: Basic design skills, Programming knowledge...">
-        <img
-          class="close"
-          src="../../../../../assets/Images/svg/delete.svg"
-          alt="Remove prerequisite"
-          (click)="removeSkill(i)">
+  <div class="scrollable-content">
+    <div class="spec-type-field">
+      <div class="field-title">
+        <h4>Type of specialization</h4>
+        <span>*</span>
       </div>
+      <p>A clear and concise name for the specialization</p>
+      <input
+        type="text"
+        placeholder="Enter specialization name"
+        formControlName="name">
     </div>
 
-    <button mat-button type="button" (click)="addSkill()" class="add-skill-btn">
-      + Add Prerequisite
-    </button>
+    <div class="spec-type-field">
+      <div class="field-title">
+        <h4>Description</h4>
+        <span>*</span>
+      </div>
+      <p>
+        A brief description of the specialization outlining its focus areas, objectives,
+        or the skills/competencies that trainees will gain
+      </p>
+      <textarea
+        placeholder="Enter specialization description"
+        rows="8"
+        formControlName="description">
+      </textarea>
+    </div>
+
+    <div class="spec-type-field">
+      <div class="field-title">
+        <h4>Prerequisites</h4>
+        <span>*</span>
+      </div>
+      <p>
+        Any prerequisite knowledge or skills required
+        before a trainee can be assigned to the specialization
+      </p>
+
+      <div formArrayName="prerequisites">
+        <div class="skill-input-container" *ngFor="let prerequisite of prerequisites.controls; let i = index">
+          <input
+            [formControlName]="i"
+            type="text"
+            placeholder="Add prerequisite: Basic design skills, Programming knowledge...">
+
+          <img *ngIf="prerequisites.controls.length > 1"
+            class="close"
+            src="../../../../../assets/Images/svg/delete.svg"
+            alt="Remove prerequisite"
+            (click)="removeSkill(i)">
+        </div>
+      </div>
+
+      <button mat-button type="button" (click)="addSkill()" class="add-skill-btn">
+        + Add Prerequisite
+      </button>
+    </div>
   </div>
 
-  <button
-    mat-button
-    type="button"
-    [disabled]="specializationForm.invalid"
-    class="add-spec-btn"
-    (click)="submitForm()">
-    {{ isEditMode ? 'Update' : 'Create' }} Specialization
-  </button>
+  <div class="button-container">
+
+    <button
+      matRipple
+      type="button"
+      [disabled]="specializationForm.invalid"
+      class="add-spec-btn"
+      (click)="submitForm()">
+      {{ isEditMode ? 'Update' : 'Create' }} Specialization
+    </button>
+  </div>
 </form>
 
 

@@ -29,14 +29,7 @@ export class CohortDataService {
   
   //(HTTP Request) Retriev a list of cohorts from backend 
   getAllCohorts(): Observable<CohortList[]> { 
-    const headers = new HttpHeaders({
-      "ngrok-skip-browser-warning": "69420"
-    });
-  
-    return this.http.get<CohortList[]>(this.cohortsListUrl, { headers }).pipe(
-      tap((response: CohortList[]) => {
-        // console.log("allcohorts: ", response);
-      }),
+    return this.http.get<CohortList[]>(this.cohortsListUrl).pipe( 
       catchError(error => this.errorhandlerService.handleError(error))
     );
   }
@@ -46,32 +39,21 @@ export class CohortDataService {
   //(HTTP Request) Make a post request to backend to add cohort
   addCohort(formData: Cohort) {
     console.log("formData", formData)
-    const headers = new HttpHeaders({
-      "ngrok-skip-browser-warning": "69420"
-    });
 
-    return this.http.post<CohortList>(this.cohortsListUrl, formData, { headers }).pipe(
+    return this.http.post<CohortList>(this.cohortsListUrl, formData).pipe(
       catchError(error => this.errorhandlerService.handleError(error))
     )
   }
 
   //(HTTP Request) Make a post request to backend for Cohort Details including trainee list
   getSelectedCohortDetails() {
-    const headers = new HttpHeaders({
-      "ngrok-skip-browser-warning": "69420"
-    });
-
-    return this.http.get<CohortDetails>(`${this.cohortsListUrl}/${this.selectedCohortId}`, { headers }).pipe(
+    return this.http.get<CohortDetails>(`${this.cohortsListUrl}/${this.selectedCohortId}`).pipe(
       catchError(error => this.errorhandlerService.handleError(error))
     )
   }
 
   //(HTTP Request) Get cohort for update
   getCohortFormData(): Observable<Cohort> {
-    const headers = new HttpHeaders({
-      "ngrok-skip-browser-warning": "69420"
-    });
-    
     return this.http.get<Cohort>(`${this.cohortsListUrl}/cohorts/${this.selectedCohortId}`).pipe(
       catchError(error => this.errorhandlerService.handleError(error))
     )
@@ -85,10 +67,6 @@ export class CohortDataService {
   }
 
   deleteCohort(id: string) {
-    const headers = new HttpHeaders({
-      "ngrok-skip-browser-warning": "69420"
-    });
-
     return this.http.delete<CohortList>(`${this.cohortsListUrl}/${id}`).pipe(
       catchError(error => this.errorhandlerService.handleError(error))
     )

@@ -16,7 +16,7 @@
                 <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M11.8485 12.4395L15 15.591M0.818176 7.71221C0.818176 9.38388 1.48224 10.9871 2.66429 12.1691C3.84634 13.3512 5.44954 14.0152 7.12121 14.0152C8.79287 14.0152 10.3961 13.3512 11.5781 12.1691C12.7602 10.9871 13.4242 9.38388 13.4242 7.71221C13.4242 6.04054 12.7602 4.43734 11.5781 3.25529C10.3961 2.07325 8.79287 1.40918 7.12121 1.40918C5.44954 1.40918 3.84634 2.07325 2.66429 3.25529C1.48224 4.43734 0.818176 6.04054 0.818176 7.71221Z" stroke="#A3A3A3" stroke-width="1.18182" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-            </div>   
+            </div>
         </div>
         <div class="divider"></div>
         <div class="user-details">
@@ -32,10 +32,10 @@
                 <div class="drop-down-options"
                     [class]="dropDownClicked ? 'dropDownVisible' : 'dropDownNotVisible'"
                 >
-                    <span>Logout</span>
+                    <span (click)="onLogout()">Logout</span>
                 </div>
             </div>
-                
+
         </div>
     </div>
 </nav>

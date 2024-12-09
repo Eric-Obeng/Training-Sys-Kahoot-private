@@ -24,7 +24,7 @@
             <div class="cohort">
                 <label for="specialization">Cohort</label>
                 <select formControlName="cohort" id="cohort-select-list">
-                  <option *ngFor="let option of allCohorts$ | async" [value]="option.name">
+                  <option *ngFor="let option of allCohorts$ | async" [value]="option.id">
                     {{ option.name }}
                   </option>
                 </select>

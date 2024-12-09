@@ -1,17 +1,40 @@
 @import '../../../../../styleSheet/grade_management_mixins';
+@import '../../../../../styleSheet/loading_animation';
 
 .assessment-card {
     @include assessment-card;
+    width: 100%;
 
     & .title-quiz-count {
         @include title-count;
+        width: 100%;
     }
 
     & .table-header {
         @include table-header;
+        width: 100%;
     }
 
     & .table-items {
         @include table-items;
+        width: 100%;
     }
+}
+
+
+.no-data-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 12rem;
+
+    .no-data {
+        @include modal-like-card;
+        width: 59.5rem;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
+}
+
+
+.spinner {
+    @include spinner;
 }

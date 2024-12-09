@@ -17,8 +17,9 @@
   }
 
   .card-list {
-    @include flexbox(row, space-between, center);
+    @include flexbox(row, space-evenly, center);
     gap: 2.4rem;
+    width: 100%;
 
     .card {
       @include flexbox(column, flex-start, flex-start);

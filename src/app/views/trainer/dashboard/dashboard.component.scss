@@ -1,0 +1,21 @@
+@use '../../../../styleSheet/mixins' as *;
+
+main{
+   margin-left: 2.4rem;
+   .track-card-section{
+     display: flex;
+     gap: 2.7rem;
+   }
+
+  mat-divider{
+  margin-top: 2.6rem;
+  width: 98.4rem;
+  }
+
+  .notification-section{
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 2.4rem;
+
+  }
+}

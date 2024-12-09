@@ -1,6 +1,4 @@
-import { Injectable } from '@angular/core';
 import {
-  HttpClient,
   HttpEvent,
   HttpHandlerFn,
   HttpInterceptorFn,
@@ -8,23 +6,23 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { AuthService } from '../services/auth/auth.service';
-import { jwtDecode } from 'jwt-decode';
 
 export const authInterceptor: HttpInterceptorFn = (
   req: HttpRequest<any>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<any>> => {
-  if (!req.url.includes('/login')) {
-    return next(req);
-  }
-
   const token = localStorage.getItem('token');
+
   const modifiedReq = token
     ? req.clone({
-        headers: req.headers.append('X-Authentication-Token', token),
+        headers: req.headers.set('Authorization', `Bearer ${token}`),
       })
     : req;
+
+  if (!req.url.includes('/login')) {
+    return next(modifiedReq);
+  }
+
   return next(modifiedReq).pipe(
     tap({
       next: (event) => {
@@ -32,14 +30,9 @@ export const authInterceptor: HttpInterceptorFn = (
           const token = (event.body as { token?: string })?.token;
           if (token) {
             try {
-              const decodedToken = jwtDecode(token);
               localStorage.setItem('token', token);
-              localStorage.setItem(
-                'decodedToken',
-                JSON.stringify(decodedToken)
-              );
             } catch (e) {
-              console.error('Failed to decode token:', e);
+              console.error('Failed to get token:', e);
             }
           }
         }

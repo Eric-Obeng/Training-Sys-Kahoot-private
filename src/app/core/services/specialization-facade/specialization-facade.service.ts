@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, tap, map } from 'rxjs';
+import { BehaviorSubject, catchError, tap, map, Observable } from 'rxjs';
 import { specialization } from '../../models/specialization.interface';
 import { ErrorHandleService } from '../error-handle/error-handle.service';
 import { SpecializationCrudService } from '../specialization-crud/specialization-crud.service';
@@ -34,7 +34,7 @@ export class SpecializationFacadeService {
   private loadSpecializations() {
     this.specializationCrud.getAllSpecializations()
       .pipe(
-        map(response => this.sort(response.content))
+        map(response => this.sort(response))
       )
       .subscribe({
         next: (specializations) => this.specializationSubject.next(specializations),
@@ -57,7 +57,7 @@ export class SpecializationFacadeService {
     this.loadSpecializations();
   }
 
- getSpecializationById(id: number): Observable<specialization> {
+  getSpecializationById(id: number): Observable<specialization> {
     return this.specializationCrud.getSpecializationById(id)
       .pipe(
         tap((data) => {

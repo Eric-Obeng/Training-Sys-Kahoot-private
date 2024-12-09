@@ -75,7 +75,7 @@ export class CreateSpecializationComponent {
   }
 
   navigateToList(){
-    this.router.navigate(['home','admin','specialization','list'])
+    this.router.navigate(['home','admin','specialization-management'])
   }
 }
 

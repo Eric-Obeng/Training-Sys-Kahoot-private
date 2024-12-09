@@ -1,31 +1,19 @@
 @use'../mixins' as *;
 
 .trainee-nav-list{
-  list-style-type: none;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-
-  li{
-    @include list-item;
-    background-color: transparent;
-    transition: background-color .3s ease-in-out;
-
-    &.active-nav {
-      @include active-nav
+  @include nav-container;
+  .nav-list{
+    li{
+      &:hover{
+        background-color: #f9841653;
+        transition: background-color .3s ease-in-out;
+        border-right: 4px solid #F98416;
+      }
+      @include nav-item;
     }
   }
 
   .nav-settings{
-    li{
-      @include list-item;
-      background-color: transparent;
-      transition: background-color .3s ease-in-out;
-
-      &.active-nav {
-        @include active-nav
-      }
-    }
-    @include vertical-flex-spacing;
+    @include nav-settings;
   }
 }

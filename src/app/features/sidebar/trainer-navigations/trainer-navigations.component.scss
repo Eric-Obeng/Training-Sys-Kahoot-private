@@ -4,11 +4,23 @@
   @include nav-container;
   .nav-list{
     li{
+      &:hover{
+        background-color: #f9841653;
+        transition: background-color .3s ease-in-out;
+        border-right: 4px solid #F98416;
+      }
       @include nav-item;
     }
   }
 
   .nav-settings{
+    li{
+        &:hover{
+        background-color: #f9841653;
+        transition: background-color .3s ease-in-out;
+        border-right: 4px solid #F98416;
+      }
+    }
     @include nav-settings;
   }
 }

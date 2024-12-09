@@ -11,6 +11,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { MessageComponent } from '../message/message.component';
+import { TokenService } from '../../services/token/token.service';
 
 @Component({
   selector: 'app-reset-code',
@@ -40,7 +41,8 @@ export class ResetCodeComponent {
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private tokenService: TokenService
   ) {}
 
   otp: FormGroup = this.fb.group({
@@ -55,7 +57,7 @@ export class ResetCodeComponent {
     this.startCountdown();
   }
 
-  private startCountdown() {
+  startCountdown() {
     this.timeRemaining = this.EXPIRY_TIME_IN_SECONDS;
     this.isExpired = false;
     this.codeExpiryTime = '10:00';
@@ -116,12 +118,12 @@ export class ResetCodeComponent {
   }
 
   onResendCode() {
-    const decodedToken = JSON.parse(
-      localStorage.getItem('decodedToken') || '{}'
-    );
-    const email = decodedToken.email;
-
-    if (email) {
+    const decodedToken = this.tokenService.getDecodedTokenValue();
+    const email = decodedToken?.email;
+    if (!email) {
+      console.error('Email not found in token. Unable to resend code.');
+      return;
+    } else {
       this.authService.resetPassword(email).subscribe({
         next: () => {
           this.startCountdown();
@@ -131,5 +133,10 @@ export class ResetCodeComponent {
         },
       });
     }
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

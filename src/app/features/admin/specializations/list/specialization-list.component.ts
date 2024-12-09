@@ -37,6 +37,7 @@ export class SpecializationListComponent implements OnInit {
   deleteModalVisible = false;
   selectedSpecializationId?: number;
   deleteFeedbackMap = new Map<number | undefined, boolean>();
+
   specializations$!: Observable<specialization[]>;
   private pageSubject = new BehaviorSubject<number>(1);
   currentPage$ = this.pageSubject.asObservable()

@@ -1,6 +1,6 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { TabViewModule } from 'primeng/tabview';
 import { Observable, of } from 'rxjs';
 
@@ -96,6 +96,7 @@ export class AssessmentTabsComponent {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute
   ) {
     // private assessmentService: assessmentService,
   }
@@ -138,8 +139,9 @@ export class AssessmentTabsComponent {
 
 
   goToGradeHistory() {
-    this.router.navigate(['/home/trainer/grade-management/grade-history'])
-    console.log("working?")
+    this.router.navigate(['grade-history'], { relativeTo: this.route });
+
+    // console.log("working?")
   }
 
 }

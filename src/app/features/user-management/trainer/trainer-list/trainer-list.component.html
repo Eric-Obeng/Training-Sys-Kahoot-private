@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="list-wrapper" *ngIf="trainersData$ | async as trainers">
+    <div class="trainers-length">
+      <div class="col-1">
+        <h3>Trainers</h3>
+        <mat-icon svgIcon="info"></mat-icon>
+      </div>
+      <div>
+        <ng-container *ngIf="trainers?.length === 0">
+          No Trainer Created
+        </ng-container>
+        <ng-container *ngIf="trainers.length >= 1">
+          {{ trainers?.length }} Trainers
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="trainers">
+      <div class="headers">
+        <div>No.</div>
+        <div>Name</div>
+        <div>Role</div>
+        <div>Status</div>
+      </div>
+      <div class="trainers-list">
+        <div *ngFor="let trainer of trainers; let i = index" class="trainer">
+          <div class="number">#{{ i + 1 }}</div>
+          <div class="name">
+            {{ trainer.firstName | titlecase }}
+            {{ trainer.lastName | titlecase }}
+          </div>
+          <div class="role">{{ trainer.role | titlecase }}</div>
+          <div class="status" [ngClass]="trainer.status | lowercase">
+            {{ trainer.status | titlecase }}
+          </div>
+          <div class="menu">
+            <mat-icon svgIcon="dots"></mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
