@@ -1,4 +1,5 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { PaginatorComponent } from '@core/shared/paginator/paginator.component';
 import { SearchbarComponent } from '@core/shared/searchbar/searchbar.component';
 import { BehaviorSubject } from 'rxjs';
@@ -22,19 +23,26 @@ export class ViewGradeHistoryComponent {
   pageSize = 4;
   totalPages = 1;
 
-  constructor() {}
+  constructor(
+    private router: Router
+  ) {}
 
 
-  toggleEllipseOptions() {
+  toggleEllipseOptions(event: Event) {
+    event.stopPropagation();
     this.showEllipseOptions = !this.showEllipseOptions;
-    console.log("clicked", this.showEllipseOptions)
   }
 
+  // Toggle off the more options box when anywhere on the document except the box is clicked
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     if(this.ellipsisIcon && !this.ellipsisIcon.nativeElement.contains(event.target)) {
       this.showEllipseOptions = false;
     }
+  }
+
+  goToAssessmentOverview() {
+    this.router.navigate(['/home/trainer/grade-management/grade-history/assessment-overview'])
   }
 
 

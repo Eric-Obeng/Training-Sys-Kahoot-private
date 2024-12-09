@@ -57,8 +57,13 @@ export const trainerRoutes: Routes = [
           {
             path: '',
             loadComponent: () => import('../../features/grade-management/view-grade-history-list/view-grade-history/view-grade-history.component')
-            .then(m => m.ViewGradeHistoryComponent),
+            .then(m => m.ViewGradeHistoryComponent), 
           },
+          {
+            path: 'assessment-overview',
+            loadComponent: () => import('../../features/grade-management/assessment-overview/assessment-overview.component')
+            .then(m => m.AssessmentOverviewComponent)
+          }
         ]
       },
     ]
