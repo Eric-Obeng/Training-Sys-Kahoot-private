@@ -37,8 +37,9 @@
     </table>
 
     <table class="table-items" *ngFor="let assignments of gradedAssignments$ | async"
+        (click)="viewGradedTrainees()"
     >
-        <tr>
+        <tr class="gradedTable">
             <td>#{{ assignments.id }}</td>
             <td>{{ assignments.title }}</td>
             <td>{{ assignments.dateCreated | date: 'dd-MM-yyy' }}</td>

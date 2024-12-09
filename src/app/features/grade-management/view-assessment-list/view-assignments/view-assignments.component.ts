@@ -43,15 +43,18 @@ export class ViewAssignmentsComponent {
       tap(() => (this.isUngradedLoading$ = of(false)))
     );
   }
+
+  viewGradedTrainees() {
+    this.goToGradedTrainees();
+  }
+
   
   toUngradedList() {
     this.router.navigate(['home/trainer/grade-management/trainee-list'])
   }
 
-  goToGradedTrainees(assignmentType: string) {
-    if(assignmentType === 'Graded Assignments') {
+  goToGradedTrainees() {  
       this.router.navigate(['/home/trainer/grade-management/graded-trainees-list'])
-    }
   }
 
 } 
