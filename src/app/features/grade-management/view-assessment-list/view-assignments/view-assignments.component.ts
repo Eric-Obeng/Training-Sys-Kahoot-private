@@ -87,6 +87,14 @@ export class ViewAssignmentsComponent {
     }
   ];
 
+  ngOnInit() {
+
+  }
+
+
+  init() {
+    
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['cardType']) {
