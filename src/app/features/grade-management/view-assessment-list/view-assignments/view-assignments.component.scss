@@ -22,11 +22,11 @@
     display: flex;
     justify-content: center;
     margin-top: 12rem;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 
     .no-data {
         @include modal-like-card;
         width: 59.5rem;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     }
 }
 
