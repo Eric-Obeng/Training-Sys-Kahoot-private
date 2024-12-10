@@ -1,8 +1,9 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { GradeManagementService } from '@core/services/grade-management/grade-management.service';
 import { PaginatorComponent } from '@core/shared/paginator/paginator.component';
 import { SearchbarComponent } from '@core/shared/searchbar/searchbar.component';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-view-grade-history',
@@ -23,9 +24,30 @@ export class ViewGradeHistoryComponent {
   pageSize = 4;
   totalPages = 1;
 
+  gradeHistoryList$!: Observable<any[]>;
+  isGradeHistoryLoading$!: Observable<boolean>;
+
   constructor(
+    private gradeManagementService: GradeManagementService,
     private router: Router
   ) {}
+
+
+  ngOnInit() {
+    this.init()
+  }
+
+  init() {
+    this.isGradeHistoryLoading$ = of(true);
+    this.gradeHistoryList$ = this.gradeManagementService.getGradeHistoryList().pipe(
+      tap(() => (this.isGradeHistoryLoading$ = of(false)))
+    )
+    
+    this.gradeHistoryList$.subscribe({
+      next: (res) => console.log("grade history response: ", res),
+      error: (err) => console.log("grade history error: ", err) 
+    })
+  }
 
 
   toggleEllipseOptions(event: Event) {

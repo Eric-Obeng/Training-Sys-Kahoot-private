@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AssessmentList } from '@core/models/grade-management.interface';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +28,14 @@ export class GradeManagementService {
 
   getUngradedAssessments() {
     return this.http.get<AssessmentList[]>(`${this.grademanagementUrl}/assessments/ungraded`, { headers: this.getHeaders()})
+  }
+
+  getGradeHistoryList() {
+    return this.http.get<any[]>(`${this.grademanagementUrl}//grades/history`, { headers: this.getHeaders() }).pipe(
+      map((res:any) => {
+        const response = res.content;
+        return response;
+      })
+    )
   }
 }
