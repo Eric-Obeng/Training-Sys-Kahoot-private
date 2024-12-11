@@ -23,14 +23,15 @@
     class="form-section complete-btn"
     [disabled]="!modules.valid"
     (click)="onComplete()">
-    create curriculum
+    {{ isUpdate ? 'Update Curriculum' : 'Create Curriculum' }}
   </button>
 </div>
 
 <app-feedback-modal
   [visible]="showFeedback"
-  [customTitle]="'Curriculum Created Successfully'"
-  [customMessage]="'Your curriculum has been created successfully.
-  It is now available for assignment to the appropriate
-  cohorts and specializations'"
+  [customTitle]="isUpdate ? 'Curriculum Updated Successfully' : 'Curriculum Created Successfully'"
+  [customMessage]="isUpdate ?
+    'Your curriculum has been updated successfully. The changes are now reflected in the system.' :
+    'Your curriculum has been created successfully. It is now available for assignment to the appropriate cohorts and specializations'"
   [imagePath]="'../../../../../assets/Images/svg/add-spec.svg'"/>
+

@@ -50,6 +50,19 @@
                 </textarea>
               </div>
 
+              <!-- Module Timetaken Input -->
+              <div class="type-field form-section">
+                <div class="field-title">
+                  <h4>Estimated Duration(minutes)</h4>
+                  <span>*</span>
+                </div>
+                <input
+                  type="text"
+                  formControlName="estimatedTimeMinutes"
+                  [class.invalid]="module.get('estimatedTimeMinutes')?.touched && module.get('estimatedTimeMinutes')?.invalid"
+                  placeholder="Enter number minutes to take this module here">
+              </div>
+
               <!-- Module Topics -->
               <div class="type-field form-section">
                 <div class="field-title">
@@ -122,7 +135,6 @@
                           <img [src]="getFileIcon(file.type)" alt="file type icon" class="file-type-icon">
                           <div class="file-details">
                             <p class="file-name" [title]="file.name">{{ file.name }}</p>
-                            <span class="file-size">{{ file.size }}</span>
                           </div>
                         </div>
                         <button
@@ -169,6 +181,7 @@
       [activeModuleIndex]="activeModuleIndex"
       [parentFormValid]="parentForm.valid || false"
       [showFeedback]="showFeedback"
+      [isUpdate]="isUpdate"
       (moduleSelected)="onModuleSelected($event)"
       (moduleRemoved)="onModuleRemoved($event)"
       (createCurriculum)="onCreateCurriculum()">
