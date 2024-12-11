@@ -1,0 +1,169 @@
+<div class="container">
+    <div class="wrapper">
+        <div class="back-button" (click)="goBack()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.921 7.5L7.714 13.292L7 14L0 7L7 0L7.714 0.708L1.92 6.5H14V7.5H1.921Z" fill="#676767"/>
+            </svg>
+            <span>Back</span>
+        </div>
+        <div class="cohort-info">
+            <span>Cohort Information</span>
+            <p>Fill in the required details to create a new trainee profile. Ensure that all necessary information, such as the trainee's full name, contact information, and enrollment details, are accurate.</p>
+        </div>
+        <form [formGroup]="newUserForm" (ngSubmit)="onSubmit()"  enctype="multipart/form-data">
+            <div class="form-field email">
+                <div class="label-wrapper">
+                    <label for="email">Email</label>
+                    <span>*</span>
+                </div>
+                <input
+                    type="email" 
+                    formControlName="email"
+                    placeholder="Enter email here..."
+                />
+            </div>
+            <div class="error" *ngIf="newUserForm.controls['email'].invalid && (newUserForm.controls['email'].touched || newUserForm.controls['email'].dirty)">
+                <span>Field is required</span>
+            </div>
+
+            <div class="first-last-name">
+                <div class="form-field  first-name">
+                    <div class="label-wrapper">
+                        <label for="first-name">First name</label>
+                        <span>*</span>
+                    </div>
+                    <input type="text" formControlName="firstName">
+                </div>
+                <div class="form-field last-name">
+                    <div class="label-wrapper">
+                        <label for="last-name">Last name</label>
+                        <span>*</span>
+                    </div>
+                    <input type="text" formControlName="lastName">
+                </div>
+            </div>
+            <div class="error" *ngIf="newUserForm.controls['lastName'].invalid && (newUserForm.controls['lastName'].touched || newUserForm.controls['lastName'].dirty)">
+                <span>Field is required</span>
+            </div>
+
+            <div class="form-field date-of-birth">
+                <div class="label-wrapper">
+                    <label for="dob">Date of birth</label>
+                    <span>*</span>
+                </div>
+                <input type="date" formControlName="dateOfBirth">
+            </div>
+            <div class="error" *ngIf="newUserForm.controls['dateOfBirth'].invalid && (newUserForm.controls['dateOfBirth'].touched || newUserForm.controls['dateOfBirth'].dirty)">
+                <span>Field is required</span>
+            </div>
+
+            <div class="gender-country">
+                <div class="error-wrapper">
+                    <div class="form-field  gender">
+                        <div class="label-wrapper">
+                            <label for="first-name">Gender</label>
+                            <span>*</span>
+                        </div>
+                        <select name="gender" id="gender" formControlName="gender">
+                            <option *ngFor="let gender of genders$ | async" [value]="gender.sex">
+                                {{ gender.sex }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="error" *ngIf="newUserForm.controls['gender'].invalid && (newUserForm.controls['gender'].touched || newUserForm.controls['gender'].dirty)">
+                        <span>Field is required</span>
+                    </div>
+                </div>
+                <div class="error-wrapper">
+                    <div class="form-field last-name">
+                        <div class="label-wrapper">
+                            <label for="last-name">Country</label>
+                            <span>*</span>
+                        </div>
+                        <select name="country" id="country" formControlName="country">
+                            <option *ngFor="let country of restCountries$ | async" [value]="country.id">
+                                {{ country.value.country }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="error" *ngIf="newUserForm.controls['country'].invalid && (newUserForm.controls['country'].touched || newUserForm.controls['country'].dirty)">
+                        <span>Field is required</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-field address">
+                <div class="label-wrapper">
+                    <label for="address">Address</label>
+                    <span>*</span>
+                </div>
+                <input type="text" formControlName="address">
+            </div>
+            <div class="error" *ngIf="newUserForm.controls['address'].invalid && (newUserForm.controls['address'].touched || newUserForm.controls['address'].dirty)">
+                <span>Field is required</span>
+            </div>
+
+            <div class="form-field phone-number">
+                <div class="label-wrapper">
+                    <label for="address">Phone Number</label>
+                    <span>*</span>
+                </div>
+                <input type="text" formControlName="phoneNumber">
+            </div>
+            <div class="error" *ngIf="newUserForm.controls['phoneNumber'].invalid && (newUserForm.controls['phoneNumber'].touched || newUserForm.controls['phoneNumber'].dirty)">
+                <span>Field is required</span>
+            </div>
+
+            <div class="form-field university-completed">
+                <div class="label-wrapper">
+                    <label for="university-completed">University Completed</label>
+                    <span>*</span>
+                </div>
+                <input type="text" formControlName="universityCompleted">
+            </div>
+            <div class="error" *ngIf="newUserForm.controls['universityCompleted'].invalid && (newUserForm.controls['universityCompleted'].touched || newUserForm.controls['universityCompleted'].dirty)">
+                <span>Field is required</span>
+            </div>
+
+            <div class="form-field upload-photo">
+                <div class="label-wrapper">
+                    <label for="university-completed">Upload Photo</label>
+                    <span id="optional">(Optional)</span>
+                </div>
+                <div class="image-wrapper">
+                    <img [src]="previewUrl || newUserForm.get('userProfilePhoto')?.value" alt="Profile Photo" *ngIf="previewUrl || newUserForm.get('userProfilePhoto')?.value">
+                    <input 
+                        #fileInput
+                        type="file" 
+                        id="file-upload"
+                        class="upload-input"
+                        (change)="onFileSelected($event)"
+                        accept="image/*"
+                    >
+                    <svg (click)="changeImage()" class="change-image" *ngIf="selectedFile" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.548096 17.938H17.4481C17.5807 17.938 17.7079 17.8853 17.8016 17.7915C17.8954 17.6978 17.9481 17.5706 17.9481 17.438C17.9481 17.3054 17.8954 17.1782 17.8016 17.0844C17.7079 16.9907 17.5807 16.938 17.4481 16.938H0.548096C0.415487 16.938 0.28831 16.9907 0.194542 17.0844C0.100774 17.1782 0.0480957 17.3054 0.0480957 17.438C0.0480957 17.5706 0.100774 17.6978 0.194542 17.7915C0.28831 17.8853 0.415487 17.938 0.548096 17.938ZM6.7101 14.18C7.13227 14.0612 7.51756 13.8376 7.8301 13.53L17.3701 3.98999C17.6968 3.662 17.8802 3.21793 17.8802 2.75499C17.8802 2.29205 17.6968 1.84798 17.3701 1.51999L16.4301 0.589989C16.0972 0.2727 15.655 0.0957031 15.1951 0.0957031C14.7352 0.0957031 14.293 0.2727 13.9601 0.589989L4.4201 10.12C4.11246 10.4309 3.89178 10.8171 3.7801 11.24L3.0401 14C3.0053 14.1261 3.00456 14.2591 3.03793 14.3856C3.07131 14.5121 3.13762 14.6275 3.2301 14.72C3.37182 14.8589 3.56168 14.9377 3.7601 14.94L6.7101 14.18ZM7.1201 12.82C6.93568 13.0076 6.7043 13.1423 6.4501 13.21L5.48009 13.47L4.4801 12.47L4.7401 11.5C4.80914 11.2463 4.94363 11.0153 5.1301 10.83L5.5101 10.46L7.5001 12.45L7.1201 12.82ZM8.2101 11.74L6.2201 9.74999L12.9501 3.01999L14.9401 5.00999L8.2101 11.74ZM16.6601 3.28999L15.6501 4.29999L13.6601 2.30999L14.6701 1.28999C14.8107 1.14954 15.0013 1.07065 15.2001 1.07065C15.3988 1.07065 15.5895 1.14954 15.7301 1.28999L16.6601 2.22999C16.7996 2.37113 16.8778 2.56156 16.8778 2.75999C16.8778 2.95842 16.7996 3.14885 16.6601 3.28999Z" fill="#676767"/>
+                        </svg>
+                        
+                    <div *ngIf="!selectedFile" class="add-image-icon" (click)="triggerFileSelect()">
+                        <svg width="59" height="46" viewBox="0 0 59 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_51_85)">
+                            <path d="M8.49053 44.9786H50.5095C55.5834 44.9786 58.1323 42.4546 58.1323 37.4541V7.81304C58.1323 2.81261 55.5834 0.288574 50.5095 0.288574H8.49053C3.44143 0.28961 0.867676 2.78982 0.867676 7.81304V37.4552C0.867676 42.4794 3.44143 44.9786 8.49053 44.9786ZM19.0735 23.2296C15.7726 23.2296 13.0777 20.5358 13.0777 17.2339C13.0777 13.9569 15.7726 11.2381 19.0745 11.2381C22.3515 11.2381 25.0454 13.9569 25.0454 17.2349C25.0454 20.5358 22.3515 23.2296 19.0735 23.2296ZM8.53921 41.0709C6.20885 41.0709 4.77646 39.6623 4.77646 37.2833V35.8022L12.2284 29.2979C13.2962 28.3513 14.4614 27.8655 15.5541 27.8655C16.7193 27.8655 17.957 28.3513 19.0258 29.3466L23.6865 33.5205L35.2658 23.2286C36.4786 22.1608 37.8137 21.675 39.1736 21.675C40.5086 21.675 41.8923 22.1846 43.0575 23.2535L54.2225 33.594V37.333C54.2225 39.6633 52.7673 41.0709 50.4608 41.0709H8.53921Z" fill="#C2C2C2"/>
+                            </g>
+                            <defs>
+                            <clipPath id="clip0_51_85">
+                            <rect width="58" height="45.2683" fill="white" transform="translate(0.5)"/>
+                            </clipPath>
+                            </defs>
+                        </svg>
+                        <p>Add image here</p>
+                        <p>Supports: PNG, JPG, JPEG, WEBP</p>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Continue</button>
+
+        </form>
+    </div>
+
+</div>

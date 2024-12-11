@@ -1,0 +1,150 @@
+<div class="container">
+  <div class="wrapper">
+    <div class="back-button" (click)="goBack()">
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 14 14"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M1.921 7.5L7.714 13.292L7 14L0 7L7 0L7.714 0.708L1.92 6.5H14V7.5H1.921Z"
+          fill="#676767"
+        />
+      </svg>
+      <span>Back</span>
+    </div>
+    <div class="cohort-info">
+      <span>User Information</span>
+      <p>
+        Fill in the required details to create a new user profile. Ensure that
+        all necessary information, such as the user's full name, user role, and
+        password are accurate.
+      </p>
+    </div>
+    <form [formGroup]="trainerForm" (ngSubmit)="onSubmit()">
+      <div class="form-field email">
+        <app-input-field
+          type="email"
+          label="Email"
+          [required]="true"
+          formControlName="email"
+          placeholder="Enter email name here"
+        />
+      </div>
+
+      <div class="first-last-name">
+        <div class="form-field first-name">
+          <app-input-field
+            label="First name"
+            [required]="true"
+            formControlName="firstName"
+            placeholder="Enter first name here"
+          />
+        </div>
+        <div class="form-field last-name">
+          <app-input-field
+            label="Last name"
+            [required]="true"
+            formControlName="lastName"
+            placeholder="Enter last name here"
+          />
+        </div>
+      </div>
+
+      <div class="form-field date-of-birth">
+        <app-input-field
+          type="date"
+          label="Date of birth"
+          [required]="true"
+          formControlName="dateOfBirth"
+        />
+      </div>
+
+      <div class="gender-country">
+        <div class="form-field gender">
+          <div class="label-wrapper">
+            <label for="first-name">Gender</label>
+            <span>*</span>
+          </div>
+          <select name="gender" id="gender" formControlName="gender">
+            <option
+              *ngFor="let gender of genders$ | async"
+              [value]="gender.sex"
+            >
+              {{ gender.sex }}
+            </option>
+          </select>
+        </div>
+        <div class="form-field last-name">
+          <div class="label-wrapper">
+            <label for="last-name">Country</label>
+            <span>*</span>
+          </div>
+          <select name="country" id="country" formControlName="country">
+            <option
+              *ngFor="let country of countries$ | async"
+              [value]="country.name"
+            >
+              {{ country.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-field address">
+        <div class="label-wrapper">
+          <label for="address">Phone number</label>
+          <span>*</span>
+        </div>
+        <input type="text" formControlName="address" />
+      </div>
+
+      <div class="form-field university-completed">
+        <div class="label-wrapper">
+          <label for="university-completed">Assign Specialization</label>
+          <span>*</span>
+        </div>
+        <input type="text" formControlName="universityCompleted" />
+      </div>
+
+      <div class="form-field upload-photo">
+        <div class="label-wrapper">
+          <label for="university-completed">Upload Photo</label>
+          <span id="optional">(Optional)</span>
+        </div>
+        <div class="image-wrapper">
+          <svg
+            width="59"
+            height="46"
+            viewBox="0 0 59 46"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g clip-path="url(#clip0_51_85)">
+              <path
+                d="M8.49053 44.9786H50.5095C55.5834 44.9786 58.1323 42.4546 58.1323 37.4541V7.81304C58.1323 2.81261 55.5834 0.288574 50.5095 0.288574H8.49053C3.44143 0.28961 0.867676 2.78982 0.867676 7.81304V37.4552C0.867676 42.4794 3.44143 44.9786 8.49053 44.9786ZM19.0735 23.2296C15.7726 23.2296 13.0777 20.5358 13.0777 17.2339C13.0777 13.9569 15.7726 11.2381 19.0745 11.2381C22.3515 11.2381 25.0454 13.9569 25.0454 17.2349C25.0454 20.5358 22.3515 23.2296 19.0735 23.2296ZM8.53921 41.0709C6.20885 41.0709 4.77646 39.6623 4.77646 37.2833V35.8022L12.2284 29.2979C13.2962 28.3513 14.4614 27.8655 15.5541 27.8655C16.7193 27.8655 17.957 28.3513 19.0258 29.3466L23.6865 33.5205L35.2658 23.2286C36.4786 22.1608 37.8137 21.675 39.1736 21.675C40.5086 21.675 41.8923 22.1846 43.0575 23.2535L54.2225 33.594V37.333C54.2225 39.6633 52.7673 41.0709 50.4608 41.0709H8.53921Z"
+                fill="#C2C2C2"
+              />
+            </g>
+            <defs>
+              <clipPath id="clip0_51_85">
+                <rect
+                  width="58"
+                  height="45.2683"
+                  fill="white"
+                  transform="translate(0.5)"
+                />
+              </clipPath>
+            </defs>
+          </svg>
+          <p>Add image here</p>
+          <p>Supports: PNG, JPG, JPEG, WEBP</p>
+        </div>
+      </div>
+
+      <button type="submit" class="btn">Continue</button>
+    </form>
+  </div>
+</div>

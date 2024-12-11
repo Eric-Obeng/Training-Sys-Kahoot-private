@@ -1,0 +1,93 @@
+<div class="container">
+    <div class="wrapper">
+        <div class="profile-head">
+            <h2 class="main-head">Profile</h2>
+            <div *ngIf="isdisabled" class="edit" (click)="toggleEditForm()">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0.548096 17.938H17.4481C17.5807 17.938 17.7079 17.8853 17.8016 17.7915C17.8954 17.6978 17.9481 17.5706 17.9481 17.438C17.9481 17.3054 17.8954 17.1782 17.8016 17.0844C17.7079 16.9907 17.5807 16.938 17.4481 16.938H0.548096C0.415487 16.938 0.28831 16.9907 0.194542 17.0844C0.100774 17.1782 0.0480957 17.3054 0.0480957 17.438C0.0480957 17.5706 0.100774 17.6978 0.194542 17.7915C0.28831 17.8853 0.415487 17.938 0.548096 17.938ZM6.7101 14.18C7.13227 14.0612 7.51756 13.8376 7.8301 13.53L17.3701 3.98999C17.6968 3.662 17.8802 3.21793 17.8802 2.75499C17.8802 2.29205 17.6968 1.84798 17.3701 1.51999L16.4301 0.589989C16.0972 0.2727 15.655 0.0957031 15.1951 0.0957031C14.7352 0.0957031 14.293 0.2727 13.9601 0.589989L4.4201 10.12C4.11246 10.4309 3.89178 10.8171 3.7801 11.24L3.0401 14C3.0053 14.1261 3.00456 14.2591 3.03793 14.3856C3.07131 14.5121 3.13762 14.6275 3.2301 14.72C3.37182 14.8589 3.56168 14.9377 3.7601 14.94L6.7101 14.18ZM7.1201 12.82C6.93568 13.0076 6.7043 13.1423 6.4501 13.21L5.48009 13.47L4.4801 12.47L4.7401 11.5C4.80914 11.2463 4.94363 11.0153 5.1301 10.83L5.5101 10.46L7.5001 12.45L7.1201 12.82ZM8.2101 11.74L6.2201 9.74999L12.9501 3.01999L14.9401 5.00999L8.2101 11.74ZM16.6601 3.28999L15.6501 4.29999L13.6601 2.30999L14.6701 1.28999C14.8107 1.14954 15.0013 1.07065 15.2001 1.07065C15.3988 1.07065 15.5895 1.14954 15.7301 1.28999L16.6601 2.22999C16.7996 2.37113 16.8778 2.56156 16.8778 2.75999C16.8778 2.95842 16.7996 3.14885 16.6601 3.28999Z" fill="#676767"/>
+                </svg>
+                <span>Edit</span>        
+            </div>
+            <div *ngIf="isdisabled === false" class="edit" (click)="updateForm()">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0.548096 17.938H17.4481C17.5807 17.938 17.7079 17.8853 17.8016 17.7915C17.8954 17.6978 17.9481 17.5706 17.9481 17.438C17.9481 17.3054 17.8954 17.1782 17.8016 17.0844C17.7079 16.9907 17.5807 16.938 17.4481 16.938H0.548096C0.415487 16.938 0.28831 16.9907 0.194542 17.0844C0.100774 17.1782 0.0480957 17.3054 0.0480957 17.438C0.0480957 17.5706 0.100774 17.6978 0.194542 17.7915C0.28831 17.8853 0.415487 17.938 0.548096 17.938ZM6.7101 14.18C7.13227 14.0612 7.51756 13.8376 7.8301 13.53L17.3701 3.98999C17.6968 3.662 17.8802 3.21793 17.8802 2.75499C17.8802 2.29205 17.6968 1.84798 17.3701 1.51999L16.4301 0.589989C16.0972 0.2727 15.655 0.0957031 15.1951 0.0957031C14.7352 0.0957031 14.293 0.2727 13.9601 0.589989L4.4201 10.12C4.11246 10.4309 3.89178 10.8171 3.7801 11.24L3.0401 14C3.0053 14.1261 3.00456 14.2591 3.03793 14.3856C3.07131 14.5121 3.13762 14.6275 3.2301 14.72C3.37182 14.8589 3.56168 14.9377 3.7601 14.94L6.7101 14.18ZM7.1201 12.82C6.93568 13.0076 6.7043 13.1423 6.4501 13.21L5.48009 13.47L4.4801 12.47L4.7401 11.5C4.80914 11.2463 4.94363 11.0153 5.1301 10.83L5.5101 10.46L7.5001 12.45L7.1201 12.82ZM8.2101 11.74L6.2201 9.74999L12.9501 3.01999L14.9401 5.00999L8.2101 11.74ZM16.6601 3.28999L15.6501 4.29999L13.6601 2.30999L14.6701 1.28999C14.8107 1.14954 15.0013 1.07065 15.2001 1.07065C15.3988 1.07065 15.5895 1.14954 15.7301 1.28999L16.6601 2.22999C16.7996 2.37113 16.8778 2.56156 16.8778 2.75999C16.8778 2.95842 16.7996 3.14885 16.6601 3.28999Z" fill="#676767"/>
+                </svg>
+                <span>Save</span>        
+            </div>
+        </div>
+
+        <form [formGroup]="traineeProfileForm">
+            <div class="first-section card">
+                <img src="" alt="profile image">
+                <div class="profile-content">
+                    <input class="head-section" type="text" class="name" formControlName="firstName">
+                    <span class="email">
+                        <svg width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_128_1644)">
+                            <path d="M16.712 15.2493H2.0878C1.1541 15.2493 0.400391 14.4956 0.400391 13.5619V3.43741C0.400391 2.50371 1.1541 1.75 2.0878 1.75H16.712C17.6457 1.75 18.3995 2.50371 18.3995 3.43741V13.5619C18.3995 14.4956 17.6457 15.2493 16.712 15.2493ZM2.0878 2.87494C1.77282 2.87494 1.52533 3.12243 1.52533 3.43741V13.5619C1.52533 13.8769 1.77282 14.1244 2.0878 14.1244H16.712C17.027 14.1244 17.2745 13.8769 17.2745 13.5619V3.43741C17.2745 3.12243 17.027 2.87494 16.712 2.87494H2.0878Z" fill="#676767"/>
+                            <path d="M9.39982 10.704C8.61236 10.704 7.8924 10.3891 7.35243 9.81534L1.44649 3.53816C1.23275 3.31317 1.244 2.95319 1.46898 2.73945C1.69397 2.52572 2.05395 2.53696 2.26769 2.76195L8.17364 9.03913C8.81485 9.72534 9.98479 9.72534 10.626 9.03913L16.532 2.7732C16.7457 2.54821 17.1057 2.53696 17.3307 2.7507C17.5556 2.96444 17.5669 3.32442 17.3532 3.54941L11.4472 9.82659C10.9072 10.4003 10.1873 10.7153 9.39982 10.7153V10.704Z" fill="#676767"/>
+                            </g>
+                            <defs>
+                            <clipPath id="clip0_128_1644">
+                            <rect width="18" height="15.7492" fill="white" transform="translate(0.399902 0.625)"/>
+                            </clipPath>
+                            </defs>
+                        </svg>
+                        <input class="head-section" type="text" formControlName="email">
+                    </span>
+                    <span class="trainee-id">
+                        <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 9H17V7H12V9ZM12 6H17V4H12V6ZM3 12H11V11.45C11 10.7 10.6333 10.1043 9.9 9.663C9.16667 9.22167 8.2 9.00067 7 9C5.8 8.99933 4.83333 9.22033 4.1 9.663C3.36667 10.1057 3 10.7013 3 11.45V12ZM7 8C7.55 8 8.021 7.80433 8.413 7.413C8.805 7.02167 9.00067 6.55067 9 6C8.99933 5.44933 8.80367 4.97867 8.413 4.588C8.02233 4.19733 7.55133 4.00133 7 4C6.44867 3.99867 5.978 4.19467 5.588 4.588C5.198 4.98133 5.002 5.452 5 6C4.998 6.548 5.194 7.019 5.588 7.413C5.982 7.807 6.45267 8.00267 7 8ZM2 16C1.45 16 0.979333 15.8043 0.588 15.413C0.196667 15.0217 0.000666667 14.5507 0 14V2C0 1.45 0.196 0.979333 0.588 0.588C0.98 0.196666 1.45067 0.000666667 2 0H18C18.55 0 19.021 0.196 19.413 0.588C19.805 0.98 20.0007 1.45067 20 2V14C20 14.55 19.8043 15.021 19.413 15.413C19.0217 15.805 18.5507 16.0007 18 16H2ZM2 14H18V2H2V14Z" fill="#676767"/>
+                        </svg>
+                        <input class="head-section" type="text" formControlName="trainingId">
+                    </span>
+                </div>
+            </div>
+            <!-- end of first section  -->
+            <div class="second-section card">
+                <h2 class="section-head">Personal Information</h2>
+                <div class="info-flex">
+                    <div class="personal-info">
+                        <span>FirstName</span>
+                        <input class="section-details" [disabled]="isdisabled" type="text" formControlName="firstName">
+                        <span>Email Address</span>
+                        <input class="section-details" [disabled]="isdisabled" type="text" formControlName="email">
+                        <span>Phone Number</span>
+                        <input class="section-details" [disabled]="isdisabled" type="text" formControlName="phoneNumber">
+                    </div>
+                    <div class="personal-info">
+                        <span>Last Name</span>
+                        <input class="section-details" [disabled]="isdisabled" type="text" formControlName="lastName">
+                        <span>Gender</span>
+                        <input class="section-details" [disabled]="isdisabled" type="text" formControlName="gender">
+                        <span>Country</span>
+                        <input class="section-details" [disabled]="isdisabled" type="text" formControlName="country">
+                    </div>
+                </div>
+            </div>
+            <!-- End of second section  -->
+            <div class="third-section card">
+                <h2 class="section-head">Training Information</h2>
+            
+                <div class="info-flex">
+                    <div class="training-info">
+                        <span>Trainee Program</span>
+                        <input class="section-details" [disabled]="isdisabled" type="text" formControlName="specialization">
+                        <span>Email Address</span>
+                        <input class="section-details" [disabled]="isdisabled" type="text" formControlName="email">
+                        <span>Trainee ID</span>
+                        <input class="section-details" [disabled]="isdisabled" type="text" formControlName="trainingId">
+                    </div>
+                    <div class="training-info">
+                        <span>Status</span>
+                        <input class="section-details" [disabled]="isdisabled" type="text" formControlName="status">
+                        <span>Country</span>
+                        <input class="section-details" [disabled]="isdisabled" type="text" formControlName="country">
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+</div>

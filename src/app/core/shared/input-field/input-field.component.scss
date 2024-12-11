@@ -1,15 +1,24 @@
 @use "../../../../styleSheet/mixins" as *;
-@use '../../../../styleSheet/variables' as *;
+@use "../../../../styleSheet/variables" as *;
 
 .input-container {
   width: 100%;
   @include flexbox(column);
   gap: 0.4rem;
 
-  label {
-    font-size: $font-size-xbody;
-    font-weight: 500;
-    color: $clr-gray-600;
+  .label {
+    @include flexbox(row, space-between);
+    width: 100%;
+    font-size: 1.8rem;
+    font-weight: 600;
+
+    label {
+      color: $clr-gray-600;
+    }
+
+    .required {
+      color: red;
+    }
   }
 
   .input-wrapper {
