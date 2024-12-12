@@ -1,5 +1,6 @@
+import { specialization } from './../../../../../core/models/specialization.interface';
 import { curriculum } from './../../../../../core/models/curriculum.interface';
-import { NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatRipple } from '@angular/material/core';
 import { ModuleComponent } from "./module/module.component";
@@ -7,12 +8,14 @@ import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } fr
 import { ActivatedRoute, Router } from '@angular/router';
 import { CurriculumStateService } from '@core/services/curriculum-state/curriculum-state.service';
 import { CurriculumFacadeService } from '@core/services/curriculum-facade/curriculum-facade.service';
+import { Specialization } from '@core/models/cohort.interface';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-form',
   standalone: true,
   imports: [MatRipple, NgIf,NgFor,
-    ModuleComponent,ReactiveFormsModule],
+    ModuleComponent,ReactiveFormsModule,AsyncPipe],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss'
 })
@@ -25,6 +28,7 @@ export class FormComponent implements OnInit {
   curriculumData!: FormData;
   previewImage: string | null = null;
   curriculumId: string | null = null;
+  allSpecializations$!: Observable<Specialization[]>;
   private allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
   constructor(
     private fb: FormBuilder,
@@ -49,8 +53,10 @@ export class FormComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.prepareCurriculumForm();
 
+    this.allSpecializations$ = this.curriculumFacade.specialization$;
+
+    this.prepareCurriculumForm();
     this.route.queryParams.subscribe(params => {
       if (params['id']) {
         this.curriculumId = params['id'];
