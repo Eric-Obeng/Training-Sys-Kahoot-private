@@ -1,8 +1,10 @@
+import { UserManagementTraineeService } from '@core/services/user-management/trainee/user-management-trainee.service';
 import { Injectable } from '@angular/core';
 import { curriculum } from '@core/models/curriculum.interface';
 import { BehaviorSubject,combineLatest, map,tap,catchError, Observable } from 'rxjs';
 import { ErrorHandleService } from '../error-handle/error-handle.service';
 import { CurriculumCrudService } from '../curriculum-crud/curriculum-crud.service';
+
 
 
 @Injectable({
@@ -13,6 +15,7 @@ export class CurriculumFacadeService {
   private curriculumSubject = new BehaviorSubject<curriculum[]>([]);
   private searchTermSubject = new BehaviorSubject<string>('');
   private sortDirectionSubject = new BehaviorSubject<'asc' | 'desc'>('asc');
+  specialization$ = this.UserManagementTrainee.getAllspecializations();
 
   readonly curriculum$ = this.curriculumSubject.asObservable();
   readonly searchTerm$ = this.searchTermSubject.asObservable();
@@ -20,10 +23,13 @@ export class CurriculumFacadeService {
 
   constructor(
     private errorService: ErrorHandleService,
-    private curriculumCrud: CurriculumCrudService
+    private curriculumCrud: CurriculumCrudService,
+    private UserManagementTrainee: UserManagementTraineeService
   ) {
     this.refreshCurriculum();
   }
+
+
 
 
   readonly filteredAndSortedCurriculum$ = combineLatest([
