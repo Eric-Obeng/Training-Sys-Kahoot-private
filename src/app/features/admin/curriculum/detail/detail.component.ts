@@ -36,9 +36,7 @@ export class DetailComponent implements OnInit{
       const id = params['id'].toString(); 
       this.curriculumFacade.getSelectedCurriculum(id).subscribe(
         (curriculum) => {
-          this.curriculum = curriculum;
-          console.log(this.curriculum);
-          
+          this.curriculum = curriculum;          
         }
       );
     });
