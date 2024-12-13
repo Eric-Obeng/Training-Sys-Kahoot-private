@@ -24,6 +24,7 @@ export class CurriculumCrudService {
     return this.http.get<content>(this.hostedServer, { headers: this.headers })
       .pipe(
         map((res: content) => ({ content: res.content })),
+        tap((data) => console.log(data)),
         catchError(this.errorService.handleError)
       );
   }
@@ -35,7 +36,7 @@ export class CurriculumCrudService {
 
   createCurriculum(curriculum: curriculum) {
     const formData = this.createFormData(curriculum);
-    return this.http.post<curriculum>(this.hostedCreate, formData, { headers: this.headers, }).pipe(
+    return this.http.post<curriculum>(this.hostedCreate, formData, { headers: this.headers, reportProgress: true }).pipe(
       catchError(error => {
         console.error('Full error response:', error);
         return this.errorService.handleError(error);
@@ -71,13 +72,13 @@ export class CurriculumCrudService {
         formData.append('thumbnailImage', curriculum.thumbnailImage);
       }
     }
-    
     if (curriculum.learningObjectives?.length) {
       curriculum.learningObjectives.forEach((objective) => {
         formData.append(`learningObjectives`, objective);
       });
     }
 
+    
     if (curriculum.modules?.length) {
       curriculum.modules.forEach((module, moduleIndex) => {
         if (module.id !== undefined) formData.append(`modules[${moduleIndex}].id`, module.id.toString());
@@ -102,6 +103,8 @@ export class CurriculumCrudService {
         }
       });
     }
+
+    
 
     return formData;
   }
