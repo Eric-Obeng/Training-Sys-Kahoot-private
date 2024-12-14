@@ -50,7 +50,8 @@ export class GradeManagementService {
   
 
   getUngradedTraineesList(title: string) {
-    const params = new HttpParams().set('title', title);
-    return this.http.post<any[]>(`${this.grademanagementUrl}/assessments/submitted`, { params, headers: this.getHeaders() })
+    // console.log("title in service: ", title)
+    // const params = new HttpParams().set('title', title);
+    return this.http.post<any[]>(`${this.grademanagementUrl}/assessments/submitted`, {"title": title}, { headers: this.getHeaders() })
   }
 }

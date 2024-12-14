@@ -1,9 +1,8 @@
 export interface AssessmentList {
-    id: number;
     title: string;
     dateCreated: Date;
-    type: 'lab' | 'presentation';
-    traineeCount: number;
+    type: string; 
+    traineeCount?: number;
 }
 
 export interface GradeHistoryList {
