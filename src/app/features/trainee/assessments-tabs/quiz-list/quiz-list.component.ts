@@ -184,19 +184,17 @@ export class QuizListComponent {
 
 
     this.filteredAssessment$ = combineLatest([
-      this.assessments$,
-      this.searchQuiz.searchTerm$
+      this.assessments$, // Observable of all assessments
+      this.searchQuiz.searchTerm$ // Observable of the search term
     ]).pipe(
       map(([assessments, searchTerm]) => {
-        // Filter assignments by search term
-        const title = assessments.filter((quiz:any) => quiz.assessment.title)
-        console.log("title: ", title)
-        return title;
-        // return assessments.filter(assignment =>
-        //   assignment.title.toLowerCase().includes(searchTerm.toLowerCase())
-        // );
+        // Filter assessments by the search term in their title
+        return assessments.filter((quiz: any) =>
+          quiz.assessment.title.toLowerCase().includes(searchTerm.toLowerCase())
+        );
       })
     );
+    
 
     this.filteredAssessment$.subscribe(fitleredAssignments => {
       this.quizCount = fitleredAssignments.length;
@@ -213,13 +211,13 @@ export class QuizListComponent {
 
   
   takeAssessment(id: number, quizType: string) {
-    if(quizType === 'Quiz') {
+    if(quizType === 'QUIZ') {
       this.router.navigate([`home/trainee/assessments/quiz/${id}`]);
     }
-    else if(quizType === 'Lab') {
+    else if(quizType === 'LAB') {
       this.router.navigate([`home/trainee/assessments/lab/${id}`]);
     }
-    else if(quizType === 'Presentation') {
+    else if(quizType === 'PRESENTATION') {
       this.router.navigate([`home/trainee/assessments/presentation/${id}`]);
     }
   }

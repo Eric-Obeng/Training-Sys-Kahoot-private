@@ -1,7 +1,7 @@
 <div class="container" *ngIf="quizCount !== 0">
     <div class="title-quiz-count">
-        <p *ngIf="assessmentType === 'quiz'" class="assessmentType" [textContent]="assessmentType.charAt(0).toUpperCase() + assessmentType.slice(1).toLowerCase() + 'es'"></p> 
-        <p *ngIf="assessmentType !== 'quiz'" class="assessmentType" [textContent]="assessmentType.charAt(0).toUpperCase() + assessmentType.slice(1).toLowerCase() + 's'"></p> 
+        <p *ngIf="assessmentType === 'QUIZ'" class="assessmentType" [textContent]="assessmentType.charAt(0).toUpperCase() + assessmentType.slice(1).toLowerCase() + 'es'"></p> 
+        <p *ngIf="assessmentType !== 'QUIZ'" class="assessmentType" [textContent]="assessmentType.charAt(0).toUpperCase() + assessmentType.slice(1).toLowerCase() + 's'"></p> 
         <span>{{ quizCount }} Quizes in total</span>  
     </div>
     
@@ -31,3 +31,4 @@
     <p class="show-less" *ngIf="showmore === false" (click)="toggleShowMore()">Show less...</p>
 
 </div>
+
