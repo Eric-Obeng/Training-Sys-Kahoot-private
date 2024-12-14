@@ -1,19 +1,5 @@
 <div class="container">
   <div class="list-wrapper" *ngIf="trainersData$ | async as trainers">
-    <div class="trainers-length">
-      <div class="col-1">
-        <h3>Trainers</h3>
-        <mat-icon svgIcon="info"></mat-icon>
-      </div>
-      <div>
-        <ng-container *ngIf="trainers?.length === 0">
-          No Trainer Created
-        </ng-container>
-        <ng-container *ngIf="trainers.length >= 1">
-          {{ trainers?.length }} Trainers
-        </ng-container>
-      </div>
-    </div>
 
     <div class="trainers" *ngIf="trainers.length > 0; else noTrainers">
       <div class="headers">
@@ -33,8 +19,25 @@
           <div class="status" [ngClass]="trainer.status | lowercase">
             {{ trainer.status | titlecase }}
           </div>
-          <div class="menu">
-            <mat-icon svgIcon="dots" (click)="openMenu()"></mat-icon>
+          <div class="menu relative">
+            <mat-icon
+              svgIcon="dots"
+              (click)="toggleMenu(trainer.id, $event)"
+            ></mat-icon>
+            <div
+              *ngIf="selectedTrainerId === trainer.id"
+              class="menu-popup"
+              (clickOutside)="closeMenu()"
+            >
+              <div class="menu-item" (click)="updateTrainer(trainer)">
+                <mat-icon svgIcon="edit"></mat-icon>
+                <span>Update</span>
+              </div>
+              <div class="menu-item" (click)="deactivateTrainer(trainer)">
+                <mat-icon svgIcon="trash"></mat-icon>
+                <span>Deactivate</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
