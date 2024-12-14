@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AssessmentList } from '@core/models/grade-management.interface';
-import { map } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GradeManagementService {
+
+  public selectedAssessmentTitle: string = '';
 
 
   private getHeaders(): HttpHeaders {
@@ -39,19 +41,22 @@ export class GradeManagementService {
     )
   }
 
-  getGradedTraineesList(title: string) {
-    const params = new HttpParams().set('title', title); // Add query parameter
-  
-    return this.http.post<any[]>(`${this.grademanagementUrl}/assessments/submitted`, {
-      params, // Attach the query parameters
-      headers: this.getHeaders(), // Attach headers
-    });
+  getGradedTraineesList() {
+    return this.http.post<any[]>(`${this.grademanagementUrl}/assessments/submitted`, 
+    {
+      "title": this.selectedAssessmentTitle,
+      "graded": true,
+    },
+    { headers: this.getHeaders() })
   }
   
 
-  getUngradedTraineesList(title: string) {
-    // console.log("title in service: ", title)
-    // const params = new HttpParams().set('title', title);
-    return this.http.post<any[]>(`${this.grademanagementUrl}/assessments/submitted`, {"title": title}, { headers: this.getHeaders() })
+  getUngradedTraineesList() {
+    return this.http.post<any[]>(`${this.grademanagementUrl}/assessments/submitted`, 
+    {
+      "title": this.selectedAssessmentTitle,
+      "graded": false,
+    },
+    { headers: this.getHeaders() })
   }
 }

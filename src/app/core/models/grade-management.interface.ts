@@ -13,3 +13,16 @@ export interface GradeHistoryList {
     lab: number;
     presentation: number;
 }
+
+export interface ungradedTraineeList {
+    firstName: string;
+    LastName: string;
+    specialization: string;
+}
+
+export interface gradedTraineeList {
+    firstName: string;
+    LastName: string;
+    specialization: string;
+    grade: number;
+}

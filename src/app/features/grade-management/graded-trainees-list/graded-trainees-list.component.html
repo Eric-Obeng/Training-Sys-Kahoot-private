@@ -18,72 +18,16 @@
                 <td>Graded</td>
             </tr>
         </table>
-        <table class="table-trainee-list">
+        <table class="table-trainee-list" *ngFor="let trainee of gradedList$ | async; let i = index">
             <tr>
-                <td>#1</td>
+                <td>#{{ i + 1 }}</td>
                 <td class="pic-and-name">
                     <img src="../../../../assets/Images/profile-images/profile 1.jpg" alt="">
-                    <span>Alexander Agyeman</span>
+                    <span>{{ trainee.firstName }} {{ trainee.LastName }}</span>
                 </td>
-                <td>UI/UX Design</td>
+                <td>{{ trainee.specialization }}</td>
                 <td class="submit-status">
-                    <span>85%</span>
-                </td>
-            </tr>
-            <div class="divider"></div>
-        </table>
-        <table class="table-trainee-list">
-            <tr>
-                <td>#1</td>
-                <td class="pic-and-name">
-                    <img src="../../../../assets/Images/profile-images/profile 1.jpg" alt="">
-                    <span>Alexander Agyeman</span>
-                </td>
-                <td>UI/UX Design</td>
-                <td class="submit-status">
-                    <span>85%</span>
-                </td>
-            </tr>
-            <div class="divider"></div>
-        </table>
-        <table class="table-trainee-list">
-            <tr>
-                <td>#1</td>
-                <td class="pic-and-name">
-                    <img src="../../../../assets/Images/profile-images/profile 1.jpg" alt="">
-                    <span>Alexander Agyeman</span>
-                </td>
-                <td>UI/UX Design</td>
-                <td class="submit-status">
-                    <span>85%</span>
-                </td>
-            </tr>
-            <div class="divider"></div>
-        </table>
-        <table class="table-trainee-list">
-            <tr>
-                <td>#1</td>
-                <td class="pic-and-name">
-                    <img src="../../../../assets/Images/profile-images/profile 1.jpg" alt="">
-                    <span>Alexander Agyeman</span>
-                </td>
-                <td>UI/UX Design</td>
-                <td class="submit-status">
-                    <span>85%</span>
-                </td>
-            </tr>
-            <div class="divider"></div>
-        </table>
-        <table class="table-trainee-list">
-            <tr>
-                <td>#1</td>
-                <td class="pic-and-name">
-                    <img src="../../../../assets/Images/profile-images/profile 1.jpg" alt="">
-                    <span>Alexander Agyeman</span>
-                </td>
-                <td>UI/UX Design</td>
-                <td class="submit-status">
-                    <span>85%</span>
+                    <span>{{ trainee.grade }}</span>
                 </td>
             </tr>
             <div class="divider"></div>

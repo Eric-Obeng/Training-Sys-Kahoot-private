@@ -46,31 +46,15 @@ export class ViewAssignmentsComponent {
 
   // Get list of graded trainees
   viewGradedTrainees(title: string) {
-    this.gradeManagementService.getGradedTraineesList(title).subscribe({
-      next: (res) => {
-        console.log("ungraded trainees list res: ", res)
-      },
-      error: (err) => {
-        console.error("ungraded trainees list error: ", err)
-      }
-    })
+    this.gradeManagementService.selectedAssessmentTitle = title;
     this.goToGradedTrainees();
   }
 
 
   // Get list of ungraded trainees
   viewUngradedTrainees(title: string) {
-    const titleString = title.trim()
-    console.log(titleString)
-    this.gradeManagementService.getUngradedTraineesList(titleString).subscribe({
-      next: (res) => {
-        console.log("ungraded trainees list res: ", res)
-      },
-      error: (err) => {
-        console.error("ungraded trainees list error: ", err)
-      }
-    })
-    this.goToGradedTrainees();
+    this.gradeManagementService.selectedAssessmentTitle = title;
+    this.toUngradedList();
   }
 
   
