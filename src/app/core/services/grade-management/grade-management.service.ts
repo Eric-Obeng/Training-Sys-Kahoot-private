@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AssessmentList } from '@core/models/grade-management.interface';
 import { map } from 'rxjs';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GradeManagementService {
+
 
   private getHeaders(): HttpHeaders {
     return new HttpHeaders({
@@ -14,9 +16,7 @@ export class GradeManagementService {
     });
   }
 
-
-  // grademanagementUrl: string = environment.BaseUrl;
-  grademanagementUrl: string = "https://e6d2-154-161-127-190.ngrok-free.app/api/v1";
+  grademanagementUrl: string = environment.BaseUrl;
 
   constructor(
     private http: HttpClient
@@ -37,5 +37,20 @@ export class GradeManagementService {
         return response;
       })
     )
+  }
+
+  getGradedTraineesList(title: string) {
+    const params = new HttpParams().set('title', title); // Add query parameter
+  
+    return this.http.post<any[]>(`${this.grademanagementUrl}/assessments/submitted`, {
+      params, // Attach the query parameters
+      headers: this.getHeaders(), // Attach headers
+    });
+  }
+  
+
+  getUngradedTraineesList(title: string) {
+    const params = new HttpParams().set('title', title);
+    return this.http.post<any[]>(`${this.grademanagementUrl}/assessments/submitted`, { params, headers: this.getHeaders() })
   }
 }

@@ -36,11 +36,11 @@
         </tr>
     </table>
 
-    <table class="table-items" *ngFor="let assignments of gradedAssignments$ | async"
-        (click)="viewGradedTrainees()"
+    <table class="table-items" *ngFor="let assignments of gradedAssignments$ | async; let i = index"
+        (click)="viewGradedTrainees(assignments.title)"
     >
         <tr class="gradedTable">
-            <td>#{{ assignments.id }}</td>
+            <td>#{{ i+ 1 }}</td>
             <td>{{ assignments.title }}</td>
             <td>{{ assignments.dateCreated | date: 'dd-MM-yyy' }}</td>
             <td>{{ assignments.type | titlecase }}</td>
@@ -51,6 +51,12 @@
 
     <div class="spinner" *ngIf="isGradedLoading$ | async"></div>
 </div>
+
+
+
+
+
+
 
 <!-- Ungraded assignments  -->
 <div class="assessment-card"
@@ -78,10 +84,13 @@
         </tr>
     </table>
 
-    <table class="table-items" *ngFor="let assignments of ungradedAssignments$ | async"
+    <table 
+        class="table-items" 
+        *ngFor="let assignments of ungradedAssignments$ | async; let i = index"
+        (click)="viewUngradedTrainees(assignments.title)"
     >
         <tr>
-            <td>#{{ assignments.id }}</td>
+            <td>#{{ i + 1 }}</td>
             <td>{{ assignments.title }}</td>
             <td>{{ assignments.dateCreated | date: 'dd-MM-yyyy' }}</td>
             <td>{{ assignments.type | titlecase }}</td>

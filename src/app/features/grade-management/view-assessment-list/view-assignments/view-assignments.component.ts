@@ -44,7 +44,30 @@ export class ViewAssignmentsComponent {
     );
   }
 
-  viewGradedTrainees() {
+  // Get list of graded trainees
+  viewGradedTrainees(title: string) {
+    this.gradeManagementService.getGradedTraineesList(title).subscribe({
+      next: (res) => {
+        console.log("ungraded trainees list res: ", res)
+      },
+      error: (err) => {
+        console.error("ungraded trainees list error: ", err)
+      }
+    })
+    this.goToGradedTrainees();
+  }
+
+
+  // Get list of ungraded trainees
+  viewUngradedTrainees(title: string) {
+    this.gradeManagementService.getUngradedTraineesList(title).subscribe({
+      next: (res) => {
+        console.log("ungraded trainees list res: ", res)
+      },
+      error: (err) => {
+        console.error("ungraded trainees list error: ", err)
+      }
+    })
     this.goToGradedTrainees();
   }
 
