@@ -1,6 +1,5 @@
 <div class="container">
   <div class="list-wrapper" *ngIf="trainersData$ | async as trainers">
-
     <div class="trainers" *ngIf="trainers.length > 0; else noTrainers">
       <div class="headers">
         <div>No.</div>
@@ -24,20 +23,6 @@
               svgIcon="dots"
               (click)="toggleMenu(trainer.id, $event)"
             ></mat-icon>
-            <div
-              *ngIf="selectedTrainerId === trainer.id"
-              class="menu-popup"
-              (clickOutside)="closeMenu()"
-            >
-              <div class="menu-item" (click)="updateTrainer(trainer)">
-                <mat-icon svgIcon="edit"></mat-icon>
-                <span>Update</span>
-              </div>
-              <div class="menu-item" (click)="deactivateTrainer(trainer)">
-                <mat-icon svgIcon="trash"></mat-icon>
-                <span>Deactivate</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
