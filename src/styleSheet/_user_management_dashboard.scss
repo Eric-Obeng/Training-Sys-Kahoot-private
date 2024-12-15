@@ -50,6 +50,7 @@
         background: #f8f8f8;
         display: flex;
         align-items: center;
+        justify-content: space-between;
         color: $clr-gray-800;
         font-weight: 600;
         font-size: $font-size-body;
@@ -84,6 +85,7 @@
         font-size: $font-size-body;
         display: flex;
         align-items: center;
+        justify-content: space-between;
 
         & td:nth-child(1) {
             width: 18.1rem;

@@ -1,5 +1,6 @@
 
 import { Routes } from '@angular/router';
+import { AssessmentTabsSecondComponent } from '@features/grade-management/assessment-tabs-second/assessment-tabs-second.component';
 import { WelcomePageComponent } from '@features/grade-management/welcome-page/welcome-page.component';
 
 
@@ -66,6 +67,16 @@ export const trainerRoutes: Routes = [
             loadComponent: () => import('../../features/grade-management/view-ungraded-trainees-list/trainees-list/trainees-list.component')
             .then(m => m.TraineesListComponent),
           },
+          {
+            path: 'graded-trainees-list',
+            loadComponent: () => import('../../features/grade-management/graded-trainees-list/graded-trainees-list.component')
+            .then(m => m.GradedTraineesListComponent),
+          },
+          {
+            path: 'grade-assignment',
+            loadComponent: () => import('../../features/grade-management/grade-assignment/grade-assignment.component')
+            .then(m => m.GradeAssignmentComponent)
+          }
         ]
       },
       {
@@ -76,8 +87,13 @@ export const trainerRoutes: Routes = [
           {
             path: '',
             loadComponent: () => import('../../features/grade-management/view-grade-history-list/view-grade-history/view-grade-history.component')
-            .then(m => m.ViewGradeHistoryComponent),
+            .then(m => m.ViewGradeHistoryComponent), 
           },
+          {
+            path: 'assessment-overview',
+            loadComponent: () => import('../../features/grade-management/assessment-overview/assessment-overview.component')
+            .then(m => m.AssessmentOverviewComponent)
+          }
         ]
       },
     ]

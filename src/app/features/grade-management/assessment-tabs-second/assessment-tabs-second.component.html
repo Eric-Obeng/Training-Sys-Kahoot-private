@@ -1,14 +1,16 @@
-<p-tabView (onChange)="onTabChange($event)" [activeIndex]="activeIndex">
-    <p-tabPanel header="Assignments">
-        <div>
-        </div>
-    </p-tabPanel>
+<div class="container">
+    <p-tabView (onChange)="onTabChange($event)" [activeIndex]="activeIndex">
+        <p-tabPanel header="Assignments">
+            <div>
+            </div>
+        </p-tabPanel>
     
-    <p-tabPanel header="Grade History">
-        <p>
-            <router-outlet></router-outlet>
-        </p>
-    </p-tabPanel>
-</p-tabView>
-
+        <p-tabPanel header="Grade History">
+            <p>
+                <router-outlet></router-outlet>
+            </p>
+        </p-tabPanel>
+    </p-tabView>
+    
+</div>
 
