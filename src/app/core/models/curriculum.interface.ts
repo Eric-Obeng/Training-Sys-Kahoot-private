@@ -1,4 +1,5 @@
 export interface module {
+  createdBy?: string;
   id: number;
   title: string;
   description: string;

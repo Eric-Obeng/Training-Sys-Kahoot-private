@@ -3,28 +3,30 @@ import { Injectable } from '@angular/core';
 import { content, curriculum } from '@core/models/curriculum.interface';
 import { ErrorHandleService } from '../error-handle/error-handle.service';
 import { catchError, map, Observable, tap } from 'rxjs';
+import { TokenService } from '../token/token.service';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class CurriculumCrudService {
-  private hostedServer = 'https://bc7a-212-8-250-220.ngrok-free.app/api/v1/curricula';
-  private hostedCreate = 'https://bc7a-212-8-250-220.ngrok-free.app/api/v1/curricula/create';
+  private hostedServer = `${environment.BaseUrl}/curricula`;
+  private hostedCreate = `${environment.BaseUrl}/curricula/create`;
   private headers = new HttpHeaders({
     'ngrok-skip-browser-warning': '69420'
   });
 
   constructor(
     private http: HttpClient,
-    private errorService: ErrorHandleService
+    private errorService: ErrorHandleService,
+    private tokenService: TokenService
   ) {}
 
   getAllCurriculums(): Observable<content> {
     return this.http.get<content>(this.hostedServer, { headers: this.headers })
       .pipe(
         map((res: content) => ({ content: res.content })),
-        tap((data) => console.log(data)),
         catchError(this.errorService.handleError)
       );
   }
@@ -36,7 +38,7 @@ export class CurriculumCrudService {
 
   createCurriculum(curriculum: curriculum) {
     const formData = this.createFormData(curriculum);
-    return this.http.post<curriculum>(this.hostedCreate, formData, { headers: this.headers, reportProgress: true }).pipe(
+    return this.http.post<curriculum>(this.hostedCreate, formData, { headers: this.headers }).pipe(
       catchError(error => {
         console.error('Full error response:', error);
         return this.errorService.handleError(error);
@@ -59,7 +61,9 @@ export class CurriculumCrudService {
   }
 
   private createFormData(curriculum: Partial<curriculum>): FormData {
+    const userEmail = this.tokenService.getDecodedTokenValue()?.email
     const formData = new FormData();
+    if (userEmail) formData.append('createdBy', userEmail);
     if (curriculum.id) formData.append('id', curriculum.id);
     if (curriculum.title) formData.append('title', curriculum.title);
     if (curriculum.description) formData.append('description', curriculum.description);
@@ -72,13 +76,13 @@ export class CurriculumCrudService {
         formData.append('thumbnailImage', curriculum.thumbnailImage);
       }
     }
+
     if (curriculum.learningObjectives?.length) {
       curriculum.learningObjectives.forEach((objective) => {
         formData.append(`learningObjectives`, objective);
       });
     }
 
-    
     if (curriculum.modules?.length) {
       curriculum.modules.forEach((module, moduleIndex) => {
         if (module.id !== undefined) formData.append(`modules[${moduleIndex}].id`, module.id.toString());
@@ -98,14 +102,11 @@ export class CurriculumCrudService {
                 `modules[${moduleIndex}].moduleFile`,
                 fileObj.file,
               );
-            } 
+            }
           });
         }
       });
     }
-
-    
-
     return formData;
   }
 }
