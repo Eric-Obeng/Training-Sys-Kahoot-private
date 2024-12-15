@@ -26,7 +26,7 @@ export class QuizListComponent {
   traineeEmail!: string | undefined;
 
 
-  assessments$!: Observable<Assignment[]>; // holds the filtered data
+  assessments$!: Observable<any[]>; // holds the filtered data
   // filteredAssessment$!: Observable<Assignment[]>; // holds the filtered data
   filteredAssessment$!: Observable<any[]>; // holds the filtered data
 
@@ -180,7 +180,7 @@ export class QuizListComponent {
     this.traineeEmail = this.decodedToken?.email;
 
     this.assessments$ = this.traineeAssessentsService.getAllAssignments(this.traineeEmail)
-    this.assessments$.subscribe(data => console.log(data))
+    this.assessments$.subscribe(data => console.log("assessment: ", data))
 
 
     this.filteredAssessment$ = combineLatest([
@@ -190,7 +190,7 @@ export class QuizListComponent {
       map(([assessments, searchTerm]) => {
         // Filter assessments by the search term in their title
         return assessments.filter((quiz: any) =>
-          quiz.assessment.title.toLowerCase().includes(searchTerm.toLowerCase())
+          quiz.title.toLowerCase().includes(searchTerm.toLowerCase())
         );
       })
     );
@@ -198,6 +198,7 @@ export class QuizListComponent {
 
     this.filteredAssessment$.subscribe(fitleredAssignments => {
       this.quizCount = fitleredAssignments.length;
+      console.log("filtered: ", fitleredAssignments)
     })
 
   }

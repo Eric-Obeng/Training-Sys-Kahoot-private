@@ -11,19 +11,19 @@
         <div class="assessment-card" *ngFor="let assessment of filteredAssessment$ | async">
                 <img src="../../../../../assets/Images/profile-images/profile 1.jpg" alt="profile image">
                 <div class="detail-content">
-                    <p>{{ assessment.assessment.title }}</p>
+                    <p>{{ assessment.title }}</p>
                     <div class="quiz-details">
                         <p class="circle"></p>
-                        <p>{{ assessment.assessment.assessmentType | titlecase}}</p>
+                        <p>{{ assessment.assessmentType | titlecase}}</p>
                         <p class="circle"></p>
-                        <p>{{ assessment.assessment.focusArea | titlecase}}</p>
+                        <p>{{ assessment.focusArea | titlecase}}</p>
                         <p class="circle"></p>
-                        <p>{{ assessment.assessment.questions.length }} Questions</p>
+                        <p>{{ assessment }} Questions</p>
                     </div>
                     <p class="quiz-description">This quiz is to test Trainees on their knowledge on product design</p>
-                    <button *ngIf="assessment.assessment.assessmentType === 'QUIZ'" (click)="takeAssessment(assessment.assessment.id, assessment.assessment.assessmentType)">Take {{ assessment.assessment.assessmentType | titlecase }}</button>
-                    <button *ngIf="assessment.assessment.assessmentType === 'LAB'" (click)="takeAssessment(assessment.id, assessment.assessment.assessmentType)">Complete {{ assessment.assessment.assessmentType | titlecase }}</button>
-                    <button *ngIf="assessment.assessment.assessmentType === 'PRESENTATION'" (click)="takeAssessment(assessment.id, assessment.assessment.assessmentType)">Submit {{ assessment.assessment.assessmentType | titlecase }}</button>
+                    <button *ngIf="assessment.assessmentType === 'QUIZ'" (click)="takeAssessment(assessment.id, assessment.assessmentType)">Take {{ assessment.assessmentType | titlecase }}</button>
+                    <button *ngIf="assessment.assessmentType === 'LAB'" (click)="takeAssessment(assessment.id, assessment.assessmentType)">Complete {{ assessment.assessmentType | titlecase }}</button>
+                    <button *ngIf="assessment.assessmentType === 'PRESENTATION'" (click)="takeAssessment(assessment.id, assessment.assessmentType)">Submit {{ assessment.assessmentType | titlecase }}</button>
                 </div>
         </div>
     </div>
