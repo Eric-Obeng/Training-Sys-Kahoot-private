@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { AssessmentList } from '@core/models/grade-management.interface';
+import { AssessmentList, TraineeGradeHistory } from '@core/models/grade-management.interface';
 import { BehaviorSubject, map } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 
@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment.development';
 export class GradeManagementService {
 
   public selectedAssessmentTitle: string = '';
+  public selectedTraineeEmail: string = '';
 
 
   private getHeaders(): HttpHeaders {
@@ -33,12 +34,16 @@ export class GradeManagementService {
   }
 
   getGradeHistoryList() {
-    return this.http.get<any[]>(`${this.grademanagementUrl}/grades/history`, { headers: this.getHeaders() }).pipe(
+    return this.http.get<TraineeGradeHistory[]>(`${this.grademanagementUrl}/grades/history`, { headers: this.getHeaders() }).pipe(
       // map((res:any) => {
       //   const response = res.content;
       //   return response;
       // })
     )
+  }
+
+  getSingleTraineeGradeHistory() {
+    return this.http.post<any[]>(`${this.grademanagementUrl}/grades/history`, {"email": this.selectedTraineeEmail}, { headers: this.getHeaders() })
   }
 
   getGradedTraineesList() {

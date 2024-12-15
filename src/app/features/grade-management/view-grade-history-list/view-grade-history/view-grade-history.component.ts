@@ -1,4 +1,4 @@
-import { AsyncPipe, NgFor } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TraineeGradeHistory } from '@core/models/grade-management.interface';
@@ -10,7 +10,7 @@ import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 @Component({
   selector: 'app-view-grade-history',
   standalone: true,
-  imports: [SearchbarComponent, PaginatorComponent, AsyncPipe, NgFor],
+  imports: [SearchbarComponent, PaginatorComponent, AsyncPipe, NgFor, NgIf],
   templateUrl: './view-grade-history.component.html',
   styleUrl: './view-grade-history.component.scss'
 })
@@ -19,6 +19,7 @@ export class ViewGradeHistoryComponent {
   @ViewChild('ellipsisIcon') ellipsisIcon!: ElementRef;
 
   showEllipseOptions: boolean = false;
+  selectedTraineeEmail!: string | null;
 
   //Pagination 
   private pageSubject = new BehaviorSubject<number>(1);
@@ -44,17 +45,18 @@ export class ViewGradeHistoryComponent {
     this.gradeHistoryList$ = this.gradeManagementService.getGradeHistoryList().pipe(
       tap(() => (this.isGradeHistoryLoading$ = of(false)))
     )
-    
-    this.gradeHistoryList$.subscribe({
-      next: (res) => console.log("grade history response: ", res),
-      error: (err) => console.log("grade history error: ", err) 
-    })
   }
 
 
-  toggleEllipseOptions(event: Event) {
+  toggleEllipseOptions(traineeEmail: string, event: Event) {
     event.stopPropagation();
-    this.showEllipseOptions = !this.showEllipseOptions;
+    this.selectedTraineeEmail = this.selectedTraineeEmail === traineeEmail ? null : traineeEmail;
+    if(this.selectedTraineeEmail === null) {
+      this.showEllipseOptions = false;
+    }
+    else if(this.selectedTraineeEmail === traineeEmail) {
+      this.showEllipseOptions = true;
+    }
   }
 
   // Toggle off the more options box when anywhere on the document except the box is clicked
@@ -65,7 +67,8 @@ export class ViewGradeHistoryComponent {
     }
   }
 
-  goToAssessmentOverview() {
+  goToAssessmentOverview(traineeEmail: string) {
+    this.gradeManagementService.selectedTraineeEmail = traineeEmail;
     this.router.navigate(['/home/trainer/grade-management/grade-history/assessment-overview'])
   }
 

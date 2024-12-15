@@ -5,19 +5,6 @@ export interface AssessmentList {
     traineeCount?: number;
 }
 
-export interface TraineeGradeHistory {
-    firstName: string;
-    lastName: string;
-    averageGradePoints: number;
-    gradedLabsCount: number;
-    gradedPresentationsCount: number;
-    gradedQuizzesCount: number;
-    id: number;
-    overallGradePoints: number;
-    traineeEmail: string;
-  }
-  
-
 export interface ungradedTraineeList {
     firstName: string;
     LastName: string;
@@ -30,3 +17,37 @@ export interface gradedTraineeList {
     specialization: string;
     grade: number;
 }
+
+
+export interface TraineeGradeHistory {
+    firstName: string;
+    lastName: string;
+    averageGradePoints: number;
+    gradedLabsCount: number;
+    gradedPresentationsCount: number;
+    gradedQuizzesCount: number;
+    id: number;
+    overallGradePoints: number;
+    traineeEmail: string;
+  }
+
+
+  export interface AssessmentOverview {
+    firstName: string;
+    lastName: string;
+    specialization: string;
+    assessmentId: string;
+    dateCreated: Date;
+    dateSubmitted: Date;
+    file: string | null;
+    graded: boolean;
+    id: number;
+    labByWeek: string | null;
+    letterGrade: string;
+    title: string;
+    totalMarks: number;
+    traineeEmail: string;
+    type: string;
+    url: string[];
+  }
+  
