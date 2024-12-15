@@ -1,6 +1,13 @@
 @import '../../../../../styleSheet/grade_management_mixins';
 @import '../../../../../styleSheet/user_management_dashboard';
 
+.quiz-title {
+    font-size: $font-size-subtitle;
+    font-weight: 600;
+    color: $clr-gray-700;
+    margin-bottom: 2.7rem;
+}
+
 .top-trainees {
     @include cards;
     width: 100%;

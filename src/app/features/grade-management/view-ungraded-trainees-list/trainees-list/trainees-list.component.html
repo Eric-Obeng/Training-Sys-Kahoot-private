@@ -1,3 +1,4 @@
+<div class="quiz-title" *ngIf="selectedQuizTitle$ | async as title">{{ title }}</div>
 <div class="top-trainees">
     <div class="card-title">
         <div class="title-and-icon">
@@ -15,10 +16,12 @@
                 <td> </td>
                 <td>Name</td>
                 <td>Specialization</td>
-                <td>Points</td>
+                <td>Status</td>
             </tr>
         </table>
-        <table class="table-trainee-list" *ngFor="let trainee of ungradedList$ | async; let i = index">
+        <table class="table-trainee-list" *ngFor="let trainee of ungradedList$ | async; let i = index"
+            (click)="toGradeAssignment()"
+        >
             <tr>
                 <td>#{{ i + 1 }}</td>
                 <td class="pic-and-name">
@@ -27,7 +30,7 @@
                 </td>
                 <td>{{ trainee.specialization }}</td>
                 <td class="submit-status">
-                    <span (click)="toGradeAssignment()">Submitted</span>
+                    <span>Submitted</span>
                 </td>
             </tr>
             <div class="divider"></div>

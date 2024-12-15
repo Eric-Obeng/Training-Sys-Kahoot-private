@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment.development';
 })
 export class GradeManagementService {
 
-  public selectedAssessmentTitle: string = '';
+  public selectedAssessmentTitle: string | null = '';
   public selectedTraineeEmail: string = '';
 
 
