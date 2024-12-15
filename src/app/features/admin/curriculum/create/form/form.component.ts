@@ -53,9 +53,7 @@ export class FormComponent implements OnInit {
 
 
   ngOnInit(): void {
-
     this.allSpecializations$ = this.curriculumFacade.specialization$;
-
     this.prepareCurriculumForm();
     this.route.queryParams.subscribe(params => {
       if (params['id']) {
@@ -81,15 +79,20 @@ export class FormComponent implements OnInit {
           title: curriculum.title,
           description: curriculum.description,
           specialization: curriculum.specialization,
-          thumbnailImageUrl: curriculum.thumbnailImageUrl,
+          thumbnailImage: curriculum.thumbnailImageUrl, 
         });
-
+  
+        
+        if (curriculum.thumbnailImageUrl) {
+          this.previewImage = curriculum.thumbnailImageUrl;
+        }
+  
         const learningObjectivesArray = this.curriculumForm.get('learningObjectives') as FormArray;
         learningObjectivesArray.clear();
         curriculum.learningObjectives.forEach(objective => {
           learningObjectivesArray.push(this.fb.control(objective, Validators.required));
         });
-
+  
         this.curriculumStateService.setCurriculumForm(this.curriculumForm);
       },
       error: (error: any) => {
@@ -107,7 +110,7 @@ export class FormComponent implements OnInit {
       learningObjectives: this.fb.array([
         this.fb.control('', [Validators.required])
       ]),
-      thumbnailImageUrl: [''],
+      thumbnailImage: [''],
       modules: this.fb.array([])
     });
   }
@@ -141,7 +144,7 @@ export class FormComponent implements OnInit {
   private handleFile(file: File) {
     if (this.allowedFileTypes.includes(file.type)) {
       this.curriculumForm.patchValue({
-        thumbnailImageUrl: file
+        thumbnailImage: file as File
       });
       const reader = new FileReader();
       reader.onload = (e: any) => {
@@ -154,7 +157,7 @@ export class FormComponent implements OnInit {
   removeImage() {
     this.previewImage = null;
     this.curriculumForm.patchValue({
-      thumbnailImageUrl: null
+      thumbnailImage: null
     });
   }
 
