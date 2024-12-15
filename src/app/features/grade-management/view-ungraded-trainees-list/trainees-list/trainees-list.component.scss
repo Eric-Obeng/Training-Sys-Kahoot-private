@@ -50,6 +50,7 @@
     & .table-trainee-list {
         @include tableTraineeList;
         padding: 0 2.4rem;
+        cursor: pointer;
     }
 
     & .divider {

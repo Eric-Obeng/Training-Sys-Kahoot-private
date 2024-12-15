@@ -20,7 +20,7 @@
             </tr>
         </table>
         <table class="table-trainee-list" *ngFor="let trainee of ungradedList$ | async; let i = index"
-            (click)="toGradeAssignment()"
+            (click)="toGradeAssignment(trainee.email)"
         >
             <tr>
                 <td>#{{ i + 1 }}</td>

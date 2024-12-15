@@ -9,6 +9,7 @@ export interface ungradedTraineeList {
     firstName: string;
     LastName: string;
     specialization: string;
+    email: string;
 }
 
 export interface gradedTraineeList {

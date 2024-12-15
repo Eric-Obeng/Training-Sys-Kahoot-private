@@ -33,6 +33,8 @@ export class TraineesListComponent {
     this.ungradedList$ = this.gradeManagementService.getUngradedTraineesList()
     this.selectedQuizTitle$ = of(this.gradeManagementService.selectedAssessmentTitle)
 
+    this.ungradedList$.subscribe(data => console.log(data))
+
     // // Check if a value exists in localStorage
     // const savedTitle = localStorage.getItem(this.selectedQuizStorageKey);
     // if (savedTitle) {
@@ -46,7 +48,8 @@ export class TraineesListComponent {
     // }
   }
 
-  toGradeAssignment() {
+  toGradeAssignment(email: string) {
+    this.gradeManagementService.selectedTraineeEmail = email;
     this.router.navigate(['/home/trainer/grade-management/grade-assignment'])
   }
 }

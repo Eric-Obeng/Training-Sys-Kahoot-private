@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { AssessmentList, TraineeGradeHistory } from '@core/models/grade-management.interface';
+import { AssessmentList, AssessmentOverview, TraineeGradeHistory, gradedTraineeList, ungradedTraineeList } from '@core/models/grade-management.interface';
 import { BehaviorSubject, map } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 
@@ -43,11 +43,11 @@ export class GradeManagementService {
   }
 
   getSingleTraineeGradeHistory() {
-    return this.http.post<any[]>(`${this.grademanagementUrl}/grades/history`, {"email": this.selectedTraineeEmail}, { headers: this.getHeaders() })
+    return this.http.post<AssessmentOverview[]>(`${this.grademanagementUrl}/grades/history`, {"email": this.selectedTraineeEmail}, { headers: this.getHeaders() })
   }
 
   getGradedTraineesList() {
-    return this.http.post<any[]>(`${this.grademanagementUrl}/assessments/submitted`, 
+    return this.http.post<gradedTraineeList[]>(`${this.grademanagementUrl}/assessments/submitted`, 
     {
       "title": this.selectedAssessmentTitle,
       "graded": true,
@@ -57,11 +57,19 @@ export class GradeManagementService {
   
 
   getUngradedTraineesList() {
-    return this.http.post<any[]>(`${this.grademanagementUrl}/assessments/submitted`, 
+    return this.http.post<ungradedTraineeList[]>(`${this.grademanagementUrl}/assessments/submitted`, 
     {
       "title": this.selectedAssessmentTitle,
       "graded": false,
     },
     { headers: this.getHeaders() })
   }
+
+  getAssessmentDetailsForGrading() {
+    return this.http.post<any[]>(`${this.grademanagementUrl}/assessments/grade`, {
+      // "assessmentTitle": this.selectedAssessmentTitle,
+      // "traineeEmail": this.selectedTraineeEmail,
+    }, { headers: this.getHeaders() })
+  }
+
 }
