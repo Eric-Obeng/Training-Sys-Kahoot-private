@@ -9,7 +9,7 @@ export class QuizService {
 
   private quizesUrl = 'http://localhost:9000/quizes';
   questionId = 1; 
-  quizId = '7cb5';
+  quizId = '';
 
   constructor(
     private http: HttpClient

@@ -27,7 +27,6 @@ export class QuizListComponent {
 
 
   assessments$!: Observable<any[]>; // holds the filtered data
-  // filteredAssessment$!: Observable<Assignment[]>; // holds the filtered data
   filteredAssessment$!: Observable<any[]>; // holds the filtered data
 
   showmore: boolean = true;
@@ -41,7 +40,7 @@ export class QuizListComponent {
   ) {}
 
 
-  // Sample data to use for assessment (to be removed)
+
   // quizes: Quiz[] = [
   //   {
   //     quizCount: 5,
@@ -185,21 +184,20 @@ export class QuizListComponent {
 
     this.filteredAssessment$ = combineLatest([
       this.assessments$, // Observable of all assessments
-      this.searchQuiz.searchTerm$ // Observable of the search term
+      this.searchQuiz.searchTerm$, // Observable of the search term
+      of(this.assessmentType) // Observable of the assessment type
     ]).pipe(
-      map(([assessments, searchTerm]) => {
-        // Filter assessments by the search term in their title
-        return assessments.filter((quiz: any) =>
-          quiz.title.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      })
+      map(([assessments, searchTerm, assessmentType]) => {
+        return assessments.filter((quiz: any) => {
+          const matchesSearchTerm = quiz.title.toLowerCase().includes(searchTerm.toLowerCase());
+          const matchesAssessmentType = assessmentType ? quiz.assessmentType === assessmentType : true;
+          return matchesSearchTerm && matchesAssessmentType;
+        });
+      }),
+      tap(filtered => {
+        this.quizCount = filtered.length;
+      }) 
     );
-    
-
-    this.filteredAssessment$.subscribe(fitleredAssignments => {
-      this.quizCount = fitleredAssignments.length;
-      console.log("filtered: ", fitleredAssignments)
-    })
 
   }
 

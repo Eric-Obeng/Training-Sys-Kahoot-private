@@ -18,7 +18,7 @@
                         <p class="circle"></p>
                         <p>{{ assessment.focusArea | titlecase}}</p>
                         <p class="circle"></p>
-                        <p>{{ assessment }} Questions</p>
+                        <p>{{ assessment.questions }} Questions</p>
                     </div>
                     <p class="quiz-description">This quiz is to test Trainees on their knowledge on product design</p>
                     <button *ngIf="assessment.assessmentType === 'QUIZ'" (click)="takeAssessment(assessment.id, assessment.assessmentType)">Take {{ assessment.assessmentType | titlecase }}</button>

@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
+  production: true,
   BaseUrl: 'https://octopus-arriving-monthly.ngrok-free.app/api/v1',
 };
