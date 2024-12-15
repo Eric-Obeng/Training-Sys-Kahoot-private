@@ -12,7 +12,7 @@ import { specialization } from '../../models/specialization.interface';
 
 export class SpecializationCrudService {
   // private hostedServer = environment.BaseUrl;
-  private hostedServer = 'https://75fc-196-61-35-158.ngrok-free.app/api/v1'
+  private hostedServer = 'https://octopus-arriving-monthly.ngrok-free.app/api/v1'
   private headers = new HttpHeaders({
     'ngrok-skip-browser-warning': '69420'
   });
