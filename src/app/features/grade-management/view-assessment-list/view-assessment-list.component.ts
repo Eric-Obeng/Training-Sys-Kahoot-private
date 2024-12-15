@@ -15,7 +15,6 @@ import { ViewGradeHistoryComponent } from '../view-grade-history-list/view-grade
 export class ViewAssessmentListComponent {
 
   constructor() {
-    // private assessmentService: assessmentService,
   }
 
 

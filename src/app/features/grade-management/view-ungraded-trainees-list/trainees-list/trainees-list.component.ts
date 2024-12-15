@@ -18,8 +18,6 @@ export class TraineesListComponent {
 
   selectedQuizTitle$!: Observable<string | null>;
 
-  private readonly selectedQuizStorageKey = 'selectedQuizTitle';
-
   constructor(
     private router: Router,
     public gradeManagementService: GradeManagementService,
@@ -32,20 +30,6 @@ export class TraineesListComponent {
   init() {
     this.ungradedList$ = this.gradeManagementService.getUngradedTraineesList()
     this.selectedQuizTitle$ = of(this.gradeManagementService.selectedAssessmentTitle)
-
-    this.ungradedList$.subscribe(data => console.log(data))
-
-    // // Check if a value exists in localStorage
-    // const savedTitle = localStorage.getItem(this.selectedQuizStorageKey);
-    // if (savedTitle) {
-    //   this.selectedQuizTitle$ = of(savedTitle); // Load from localStorage
-    //   this.gradeManagementService.selectedAssessmentTitle = localStorage.getItem(this.selectedQuizStorageKey)
-    //   this.ungradedList$ = this.gradeManagementService.getUngradedTraineesList()
-    // } else {
-    //   const title = this.gradeManagementService.selectedAssessmentTitle;
-    //   this.selectedQuizTitle$ = of(title); // Set from the service
-    //   localStorage.setItem(this.selectedQuizStorageKey, title || ''); // Save to localStorage
-    // }
   }
 
   toGradeAssignment(email: string) {

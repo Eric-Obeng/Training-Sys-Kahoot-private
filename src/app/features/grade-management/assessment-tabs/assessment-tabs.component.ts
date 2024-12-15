@@ -131,7 +131,6 @@ export class AssessmentTabsComponent {
 
   onTabChange(event: any) {
     if (event.index === 1) { // Index of the "Grade History" tab
-      console.log("grade history clicked")
         this.goToGradeHistory();
     }
   }
@@ -140,8 +139,6 @@ export class AssessmentTabsComponent {
 
   goToGradeHistory() {
     this.router.navigate(['grade-history'], { relativeTo: this.route });
-
-    // console.log("working?")
   }
 
 }

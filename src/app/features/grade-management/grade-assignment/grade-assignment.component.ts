@@ -36,7 +36,6 @@ export class GradeAssignmentComponent {
   }
 
   submitScore() {
-    console.log(this.assignedScore)
     if(this.assignedScore > 0 && this.assignedScore < 101) {
       this.gradeManagementService.submitGradedAssessment(this.assignedScore).subscribe({
         next: (res) => {
