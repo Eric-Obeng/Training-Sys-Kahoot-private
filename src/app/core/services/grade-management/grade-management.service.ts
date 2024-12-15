@@ -73,9 +73,7 @@ export class GradeManagementService {
   }
 
   submitGradedAssessment(score: number) {
-    console.log("titie:", this.selectedAssessmentTitle)
-    console.log("email:", this.selectedTraineeEmail)
-    return this.http.put<AssessmentDetails>(`${this.grademanagementUrl}/assessments/grade`, {
+    return this.http.post<AssessmentDetails>(`${this.grademanagementUrl}/assessments/grade`, {
       "assessmentTitle": this.selectedAssessmentTitle,
       "traineeEmail": this.selectedTraineeEmail,
       "grade": score,

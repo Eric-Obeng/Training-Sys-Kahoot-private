@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
   // BaseUrl: 'https://api.training-management.amalitech-dev.net/api/v1'
-  BaseUrl: 'https://ea69-154-161-117-90.ngrok-free.app/api/v1',
+  BaseUrl: 'https://d2b9-154-161-123-183.ngrok-free.app/api/v1',
 }

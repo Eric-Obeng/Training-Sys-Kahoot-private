@@ -19,6 +19,9 @@ export class GradeAssignmentComponent {
   assessmentDetails$!: Observable<AssessmentDetails>;
   assignedScore!: number;
 
+  isModalOpen: boolean = false;
+  isErrorModal: boolean = false;
+
   constructor(
     private router: Router,
     public gradeManagementService: GradeManagementService,
@@ -33,14 +36,35 @@ export class GradeAssignmentComponent {
   }
 
   submitScore() {
-    if(this.assignedScore >= 0 && this.assignedScore < 101) {
-      this.gradeManagementService.submitGradedAssessment(this.assignedScore)
-      this.assignedScore = 0;
+    console.log(this.assignedScore)
+    if(this.assignedScore > 0 && this.assignedScore < 101) {
+      this.gradeManagementService.submitGradedAssessment(this.assignedScore).subscribe({
+        next: (res) => {
+          this.toggleModal()
+        },
+        error: (err) => {
+          this.toggleErrorModal()
+          setTimeout(() => {
+            this.isErrorModal = false;
+          }, 1500)
+        }
+      })
     }
     else {
       alert("Enter correct score")
     }
-    console.log(this.assignedScore)
+  }
+
+  toggleModal() {
+    this.isModalOpen = !this.isModalOpen;
+  }
+
+  toggleErrorModal() {
+    this.isErrorModal = !this.isErrorModal;
+  }
+
+  routeToAssessmentList() {
+    this.router.navigate(['/home/trainer/grade-management'])
   }
 
 }
