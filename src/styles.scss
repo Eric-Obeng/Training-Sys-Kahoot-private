@@ -176,3 +176,32 @@ $theme: mat.define-light-theme(
     border-color: #f98416 !important;
   }
 }
+
+
+ul.p-tabview-nav {
+  margin-bottom: .5rem;
+  border: none;
+  display: flex;
+  gap: 3.5rem;
+  background: none;
+}
+
+span.p-tabview-title {
+  display: grid;
+  place-items: center;
+  height: 3.5rem;
+  font-family: $font-lato;
+  font-size: $font-size-body;
+  color: $clr-gray-500;
+}
+
+.p-tabview-nav li.p {
+  background: none;
+}
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  border-color: $clr-primary-500;
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  background: none;
+}

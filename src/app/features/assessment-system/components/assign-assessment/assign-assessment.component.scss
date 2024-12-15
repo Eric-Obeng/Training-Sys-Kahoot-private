@@ -67,7 +67,8 @@
       z-index: 10;
       right: 0;
       bottom: 0;
-      padding: 2.4rem;
+      padding: 1rem;
+      background: #fff;
 
       .expires {
         @include flexbox(column, flex-start, flex-start);
