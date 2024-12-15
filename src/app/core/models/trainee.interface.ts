@@ -12,6 +12,7 @@ export interface Assignment {
     focusArea: string;
     id: number;
     title: string;
+    questionsCount: number;
   }
   
 

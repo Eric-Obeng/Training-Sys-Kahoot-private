@@ -9,18 +9,15 @@
 
     <div class="divider"></div>
 
-    <div class="content" *ngIf="!empty">
+    <div class="content">
         <app-quiz-list
             [assessmentType]="'QUIZ'"
-            (dataEmpty)="handleChildEmpty($event)"
         />
         <app-quiz-list
             [assessmentType]="'LAB'"
-            (dataEmpty)="handleChildEmpty($event)"
         />
         <app-quiz-list
             [assessmentType]="'PRESENTATION'"
-            (dataEmpty)="handleChildEmpty($event)"
         />
     </div>
 

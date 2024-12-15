@@ -9,7 +9,7 @@
         [class]="showmore? 'assessment-card-list' : 'assessment-card-list-not-hidden'"
     > 
         <div class="assessment-card" *ngFor="let assessment of filteredAssessment$ | async">
-                <img src="../../../../../assets/Images/profile-images/profile 1.jpg" alt="profile image">
+                <img [src]="assessment.coverImage" alt="profile image">
                 <div class="detail-content">
                     <p>{{ assessment.title }}</p>
                     <div class="quiz-details">
@@ -18,7 +18,7 @@
                         <p class="circle"></p>
                         <p>{{ assessment.focusArea | titlecase}}</p>
                         <p class="circle"></p>
-                        <p>{{ assessment.questions }} Questions</p>
+                        <p>{{ assessment.questionsCount }} Questions</p>
                     </div>
                     <p class="quiz-description">This quiz is to test Trainees on their knowledge on product design</p>
                     <button *ngIf="assessment.assessmentType === 'QUIZ'" (click)="takeAssessment(assessment.id, assessment.assessmentType)">Take {{ assessment.assessmentType | titlecase }}</button>

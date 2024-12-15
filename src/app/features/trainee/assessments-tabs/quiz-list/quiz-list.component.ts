@@ -26,8 +26,8 @@ export class QuizListComponent {
   traineeEmail!: string | undefined;
 
 
-  assessments$!: Observable<any[]>; // holds the filtered data
-  filteredAssessment$!: Observable<any[]>; // holds the filtered data
+  assessments$!: Observable<Assignment[]>; // holds the filtered data
+  filteredAssessment$!: Observable<Assignment[]>; // holds the filtered data
 
   showmore: boolean = true;
 
@@ -178,8 +178,15 @@ export class QuizListComponent {
     this.decodedToken = this.tokenService.getDecodedTokenValue()
     this.traineeEmail = this.decodedToken?.email;
 
-    this.assessments$ = this.traineeAssessentsService.getAllAssignments(this.traineeEmail)
-    this.assessments$.subscribe(data => console.log("assessment: ", data))
+    this.traineeAssessentsService.getAllAssignments(this.traineeEmail).subscribe({
+      next: (res) => {
+        this.assessments$ = of(res)
+        console.log("response: ", res)
+      },
+      error: (err) => {
+        console.warn("error: ", err)
+      }
+    })
 
 
     this.filteredAssessment$ = combineLatest([
@@ -196,6 +203,7 @@ export class QuizListComponent {
       }),
       tap(filtered => {
         this.quizCount = filtered.length;
+        filtered.forEach(item => console.log(item.assessmentType))
       }) 
     );
 
