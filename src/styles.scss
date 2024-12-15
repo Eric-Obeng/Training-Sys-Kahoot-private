@@ -199,85 +199,6 @@ body {
   }
 }
 
-.p-datatable .p-datatable-thead > tr > th {
-  font-size: 1.5rem;
-  background: #f0f0f0;
-  padding: 0.8rem 1.6rem;
-  font-weight: 400;
-  color: #676767;
-}
-
-.p-datatable .p-datatable-tbody > tr > td {
-  padding: 2.3rem 1.6rem;
-  font-size: 1.5rem;
-  color: #676767;
-}
-
-.p-datatable .p-datatable-tbody {
-  gap: 1.5rem;
-}
-
-.mat-mdc-tab.mdc-tab {
-  margin-bottom: 3rem;
-}
-
-.mat-mdc-text-field-wrapper {
-  will-change: unset !important;
-}
-
-.mdc-notched-outline {
-  height: 5rem;
-}
-
-.mat-mdc-tab-group.mat-mdc-tab-group-stretch-tabs
-  > .mat-mdc-tab-header
-  .mat-mdc-tab {
-  flex-grow: 0 !important;
-}
-
-// Calendar styles for PrimeNg
-.p-datepicker .p-datepicker-header {
-  height: fit-content;
-  margin-bottom: 1rem;
-}
-
-#pn_id_1_panel {
-  width: 241.35px;
-  height: 238px;
-  padding: 20px;
-  border-radius: 0.8rem;
-  border: 1px solid $clr-gray-50;
-}
-
-.p-datepicker-header {
-  border: none;
-}
-
-button.p-ripple {
-  width: 2.765rem;
-  height: 2.765rem;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-
-//edit calendar date heading
-.p-datepicker-title {
-  font-family: $font-lato;
-  color: #222222;
-  display: flex;
-  gap: 0.5rem;
-}
-
-thead.ng-tns-c1685646730-0 {
-  font-family: $font-lato;
-  color: #aaaaaa;
-  font-weight: 400;
-  margin-bottom: 1.6rem;
-}
-
-// span.p-ripple.p-element.ng-tns-c1685646730-0.p-highlight.p-datepicker-current-day.ng-star-inserted {
-//   background: #1a75ff;
-//   color: $clr-white;
-// }
 
 ul.p-tabview-nav {
   margin-bottom: .5rem;
@@ -304,5 +225,5 @@ span.p-tabview-title {
 }
 
 .p-tabview .p-tabview-nav li .p-tabview-nav-link {
-  background: none;
+  background: none;
 }
