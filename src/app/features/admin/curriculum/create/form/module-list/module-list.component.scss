@@ -27,7 +27,7 @@
       background-color: $clr-body;
       padding-inline: 1.6rem;
       cursor: pointer;
-      font-size: $font-size-subtitle-2;
+      font-size: $font-size-xbody;
       font-weight: 700;
 
       &:hover {
@@ -60,5 +60,19 @@
     border: none;
     border-radius: 0.8rem;
     cursor: pointer;
+    @include flexbox($align: center, $justify: center);
+    position: relative;
+
+    .button-spinner {
+      margin-right: 10px;
+      ::ng-deep .mdc-circular-progress__determinate-circle,
+      ::ng-deep .mdc-circular-progress__indeterminate-circle-graphic {
+        stroke: white !important;
+      }
+    }
   }
 }
+
+
+
+
