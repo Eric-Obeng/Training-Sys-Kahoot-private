@@ -86,7 +86,7 @@ export class AssessmentService {
     }
     return this.http
       .post<AssessmentData>(
-        `${environment.BaseUrl}/quizzes/${quizId}/questions/batch?quizDuration=${timeFrame}`,
+        `${environment.BaseUrl}/quizzes/trainer/${quizId}/questions/batch?quizDuration=${timeFrame}`,
         assessment,
         { responseType: 'text' as 'json' }
       )
