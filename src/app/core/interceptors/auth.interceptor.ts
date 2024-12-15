@@ -3,6 +3,7 @@ import {
   HttpHandlerFn,
   HttpInterceptorFn,
   HttpRequest,
+  HttpHeaders,
   HttpResponse,
 } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
@@ -13,11 +14,11 @@ export const authInterceptor: HttpInterceptorFn = (
 ): Observable<HttpEvent<any>> => {
   const token = localStorage.getItem('token');
 
-  const modifiedReq = token
-    ? req.clone({
-        headers: req.headers.set('Authorization', `Bearer ${token}`),
-      })
-    : req;
+  const modifiedReq = req.clone({
+    headers: req.headers
+      .set('ngrok-skip-browser-warning', '69420')
+      .set('Authorization', token ? `Bearer ${token}` : ''),
+  });
 
   if (!req.url.includes('/login')) {
     return next(modifiedReq);
@@ -32,7 +33,7 @@ export const authInterceptor: HttpInterceptorFn = (
             try {
               localStorage.setItem('token', token);
             } catch (e) {
-              console.error('Failed to get token:', e);
+              console.error('Failed to store token:', e);
             }
           }
         }
