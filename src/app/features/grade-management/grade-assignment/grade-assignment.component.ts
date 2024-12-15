@@ -1,22 +1,27 @@
+import { AsyncPipe, DatePipe, NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AssessmentDetails } from '@core/models/grade-management.interface';
 import { GradeManagementService } from '@core/services/grade-management/grade-management.service';
+import { InputFieldComponent } from '@core/shared/input-field/input-field.component';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-grade-assignment',
   standalone: true,
-  imports: [],
+  imports: [NgIf, NgFor, AsyncPipe, FormsModule, DatePipe],
   templateUrl: './grade-assignment.component.html',
   styleUrl: './grade-assignment.component.scss'
 })
 export class GradeAssignmentComponent {
 
-  assessmentDetails$!: Observable<any[]>;
+  assessmentDetails$!: Observable<AssessmentDetails>;
+  assignedScore!: number;
 
   constructor(
     private router: Router,
-    private gradeManagementService: GradeManagementService,
+    public gradeManagementService: GradeManagementService,
   ) {}
 
   ngOnInit() {
@@ -25,11 +30,17 @@ export class GradeAssignmentComponent {
 
   init() {
     this.assessmentDetails$ = this.gradeManagementService.getAssessmentDetailsForGrading()
+  }
 
-    console.log(this.gradeManagementService.selectedAssessmentTitle)
-    console.log(this.gradeManagementService.selectedTraineeEmail)
-
-    this.assessmentDetails$.subscribe(data => console.log("assessment details: ", data))
+  submitScore() {
+    if(this.assignedScore >= 0 && this.assignedScore < 101) {
+      this.gradeManagementService.submitGradedAssessment(this.assignedScore)
+      this.assignedScore = 0;
+    }
+    else {
+      alert("Enter correct score")
+    }
+    console.log(this.assignedScore)
   }
 
 }

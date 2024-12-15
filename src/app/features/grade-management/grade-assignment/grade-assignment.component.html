@@ -1,12 +1,13 @@
-<div class="container">
+<!-- <div class="container" *ngIf="assessmentDetails$ | async as details"> -->
+<div class="container" *ngIf="assessmentDetails$ | async as quiz">
     <div class="title-and-trainee-name">
-        <span>Basics of User-Centered-Design - </span>
-        <span>Alex Agyemang</span>
+        <span>{{ quiz.title }} </span>
+        <span>{{ quiz.type }}</span>
     </div>
     
     <div class="score">
-        <span>Content</span>
-        <span>Score 0 / 30</span>
+        <span>{{ quiz.traineeEmail }}</span>
+        <span>Submittted: {{ quiz.dateSubmitted | date: "dd-MM-yyyy" }}</span>
     </div>
 
     
@@ -17,43 +18,14 @@
     <div class="divider"></div>
 
     <div class="questions-container">
-        <div class="questions-list-wrapper">
-            <div class="questions-list">
-                <span>Question - 1</span>
-                <span>Multi-choice</span>
-            </div>
-            <div class="questions-list">
-                <span>Question - 2</span>
-                <span>Multi-choice</span>
-            </div>
-            <div class="questions-list">
-                <span>Question - 3</span>
-                <span>Multi-choice</span>
-            </div>
-            <div class="questions-list">
-                <span>Question - 4</span>
-                <span>Multi-choice</span>
-            </div>
+        <div>Links</div>
+        <div class="links" *ngFor="let url of quiz.url">
+            <a [href]="url">{{ url }}</a>
         </div>
-    
-        <div class="questions-content">
-            <div class="content-top">
-                <div class="question-header">
-                    <div class="question">What is the primary goal of User-Centered Design</div>
-                    <div class="points">5 points</div>
-                </div>
-                <p class="trainees-answer">
-                    The primary goal of user-centered design is to ensure that the product is designed to meet the needs, preferences, and behaviors of its users, resulting in improved usability and user satisfaction
-                </p>
-            </div>
-    
-            <div class="grading-btns">
-                <button class="prev">Prev.</button>
-                <div>
-                    <input type="number" placeholder="Assign mark eg. 5">
-                    <button class="proceed">Proceed</button>
-                </div>
-            </div>
-        </div>
+    </div>
+
+    <div class="buttons">
+        <input type="number" placeholder="Enter score" [(ngModel)]="assignedScore">
+        <button (click)="submitScore()">Submit Score</button>
     </div>
 </div>

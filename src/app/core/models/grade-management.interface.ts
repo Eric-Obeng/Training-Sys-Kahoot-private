@@ -52,3 +52,19 @@ export interface TraineeGradeHistory {
     url: string[];
   }
   
+  export interface AssessmentDetails {
+    assessmentId: string;
+    dateCreated: string;
+    dateSubmitted: string; 
+    file: any | null;
+    graded: boolean;
+    id: number;
+    labByWeek: number;
+    letterGrade: string | null;
+    title: string;
+    totalMarks: number;
+    traineeEmail: string;
+    type: string;
+    url: string[]; 
+  }
+  
