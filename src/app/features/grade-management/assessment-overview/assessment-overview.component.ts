@@ -20,6 +20,7 @@ export class AssessmentOverviewComponent {
 
   traineeName: string = '';
   traineeSpecialiation: string = '';
+  selectedTraineeEmail: string | null = '';
 
   constructor(
     private router: Router, 
@@ -41,9 +42,16 @@ export class AssessmentOverviewComponent {
     
   }
 
-  toggleEllipsis() {
-    this.ellipsisClicked = !this.ellipsisClicked;
-    console.log(this.ellipsisClicked)
+  toggleEllipsis(traineeEmail: string, event: Event) {
+    event.stopPropagation();
+    
+    this.selectedTraineeEmail = this.selectedTraineeEmail === traineeEmail ? null : traineeEmail
+    if(this.selectedTraineeEmail === traineeEmail) {
+      this.ellipsisClicked = true;
+    }
+    else if(this.selectedTraineeEmail === null) {
+      this.ellipsisClicked = false;
+    }
   }
 
 
