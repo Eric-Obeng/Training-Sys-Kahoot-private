@@ -8,7 +8,12 @@
   <ng-container *ngIf="!isAssessmentsEmpty; else noDataTemplate">
     <div class="wrapper">
       <div class="col-1">
-        <app-searchbar [title]="'Assessment'" [placeholder]="'Name'" [hide]="true"/>
+        <app-searchbar
+          [title]="'Assessment'"
+          [placeholder]="'Name'"
+          [hide]="true"
+          [showAddButton]="false"
+        />
       </div>
       <div class="assessments">
         <div *ngFor="let assessment of assessments$ | async">

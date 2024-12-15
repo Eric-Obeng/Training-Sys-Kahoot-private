@@ -16,6 +16,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { QuizDataService } from '@core/services/assessment/quiz-data.service';
 import { AssessmentService } from '@core/services/assessment/assessment.service';
 import { AssessmentData, Quiz } from '@core/models/assessment-form.interface';
+import { FeedbackComponent } from '../../../core/shared/modal/feedback/feedback.component';
 
 @Component({
   selector: 'app-quiz-creation',
@@ -27,6 +28,7 @@ import { AssessmentData, Quiz } from '@core/models/assessment-form.interface';
     AnswerComponent,
     ReactiveFormsModule,
     FormsModule,
+    FeedbackComponent,
   ],
   templateUrl: './quiz-creation.component.html',
   styleUrl: './quiz-creation.component.scss',
@@ -36,6 +38,18 @@ export class QuizCreationComponent {
   selectedQuestionIndex: number | null = null;
   quizTitle: string = '';
   showErrors: boolean = false;
+
+  feedbackVisible: boolean = false;
+  feedbackTitle: string = '';
+  feedbackMessage: string = '';
+  feedbackImageSrc: string = '';
+
+  showFeedback(title: string, message: string, imageSrc: string) {
+    this.feedbackTitle = title;
+    this.feedbackMessage = message;
+    this.feedbackImageSrc = imageSrc;
+    this.feedbackVisible = true;
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -136,11 +150,20 @@ export class QuizCreationComponent {
       .subscribe({
         next: (response) => {
           console.log('Quiz submitted successfully', response);
+          this.showFeedback(
+            `Quiz Saved Successfully`,
+            `Your Quiz assignment has been successfully created. You can now proceed to assign it to the relevant trainees or cohorts when ready!`,
+            'assets/Images/svg/add-spec.svg'
+          );
           localStorage.removeItem('quizData');
-          this.router.navigate(['/home/trainer/assessment/quiz-creation']);
         },
         error: (err) => {
           console.error('Error submitting quiz', err);
+          this.showFeedback(
+            `Failed to Saved Quiz`,
+            `Quiz failed to save. Please try again later`,
+            'assets/Images/svg/add-spec.svg'
+          );
         },
       });
   }
@@ -185,6 +208,11 @@ export class QuizCreationComponent {
           .join(', ');
       }
     });
+  }
+
+  onCloseFeedback() {
+    this.feedbackVisible = false;
+    this.router.navigate(['/home/trainer/assessment']);
   }
 
   save() {
