@@ -33,11 +33,11 @@ export class GradeManagementService {
   }
 
   getGradeHistoryList() {
-    return this.http.get<any[]>(`${this.grademanagementUrl}//grades/history`, { headers: this.getHeaders() }).pipe(
-      map((res:any) => {
-        const response = res.content;
-        return response;
-      })
+    return this.http.get<any[]>(`${this.grademanagementUrl}/grades/history`, { headers: this.getHeaders() }).pipe(
+      // map((res:any) => {
+      //   const response = res.content;
+      //   return response;
+      // })
     )
   }
 

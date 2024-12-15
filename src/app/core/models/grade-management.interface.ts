@@ -5,14 +5,18 @@ export interface AssessmentList {
     traineeCount?: number;
 }
 
-export interface GradeHistoryList {
+export interface TraineeGradeHistory {
+    firstName: string;
+    lastName: string;
+    averageGradePoints: number;
+    gradedLabsCount: number;
+    gradedPresentationsCount: number;
+    gradedQuizzesCount: number;
     id: number;
     overallGradePoints: number;
-    averageGradePoints: number;
-    quiz: number;
-    lab: number;
-    presentation: number;
-}
+    traineeEmail: string;
+  }
+  
 
 export interface ungradedTraineeList {
     firstName: string;

@@ -1,5 +1,7 @@
+import { AsyncPipe, NgFor } from '@angular/common';
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { TraineeGradeHistory } from '@core/models/grade-management.interface';
 import { GradeManagementService } from '@core/services/grade-management/grade-management.service';
 import { PaginatorComponent } from '@core/shared/paginator/paginator.component';
 import { SearchbarComponent } from '@core/shared/searchbar/searchbar.component';
@@ -8,7 +10,7 @@ import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 @Component({
   selector: 'app-view-grade-history',
   standalone: true,
-  imports: [SearchbarComponent, PaginatorComponent],
+  imports: [SearchbarComponent, PaginatorComponent, AsyncPipe, NgFor],
   templateUrl: './view-grade-history.component.html',
   styleUrl: './view-grade-history.component.scss'
 })
@@ -24,7 +26,7 @@ export class ViewGradeHistoryComponent {
   pageSize = 4;
   totalPages = 1;
 
-  gradeHistoryList$!: Observable<any[]>;
+  gradeHistoryList$!: Observable<TraineeGradeHistory[]>;
   isGradeHistoryLoading$!: Observable<boolean>;
 
   constructor(
