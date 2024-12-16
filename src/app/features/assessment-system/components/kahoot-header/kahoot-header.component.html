@@ -9,3 +9,8 @@
 <div *ngIf="openAiModal">
   <app-generate-by-ai (closeModal)="onCloseAiModal()" (questionsAdded)="handleQuestionsAdded($event)"></app-generate-by-ai>
 </div>
+
+
+<div *ngIf="showShareModal">
+  <app-share (closeModal)="onCloseShareModal()" />
+</div>
