@@ -4,12 +4,13 @@ import { OptionsDropdownComponent } from "../../../../../core/shared/options-dro
 import { Router } from '@angular/router';
 import { CurriculumFacadeService } from '@core/services/curriculum-facade/curriculum-facade.service';
 import { DeleteModalComponent } from '../../delete-modal/delete-modal.component';
+import { TitleCasePipe } from '@angular/common';
 
 
 @Component({
   selector: 'app-list-item',
   standalone: true,
-  imports: [OptionsDropdownComponent, DeleteModalComponent],
+  imports: [OptionsDropdownComponent, DeleteModalComponent,TitleCasePipe],
   templateUrl: './list-item.component.html',
   styleUrl: './list-item.component.scss'
 })

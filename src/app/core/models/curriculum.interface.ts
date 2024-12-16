@@ -1,27 +1,35 @@
 export interface module {
-  id:number;
+  id: number;
   title: string;
   description: string;
   estimatedTimeMinutes: string;
+  estimatedTime?: number;
   topics: string[];
-  fileUrl: ModuleFile[];
+  moduleFile: moduleFile[];
+  fileUrl: string ;
 }
-interface ModuleFile {
+
+
+export interface moduleFile {
   name: string;
   size: string;
   type: string;
-  file?: File;
+  file?: File | string;
 }
 
 
+
 export interface curriculum {
-  id:string;
+  id: string;
   createdAt: string;
+  createdBy?: string;
   title: string;
   description: string;
   specialization: string;
+  
   learningObjectives: string[];
-  thumbnailImageUrl: string ;
+  thumbnailImage: string | File | null;
+  thumbnailImageUrl?: string;
   modules: module[];
 }
 

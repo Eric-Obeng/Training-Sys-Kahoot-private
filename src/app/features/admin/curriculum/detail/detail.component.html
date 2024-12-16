@@ -1,17 +1,24 @@
 <main >
   <div class="curriculum-header">
-    <h2>{{ curriculum?.title}}</h2>
+    <h2>{{ curriculum?.title }}</h2>
     <div class="subtitle-info">
       <span>
         <div class="gray-circle"></div>
-        {{curriculum?.specialization}}
+        {{curriculum?.specialization | titlecase}}
       </span>
-      
+
+      <span>
+        <div class="gray-circle"></div>
+        Estimated duration
+        <b>{{getTotalDuration()}}</b>
+      </span>
+
       <span>
         <div class="gray-circle"></div>
         Created by
         <b>
-          Francis Class-peters on
+          {{curriculum?.createdBy}}
+
         </b>
         {{curriculum?.createdAt | date}}
       </span>
@@ -19,7 +26,6 @@
   </div>
 
   <div class="scrollable-content">
-
     <div class="cover-image">
       <img [src]="curriculum?.thumbnailImageUrl" alt="cover-image"/>
     </div>
@@ -33,10 +39,12 @@
     <div class="modules-section">
       <div class="info-headers">
         <h4 (click)="setActiveDetail('overview')"
+          matTooltip="view curriculum overview"
           [ngClass]="{ 'active': activeSection() === 'overview' }">
           Overview
         </h4>
         <h4 (click)="setActiveDetail('modules')"
+          matTooltip="view modules and topics"
           [ngClass]="{ 'active': activeSection() === 'modules' }">
           Modules & Topics
         </h4>
@@ -71,16 +79,20 @@
           <div>
             <div class="material-list" *ngFor="let module of curriculum?.modules; let matIndex = index">
               <div class="module-files">
-                <h6>{{ module.title }}</h6>
-                <div *ngIf="module.fileUrl?.length; else noFiles">
-                  <div *ngFor="let file of module.fileUrl" class="mat-item">
-                    <img [src]="getFileIcon(file.type)" alt="file icon">
-                    <span class="file-info">
-                      <span class="file-name">{{ file.name }}</span>
-                      <span class="file-size">{{ file.size }}</span>
-                    </span>
+                <h6>#{{ matIndex + 1}}. {{ module.title }}</h6>
+                <ng-container *ngIf="module.fileUrl && module.fileUrl.length > 0; else noFiles">
+                  <div *ngFor="let fileUrl of module.fileUrl" class="file-item">
+                    <a
+                    class="file-name"
+                    [href]="fileUrl"
+                    target="_blank"
+                    matTooltip="preview file"
+                    >
+                    {{ extractFileName(fileUrl) }}
+                    <img [src]="showFileType(fileUrl)" alt="File icon" class="file-icon">
+                    </a>
                   </div>
-                </div>
+                </ng-container>
                 <ng-template #noFiles>
                   <p class="no-files">No files uploaded for this module</p>
                 </ng-template>
@@ -94,7 +106,7 @@
       <div *ngIf="activeSection() === 'modules'" class="module-section">
         <p-accordion [multiple]="true" styleClass="custom-accordion">
           <p-accordionTab *ngFor="let module of curriculum?.modules; let moduleIndex = index">
-            <ng-template pTemplate="header">
+            <ng-template pTemplate="header" >
               <h5>{{ module.title }}</h5>
             </ng-template>
             <div class="topics">

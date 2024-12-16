@@ -219,12 +219,14 @@ main{
             color: #F98416;
           }
 
-          p {
-            font-size: 1.2rem;
-            color: #676767;
-          }
+        p {
+          font-size: 1.2rem;
+          color: #676767;
         }
       }
+
+
+    }
 
     .add-btn[disabled] {
       cursor: not-allowed;
