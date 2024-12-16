@@ -9,7 +9,7 @@
 
       <span>
         <div class="gray-circle"></div>
-        Estimated duration 
+        Estimated duration
         <b>{{getTotalDuration()}}</b>
       </span>
 
@@ -17,7 +17,8 @@
         <div class="gray-circle"></div>
         Created by
         <b>
-          Francis Class-peters on
+          {{curriculum?.createdBy}}
+
         </b>
         {{curriculum?.createdAt | date}}
       </span>
@@ -81,10 +82,10 @@
                 <h6>#{{ matIndex + 1}}. {{ module.title }}</h6>
                 <ng-container *ngIf="module.fileUrl && module.fileUrl.length > 0; else noFiles">
                   <div *ngFor="let fileUrl of module.fileUrl" class="file-item">
-                    <a 
-                    class="file-name" 
-                    [href]="fileUrl" 
-                    target="_blank" 
+                    <a
+                    class="file-name"
+                    [href]="fileUrl"
+                    target="_blank"
                     matTooltip="preview file"
                     >
                     {{ extractFileName(fileUrl) }}
