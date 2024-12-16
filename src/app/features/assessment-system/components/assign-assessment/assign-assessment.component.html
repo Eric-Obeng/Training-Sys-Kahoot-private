@@ -38,7 +38,10 @@
             ></app-trainee-list>
           </p-tabPanel>
           <p-tabPanel header="Cohort">
-            <app-cohort-list [activeCohort]="activeCohort" />
+            <app-cohort-list
+              [activeCohort]="activeCohort"
+              (cohortSelectionChange)="onCohortSelectionChange($event)"
+            />
           </p-tabPanel>
         </p-tabView>
       </div>
