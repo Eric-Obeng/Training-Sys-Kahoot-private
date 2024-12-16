@@ -128,8 +128,9 @@ export class TraineeListComponent {
     }
   }
 
-  getSelectedUser(traineeEmail: string) {
+  getSelectedUser(traineeEmail: string, traineeId: number) {
     this.traineesInsystemService.selectedEmailSubject.next(traineeEmail)
+    this.traineesInsystemService.selectedTraineeId = traineeId;
     this.goToCreateUser();
   }
 

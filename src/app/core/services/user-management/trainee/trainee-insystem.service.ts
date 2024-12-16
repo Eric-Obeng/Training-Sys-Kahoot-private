@@ -43,6 +43,8 @@ export class TraineeInsystemService {
   public selectedEmailSubject = new BehaviorSubject<string | null>('');
   public selectedEmail$: Observable<string | null> = this.selectedEmailSubject.asObservable();
 
+  public selectedTraineeId: number = 0;
+
 
   constructor(
     private http: HttpClient,
@@ -111,6 +113,20 @@ export class TraineeInsystemService {
 
   createNewUser(formData: FormData) {
     return this.http.post<User>(`${this.baseUrl}/users/trainee/create`, formData).pipe(
+      tap(() => {
+        // Reset form states
+        this.firstFormStateSubject.next(null);
+        this.secondFormStateSubject.next(null);
+      }),
+      catchError((error) => {
+        console.error('Error creating user:', error);
+        return throwError(() => new Error("Failed to create user"));
+      })
+    );
+  }
+
+  updateExistingUser(formData: FormData) {
+    return this.http.put<User>(`${this.baseUrl}/profiles/trainees/${this.selectedTraineeId}`, formData).pipe(
       tap(() => {
         // Reset form states
         this.firstFormStateSubject.next(null);

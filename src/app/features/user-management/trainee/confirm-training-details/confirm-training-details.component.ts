@@ -21,6 +21,7 @@ export class ConfirmTrainingDetailsComponent implements OnDestroy {
   allCohorts$!: Observable<Cohort[]>;
 
   isModalOpen = false;
+  isUpdateModalOpen = false;
   errorMessage = '';
   private destroy$ = new Subject<void>();
 
@@ -64,7 +65,51 @@ export class ConfirmTrainingDetailsComponent implements OnDestroy {
       });
   }
 
-  onSubmit() {
+  submitUpdate() {
+    combineLatest([
+      this.traineeInSystemService.firstFormState$,
+      this.traineeInSystemService.secondFormState$,
+    ])
+    .pipe(
+      takeUntil(this.destroy$),
+      catchError(error => {
+        this.errorMessage = 'Failed to retrieve form data. Please try again.';
+        throw error;
+      })
+    )
+    .subscribe(([firstFormState, secondFormState]) => {
+      if (!firstFormState || !secondFormState) {
+        this.errorMessage = 'Incomplete form data. Please fill all required fields.';
+        return;
+      }
+
+      const newForm = {
+        ...firstFormState, 
+        ...secondFormState,
+        cohortId: secondFormState.cohort,
+      };
+
+      delete (newForm as any).cohort;
+
+      // Convert newForm to FormData
+      const formData = this.convertToFormData(newForm);
+
+      // Submit the FormData to the service
+      this.traineeInSystemService.updateExistingUser(formData)
+        .pipe(
+          takeUntil(this.destroy$),
+          tap((res) => {
+            this.toggleUpdateModal();
+          }),
+          catchError(err => {
+            this.errorMessage = 'Failed to create user. Please try again.';
+            throw err;
+          }),
+        ).subscribe();
+    });
+  }
+
+  submitCreateNewUSer() {
     combineLatest([
       this.traineeInSystemService.firstFormState$,
       this.traineeInSystemService.secondFormState$,
@@ -144,6 +189,10 @@ export class ConfirmTrainingDetailsComponent implements OnDestroy {
 
   toggleModal() {
     this.isModalOpen = !this.isModalOpen;
+  }
+
+  toggleUpdateModal() {
+    this.isUpdateModalOpen = !this.isUpdateModalOpen;
   }
 
   routeToUserList() {
