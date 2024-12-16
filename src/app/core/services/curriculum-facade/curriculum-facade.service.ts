@@ -89,11 +89,10 @@ export class CurriculumFacadeService {
     return this.curriculumCrud.createCurriculum(curriculum)
     .pipe(
       catchError(error => {
-        console.error('Full error response:', error);
         return this.errorService.handleError(error);
       }),
       tap(() => {
-        this.refreshCurriculum()
+        this.loadCurriculum()
       })
     )
   }
@@ -102,7 +101,7 @@ export class CurriculumFacadeService {
     return this.curriculumCrud.deleteCurriculum(id).pipe(
       catchError(this.errorService.handleError),
       tap(() => {
-        this.refreshCurriculum();
+        this.loadCurriculum()
       })
     );
   }
@@ -110,7 +109,7 @@ export class CurriculumFacadeService {
   update(id: string, curriculum: curriculum){
     return this.curriculumCrud.updateCurriculum(id, curriculum)
     .pipe(
-      tap(() => this.refreshCurriculum()),
+      tap(() => this.loadCurriculum()),
       catchError(this.errorService.handleError)
     )
   }

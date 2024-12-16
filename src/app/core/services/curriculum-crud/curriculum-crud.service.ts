@@ -27,6 +27,7 @@ export class CurriculumCrudService {
     return this.http.get<content>(this.hostedServer, { headers: this.headers })
       .pipe(
         map((res: content) => ({ content: res.content })),
+        tap((data) => console.log(data)),
         catchError(this.errorService.handleError)
       );
   }
@@ -40,7 +41,6 @@ export class CurriculumCrudService {
     const formData = this.createFormData(curriculum);
     return this.http.post<curriculum>(this.hostedCreate, formData, { headers: this.headers }).pipe(
       catchError(error => {
-        console.error('Full error response:', error);
         return this.errorService.handleError(error);
       })
     );

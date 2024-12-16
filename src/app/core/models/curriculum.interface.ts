@@ -1,5 +1,4 @@
 export interface module {
-  createdBy?: string;
   id: number;
   title: string;
   description: string;
@@ -23,9 +22,11 @@ export interface moduleFile {
 export interface curriculum {
   id: string;
   createdAt: string;
+  createdBy?: string;
   title: string;
   description: string;
   specialization: string;
+  
   learningObjectives: string[];
   thumbnailImage: string | File | null;
   thumbnailImageUrl?: string;
