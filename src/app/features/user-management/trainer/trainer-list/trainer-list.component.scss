@@ -67,7 +67,7 @@
 
         .trainer {
           width: 100%;
-          @include flexbox(row, flex-start, flex-start);
+          @include flexbox(row, flex-start, center);
           padding: 2rem 2rem;
           border-bottom: 2px solid $clr-gray-50;
           color: #676767;
