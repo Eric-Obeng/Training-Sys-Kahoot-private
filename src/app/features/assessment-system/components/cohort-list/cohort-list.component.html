@@ -16,7 +16,7 @@
         <td>{{ cohort.endDate }}</td>
         <td>{{ cohort.traineesEnrolled }}</td>
         <td>
-          <input type="checkbox" />
+          <input type="checkbox" (change)="onCohortSelectionChange(cohort.id, $event)" />
         </td>
       </tr>
     </ng-template>
