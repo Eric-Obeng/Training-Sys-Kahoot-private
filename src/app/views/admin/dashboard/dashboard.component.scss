@@ -8,28 +8,31 @@
   height: 100vh;
   display: flex;
   justify-content: center;
-  gap: 3rem;
 
   & div.left-partition {
     display: flex;
     flex-direction: column;
     gap: 2.4rem;
-    width: calc(27.4rem + 37.3rem + 2.4rem);
+    width: 70%;
     height: calc(32.3rem + 49rem + 2rem);
 
     & section.top {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 2.4rem;
+      width: 100%;
 
       & section.top-left-card {
         @include cards;
-        width: 27.4rem;
+        width: 37.4rem;
         height: 32.3rem;
         @include flexbox(column, space-evenly, center);
+        padding-top: 0;
 
         div.total {
           @include card-numeric-data;
+          width: 30rem;
 
           .details {
             span {
@@ -49,7 +52,7 @@
 
       & section.top-right-card {
         @include cards;
-        width: 37.3rem;
+        flex: 1;
         height: 32.3rem;
         padding: 2.4rem;
         @include flexbox(column, flex-start, flex-start);
@@ -156,6 +159,7 @@
 
     & .bottom {
       @include table;
+      width: 100%;
 
       .card {
         width: 100%;
