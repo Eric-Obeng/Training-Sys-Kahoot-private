@@ -152,12 +152,10 @@ export class AddUserComponent {
 
   setToTrainerTab() {
     this.trainerTabClicked = true;
-    console.log(this.trainerTabClicked, 'trainer');
   }
 
   setToTraineeTab() {
     this.trainerTabClicked = false;
-    console.log(this.trainerTabClicked, 'trainee');
   }
 
   goToAddUserForm() {
