@@ -261,13 +261,16 @@ button.current-question-indicator {
     }
   
     /* Highlight container when selected */
-    input[type="radio"]:checked + .radio-custom + .radio-label {
+    input[type="radio"]:checked + .radio-custom + label {
       font-weight: 600;
       color: #f28500; /* Highlighted text color */
+      background: #fef2e6;
     }
   
     label:hover{
       background-color: #fef2e6;
     }
+
+
   }
   

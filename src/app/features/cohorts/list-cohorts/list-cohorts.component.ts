@@ -45,7 +45,9 @@ export class ListCohortsComponent {
   ngOnInit() {
     this.cohortsList$ = this.cohortDataService.getAllCohorts()
 
-    this.cohortsList$.subscribe(data => {console.log("cohorts list: ", data)})
+    this.cohortsList$.subscribe(data => {
+      this.listEmptyCheck = false;
+    })
 
     this.filteredCohorts$ = combineLatest([this.cohortsList$, this.searchTerm$, this.currentPage$]).pipe(
       map(([cohorts, searchTerm, page]) => {
