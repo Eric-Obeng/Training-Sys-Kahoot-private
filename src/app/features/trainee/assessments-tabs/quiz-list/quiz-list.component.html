@@ -1,4 +1,4 @@
-<div class="container" *ngIf="quizCount !== 0">
+<div class="container" *ngIf="loading === false">
     <div class="title-quiz-count">
         <p *ngIf="assessmentType === 'QUIZ'" class="assessmentType" [textContent]="assessmentType.charAt(0).toUpperCase() + assessmentType.slice(1).toLowerCase() + 'es'"></p> 
         <p *ngIf="assessmentType !== 'QUIZ'" class="assessmentType" [textContent]="assessmentType.charAt(0).toUpperCase() + assessmentType.slice(1).toLowerCase() + 's'"></p> 
@@ -9,7 +9,7 @@
         [class]="showmore? 'assessment-card-list' : 'assessment-card-list-not-hidden'"
     > 
         <div class="assessment-card" *ngFor="let assessment of filteredAssessment$ | async">
-                <img [src]="assessment.coverImage" alt="profile image">
+                <img [src]="'data:image/jpeg;base64,' + assessment.coverImage" alt="profile image">
                 <div class="detail-content">
                     <p>{{ assessment.title }}</p>
                     <div class="quiz-details">
@@ -31,4 +31,6 @@
     <p class="show-less" *ngIf="showmore === false" (click)="toggleShowMore()">Show less...</p>
 
 </div>
+
+<div class="spinner" *ngIf="loading"></div>
 

@@ -24,9 +24,10 @@ export class QuizListComponent {
   totallyEmpty!: boolean;
   decodedToken!: DecodedToken | null;
   traineeEmail!: string | undefined;
+  loading: boolean = true;
 
 
-  assessments$!: Observable<Assignment[]>; // holds the filtered data
+  assessments$!: Observable<Assignment[]>;
   filteredAssessment$!: Observable<Assignment[]>; // holds the filtered data
 
   showmore: boolean = true;
@@ -178,13 +179,10 @@ export class QuizListComponent {
     this.decodedToken = this.tokenService.getDecodedTokenValue()
     this.traineeEmail = this.decodedToken?.email;
 
-    this.traineeAssessentsService.getAllAssignments(this.traineeEmail).subscribe({
-      next: (res) => {
-        this.assessments$ = of(res)
-        console.log("response: ", res)
-      },
-      error: (err) => {
-        console.warn("error: ", err)
+    this.assessments$ = this.traineeAssessentsService.getAllAssignments(this.traineeEmail)
+    this.assessments$.subscribe({
+      next: () => {
+        this.loading = false;
       }
     })
 
@@ -192,18 +190,18 @@ export class QuizListComponent {
     this.filteredAssessment$ = combineLatest([
       this.assessments$, // Observable of all assessments
       this.searchQuiz.searchTerm$, // Observable of the search term
-      of(this.assessmentType) // Observable of the assessment type
+      // of(this.assessmentType) // Observable of the assessment type
     ]).pipe(
-      map(([assessments, searchTerm, assessmentType]) => {
+      map(([assessments, searchTerm]) => {
         return assessments.filter((quiz: any) => {
           const matchesSearchTerm = quiz.title.toLowerCase().includes(searchTerm.toLowerCase());
-          const matchesAssessmentType = assessmentType ? quiz.assessmentType === assessmentType : true;
+          const matchesAssessmentType = this.assessmentType ? quiz.assessmentType === this.assessmentType : true;
           return matchesSearchTerm && matchesAssessmentType;
         });
       }),
       tap(filtered => {
         this.quizCount = filtered.length;
-        filtered.forEach(item => console.log(item.assessmentType))
+        this.dataEmpty.emit(filtered.length === 0);
       }) 
     );
 

@@ -15,10 +15,8 @@ export class TraineeQuizService {
   ) { }
 
   getAllAssignments(traineeEmail: string | undefined) {
-    const params = new HttpParams().set('traineeEmail', traineeEmail || '')
-    return this.http.get<any[]>(this.quizUrl, {
-      params,
-    })
+    const params = new HttpParams().set('traineeEmail', traineeEmail || '');
+    return this.http.get<any[]>(this.quizUrl, { params });
   }
-
+  
 }
