@@ -145,6 +145,7 @@ export class AssignAssessmentComponent implements OnInit {
 
   readonly checked = model(false);
   selectAllChecked = false;
+  selectedCohortIds: number[] = [];
 
   onCancel() {
     this.cancel.emit();
@@ -152,6 +153,11 @@ export class AssignAssessmentComponent implements OnInit {
 
   onTraineeSelectionChange(emails: string[]) {
     this.traineeEmail = emails;
+  }
+
+  onCohortSelectionChange(cohortIds: number[]) {
+    this.selectedCohortIds = cohortIds;
+    console.log('Selected Cohort IDs:', this.selectedCohortIds);
   }
 
   onAssign() {
@@ -162,25 +168,62 @@ export class AssignAssessmentComponent implements OnInit {
       'en-US'
     );
 
-    const assessmentData: AssignAssessment = {
-      assessmentId: this.currentAssessmentId ?? 0,
-      deadline: formattedDeadline,
-      traineeEmail: this.traineeEmail,
-    };
+    if (this.selectedCohortIds.length > 0) {
+      console.log('Submitting to cohort with IDs:', this.selectedCohortIds);
+      this.selectedCohortIds.forEach((cohortId) => {
+        this.assessmentService
+          .assignAssessmentToCohort(
+            this.currentAssessmentId ?? 0,
+            cohortId,
+            formattedDeadline
+          )
+          .subscribe({
+            next: () => {
+              this.showFeedback(
+                `Assigned Successfully`,
+                `Your quiz has been successfully assigned to the selected cohorts. They can now access and complete it within the given time-frame`,
+                'assets/Images/svg/add-spec.svg'
+              );
+              console.log('Assessment assigned to cohort successfully');
+            },
+            error: (error) => {
+              console.error('Error assigning assessment to cohort:', error),
+                this.showFeedback(
+                  `Failed to Assign Assessment`,
+                  `Your quiz has been successfully assigned to the selected trainees. They can now access and complete it within the given time-frame`,
+                  'assets/Images/svg/add-spec.svg'
+                );
+            },
+          });
+      });
+    }
 
-    console.log(assessmentData);
+    if (this.traineeEmail.length > 0) {
+      const assessmentData: AssignAssessment = {
+        assessmentId: this.currentAssessmentId ?? 0,
+        deadline: formattedDeadline,
+        traineeEmail: this.traineeEmail,
+      };
 
-    this.assessmentService.assignAssessment(assessmentData).subscribe({
-      next: () => {
-        this.showFeedback(
-          `Assigned Successfully`,
-          `Your quiz has been successfully assigned to the selected trainees. They can now access and complete it within the given time-frame`,
-          'assets/Images/svg/add-spec.svg'
-        );
-        console.log('Assessment assigned successfully');
-      },
-      error: (error) => console.error('Error assigning assessment:', error),
-    });
+      this.assessmentService.assignAssessment(assessmentData).subscribe({
+        next: () => {
+          this.showFeedback(
+            `Assigned Successfully`,
+            `Your quiz has been successfully assigned to the selected trainees. They can now access and complete it within the given time-frame`,
+            'assets/Images/svg/add-spec.svg'
+          );
+          console.log('Assessment assigned successfully');
+        },
+        error: (error) => {
+          console.error('Error assigning assessment:', error),
+            this.showFeedback(
+              `Failed to Assign Assessment`,
+              `Your quiz has been successfully assigned to the selected trainees. They can now access and complete it within the given time-frame`,
+              'assets/Images/svg/add-spec.svg'
+            );
+        },
+      });
+    }
   }
 
   applyFilters() {
@@ -216,7 +259,7 @@ export class AssignAssessmentComponent implements OnInit {
 
   onCloseFeedback() {
     this.feedbackVisible = false;
-    this.onCancel()
+    this.onCancel();
     this.router.navigate(['/home/trainer/assessment']);
   }
 }

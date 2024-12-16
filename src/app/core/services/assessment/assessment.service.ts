@@ -107,4 +107,13 @@ export class AssessmentService {
   assignAssessment(data: AssignAssessment) {
     return this.http.post(`${environment.BaseUrl}/assignments/batch`, data, {responseType: 'text'});
   }
+
+  assignAssessmentToCohort(assessmentId: number, cohortId: number, deadline: string) {
+    const params = {
+      assessmentId: assessmentId.toString(),
+      cohortId: cohortId.toString(),
+      deadline: deadline,
+    };
+    return this.http.post(`${environment.BaseUrl}/assignments/cohort`, null, { params, responseType: 'text' });
+  }
 }
