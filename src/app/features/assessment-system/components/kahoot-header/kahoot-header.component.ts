@@ -4,11 +4,12 @@ import { GenerateByAiComponent } from '../../kahoot-page/generate-by-ai/generate
 import { RouterLink, RouterModule } from '@angular/router';
 import { Question } from '@core/models/kahoot-questions';
 import { KahootService } from '@core/services/assessment/kahoot/kahoot.service';
+import { ShareComponent } from "../share/share.component";
 
 @Component({
   selector: 'app-kahoot-header',
   standalone: true,
-  imports: [CommonModule, GenerateByAiComponent, RouterModule, RouterLink],
+  imports: [CommonModule, GenerateByAiComponent, RouterModule, RouterLink, ShareComponent],
   templateUrl: './kahoot-header.component.html',
   styleUrl: './kahoot-header.component.scss',
 })
@@ -18,6 +19,8 @@ export class KahootHeaderComponent {
 
   @Output() questionsAdded = new EventEmitter<Question[]>();
   @Output() currentQuestionSubmitted = new EventEmitter<Question[]>();
+
+  showShareModal = true;
 
   constructor(private kahootService: KahootService) {}
 
@@ -71,5 +74,9 @@ export class KahootHeaderComponent {
     } else {
       console.error('No questions available to submit');
     }
+  }
+
+  onCloseShareModal() {
+    this.showShareModal = false;
   }
 }

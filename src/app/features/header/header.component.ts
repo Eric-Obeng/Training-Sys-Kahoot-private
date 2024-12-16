@@ -12,6 +12,7 @@ import { TitleCasePipe } from '@angular/common';
 import { ButtonStateService } from '../../core/services/buttonState/buttonstate.service';
 import { ActiveNavService } from '@core/services/active-nav/active-nav.service';
 import { TokenService } from '@core/services/token/token.service';
+import { DecodedToken } from '@core/models/iuser';
 
 @Component({
   selector: 'app-header',
@@ -25,6 +26,10 @@ export class HeaderComponent implements OnInit {
   dropDownClicked: boolean = false;
   routeName!: string;
   userRole!: string;
+  userName!: string;
+
+  decodedToken!: DecodedToken | null;
+  traineeEmail!: string | undefined;
 
   @Output() activatePlusBtn = new EventEmitter<void>();
 
@@ -41,8 +46,11 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.decodeToken();
     // Get user role
     this.userRole = this.userRoleService.getUserRole();
+
+    this.getUserDetails()
 
     // Set routeName immediately on component load, in case the NavigationEnd hasn't fired yet
     this.updateRouteName();
@@ -54,6 +62,32 @@ export class HeaderComponent implements OnInit {
         this.updateRouteName();
         this.runAfterViewInitLogic();
       });
+  }
+
+  decodeToken() {
+    this.decodedToken = this.tokenService.getDecodedTokenValue()
+    this.traineeEmail = this.decodedToken?.email;
+  }
+
+  getUserDetails() {
+    if(this.userRole === 'TRAINEE') {
+      this.userRoleService.getTraineeInfo(this.traineeEmail || '').subscribe({
+        next: (res: any) => { 
+          this.userName = res.firstName;
+        }
+      })
+    }
+    else if(this.userRole === 'TRAINER') {
+      this.userRoleService.getTraineeInfo(this.traineeEmail || '').subscribe({
+        next: (res: any) => { 
+          this.userName = res.firstName;
+        }
+      })
+    }
+    else if(this.userRole === 'ADMIN') {
+      this.userName = 'Admin'
+      console.log(this.userName)
+    }
   }
 
   // trigger emitter
@@ -76,5 +110,9 @@ export class HeaderComponent implements OnInit {
   onLogout() {
     this.tokenService.clearToken();
     this.router.navigate(['/auth/login']);
+  }
+
+  getUserName() {
+
   }
 }

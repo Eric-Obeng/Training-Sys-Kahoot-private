@@ -4,6 +4,7 @@ import { BehaviorSubject,combineLatest, map,tap,catchError, Observable } from 'r
 import { ErrorHandleService } from '../error-handle/error-handle.service';
 import { CurriculumCrudService } from '../curriculum-crud/curriculum-crud.service';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,14 +18,14 @@ export class CurriculumFacadeService {
   readonly searchTerm$ = this.searchTermSubject.asObservable();
   readonly sortDirection$ = this.sortDirectionSubject.asObservable();
 
-
-
   constructor(
     private errorService: ErrorHandleService,
     private curriculumCrud: CurriculumCrudService
   ) {
     this.refreshCurriculum();
   }
+
+
   readonly filteredAndSortedCurriculum$ = combineLatest([
     this.curriculum$,
     this.searchTerm$,
@@ -48,9 +49,8 @@ export class CurriculumFacadeService {
 
   private loadCurriculum() {
     this.curriculumCrud.getAllCurriculums().subscribe({
-      next: (curriculums) => this.curriculumSubject.next(curriculums),
+      next: (curriculums) => this.curriculumSubject.next(curriculums.content),
       error: (error) => {
-        console.error('Error occurred while fetching curriculums:', error);
         this.errorService.handleError(error);
       }
     });
@@ -71,12 +71,10 @@ export class CurriculumFacadeService {
   }
 
 
-  getSelectedCurriculum(id:number){
-    return this.curriculumCrud.getCurriculumById(id).pipe(
-      tap((data) => {
-        console.log(data);
-        this.loadCurriculum();
-      }),
+  getSelectedCurriculum(id:string | null ){
+    return this.curriculumCrud.getCurriculumById(id)
+    .pipe(
+      tap(() => { this.loadCurriculum(); }),
       catchError(this.errorService.handleError)
     )
   }
@@ -84,19 +82,30 @@ export class CurriculumFacadeService {
   create(curriculum: curriculum):Observable<any>{
     return this.curriculumCrud.createCurriculum(curriculum)
     .pipe(
-       catchError(this.errorService.handleError),
-       tap(() => {
+      catchError(error => {
+        console.error('Full error response:', error);
+        return this.errorService.handleError(error);
+      }),
+      tap(() => {
         this.refreshCurriculum()
-       })
+      })
     )
   }
 
-  delete(id: number): Observable<any> {
+  delete(id: string): Observable<any> {
     return this.curriculumCrud.deleteCurriculum(id).pipe(
       catchError(this.errorService.handleError),
       tap(() => {
         this.refreshCurriculum();
       })
     );
+  }
+
+  update(id: string, curriculum: curriculum){
+    return this.curriculumCrud.updateCurriculum(id, curriculum)
+    .pipe(
+      tap(() => this.refreshCurriculum()),
+      catchError(this.errorService.handleError)
+    )
   }
 }

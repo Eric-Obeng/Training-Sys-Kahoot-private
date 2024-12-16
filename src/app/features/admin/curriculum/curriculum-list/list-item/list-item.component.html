@@ -6,14 +6,15 @@
     <span class="curriculum-txt-3">
       {{ getTotalTopics() }}
     </span>
-    <span class="curriculum-txt-4">{{ curriculum.assignedSpecialization }}</span>
+    <span class="curriculum-txt-4">{{ curriculum.specialization }}</span>
   </div>
 
-  <app-options-dropdown class="options"
+  <app-options-dropdown
     [isActive]="isDropdownActive"
     [options]="dropdownOptions"
     (toggle)="toggleDropdown($event)"
-    (optionSelected)="handleOptionSelect($event)">
+    (optionSelected)="handleOptionSelect($event)"
+    class="options-dropdown">
   </app-options-dropdown>
 
 

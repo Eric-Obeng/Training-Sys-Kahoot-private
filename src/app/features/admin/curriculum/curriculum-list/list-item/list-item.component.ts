@@ -19,20 +19,25 @@ export class ListItemComponent {
   @Input() curriculumIndex!: number;
   isDropdownActive = false;
   isDeleteModalVisible = false;
+  private documentClickListener!: (event: MouseEvent) => void;
 
   constructor(
     private router: Router,
     private curriculumFacadeService: CurriculumFacadeService
   ) {
-    document.addEventListener('click', () => {
-      this.isDropdownActive = false;
-    });
+    this.documentClickListener = this.handleDocumentClick.bind(this);
+    document.addEventListener('click', this.documentClickListener);
   }
 
   ngOnDestroy() {
-    document.removeEventListener('click', () => {
+    document.removeEventListener('click', this.documentClickListener);
+  }
+
+  private handleDocumentClick(event: MouseEvent): void {
+    const dropdownElement = (event.target as HTMLElement).closest('.options-dropdown');
+    if (!dropdownElement) {
       this.isDropdownActive = false;
-    });
+    }
   }
 
   getTotalTopics(): number {
@@ -65,7 +70,7 @@ export class ListItemComponent {
     const { action } = data;
     switch(action) {
       case 'update':
-        // Implement update logic if needed
+        this.navigateToCreate(this.curriculum.id)
         break;
       case 'delete':
         this.isDeleteModalVisible = true;
@@ -75,4 +80,9 @@ export class ListItemComponent {
   }
 
 
+  private navigateToCreate(id: string | undefined): void {
+    this.router.navigate(['home', 'admin', 'curriculum-management', 'create-curriculum'], {
+      queryParams: { id }
+    });
+  }
 }
