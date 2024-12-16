@@ -20,7 +20,7 @@ export class KahootHeaderComponent {
   @Output() questionsAdded = new EventEmitter<Question[]>();
   @Output() currentQuestionSubmitted = new EventEmitter<Question[]>();
 
-  showShareModal = true;
+  showShareModal = false;
 
   constructor(private kahootService: KahootService) {}
 
@@ -66,6 +66,7 @@ export class KahootHeaderComponent {
       this.kahootService.createKahootQuiz(normalizedQuestions).subscribe({
         next: (response) => {
           console.log('Quiz created successfully', response);
+          this.showShareModal = true;
         },
         error: (error) => {
           console.error('Error creating quiz', error);
