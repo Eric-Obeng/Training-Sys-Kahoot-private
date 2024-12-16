@@ -22,7 +22,7 @@
         <div class="user-details">
             <img src="../../../assets/Images/userprofile.jpg" alt="user-image" class="profile-image">
             <div class="user-name-role">
-                <span id="user-name">Alex</span>
+                <span id="user-name">{{ userName }}</span>
                 <span id="user-role">{{ userRole | titlecase }}</span>
             </div>
             <div class="more-option-icon" (click)="toggleDropDownBtn()">

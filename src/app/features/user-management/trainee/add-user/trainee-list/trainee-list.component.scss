@@ -3,6 +3,7 @@
 
 .container {
     width: 100%;
+    height: 65vh;
     margin-top: 1.6rem;
 
     & .list-wrapper {
@@ -202,10 +203,17 @@
     @include dropDownNotVisible;
 }
 
+.confirm-delete-modal-wrapper {
+    position: absolute;
+    z-index: 30000000;
+    top: 0;
+    left: 0;
+}
+
 .confirmDeleteModal {
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, .5);
+    background: rgba(0, 0, 0, 0);
     display: grid;
     place-items: center;
     position: absolute;
@@ -223,6 +231,7 @@
         flex-direction: column;
         align-items: Center;
         position: relative;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 
         & svg {
             position: absolute;
