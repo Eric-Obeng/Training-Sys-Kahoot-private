@@ -14,7 +14,7 @@ import { DeleteFeedbackComponent } from "../../specializations/delete-feedback/d
 })
 export class DeleteModalComponent {
   @Input() visible = false;
-  @Input() curriculumId?: number;
+  @Input() curriculumId?: string;
   @Output() visibleChange = new EventEmitter<boolean>();
   @Output() deleted = new EventEmitter<void>();
   showDeleteFeedback = false;

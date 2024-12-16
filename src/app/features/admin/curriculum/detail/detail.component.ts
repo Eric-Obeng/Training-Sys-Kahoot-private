@@ -26,7 +26,7 @@ export class DetailComponent implements OnInit{
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      const id = +params['id'];
+      const id = params['id'].toString(); 
       this.curriculumFacade.getSelectedCurriculum(id).subscribe(
         (curriculum) => {
           this.curriculum = curriculum;

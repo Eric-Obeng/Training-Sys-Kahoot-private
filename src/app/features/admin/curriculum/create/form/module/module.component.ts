@@ -6,7 +6,7 @@ import { uploadedFile } from '@core/models/file.interface';
 import { AccordionModule } from 'primeng/accordion';
 import { ModuleListComponent } from "../module-list/module-list.component";
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CurriculumStateService } from '@core/services/curriculum-state/curriculum-state.service';
 import { FeedbackModalComponent } from "../../../../../../core/shared/feedback-modal/feedback-modal.component";
 import { CurriculumFacadeService } from '@core/services/curriculum-facade/curriculum-facade.service';
@@ -28,7 +28,10 @@ export class ModuleComponent implements OnInit {
   parentForm!: FormGroup;
   private formSubscription: Subscription | null = null;
   showFeedback: boolean = false;
-  curriculums: curriculum[] = []
+  curriculums: curriculum[] = [];
+  isUpdate: boolean = false;
+  curriculumId: string | null = null;
+
 
   activeModuleIndex = 0;
   readonly allowedFileTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/webp', 'application/pdf'];
@@ -39,6 +42,7 @@ export class ModuleComponent implements OnInit {
     private fb: FormBuilder,
     private curriculumStateService: CurriculumStateService,
     private router: Router,
+    private route: ActivatedRoute,
     private curriculumService: CurriculumFacadeService,
     private fileUploadService: FileUploadService
   ) {
@@ -48,6 +52,33 @@ export class ModuleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      if (params['id']) {
+        this.curriculumId = params['id'];
+        this.isUpdate = true;
+
+        this.curriculumService.getSelectedCurriculum(this.curriculumId).subscribe(curriculum => {
+          if (curriculum) {
+            while (this.modules.length) {
+              this.modules.removeAt(0);
+            }
+            curriculum.modules.forEach((module: any) => {
+              const moduleGroup = this.createModuleGroup(module);
+              this.modules.push(moduleGroup);
+
+              const moduleIndex = this.modules.length - 1;
+              this.uploadedFiles[moduleIndex] = module.fileUrl?.map((file: any) => ({
+                name: file.name,
+                size: this.fileUploadService.formatFileSize(parseInt(file.size)),
+                type: file.type,
+                file: null
+              })) || [];
+            });
+          }
+        });
+      }
+    });
+
     this.formSubscription = this.curriculumStateService.getCurriculumForm()
     .subscribe(form => {
       if (form) {
@@ -56,12 +87,25 @@ export class ModuleComponent implements OnInit {
           this.addModule();
         }
       } else {
-        this.router.navigate(['home', 'admin', 'curriculum', 'create-curriculum']);
+        this.router.navigate(['home', 'admin', 'curriculum-management', 'create-curriculum']);
       }
     });
-
     this.curriculumService.curriculum$.subscribe((curriculums: curriculum[]) => {
       this.curriculums = curriculums;
+    });
+  }
+
+  private createModuleGroup(existingModule?: any) {
+    return this.fb.group({
+      title: [existingModule?.title || '', Validators.required],
+      description: [existingModule?.description || '', Validators.required],
+      estimatedTimeMinutes: [existingModule?.estimatedTimeMinutes || 0 , Validators.required],
+      topics: this.fb.array(
+        Array.isArray(existingModule?.topics)
+          ? existingModule.topics.map((topic: string) => this.fb.control(topic, Validators.required))
+          : [this.fb.control('', Validators.required)]
+      ),
+      fileUrl: this.fb.array(existingModule?.fileUrl || [])
     });
   }
 
@@ -83,16 +127,13 @@ export class ModuleComponent implements OnInit {
     return this.modules.at(moduleIndex).get('topics') as FormArray;
   }
 
-  addModule(): void {
-    const moduleGroup = this.fb.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required],
-      topics: this.fb.array([this.fb.control('', Validators.required)]),
-      files: []
-    });
-    this.modules.push(moduleGroup);
-    this.uploadedFiles[this.modules.length - 1] = [];
-  }
+
+addModule(): void {
+  const moduleGroup = this.createModuleGroup();
+  this.modules.push(moduleGroup);
+  this.uploadedFiles[this.modules.length - 1] = [];
+}
+
 
   onModuleSelected(index: number): void {
     this.activeModuleIndex = index;
@@ -102,49 +143,67 @@ export class ModuleComponent implements OnInit {
     this.removeModule(index);
   }
 
-
   get formControls(){
     return {
       title: this.parentForm.get('title'),
       description: this.parentForm.get('description'),
-      topics: this.parentForm.get('topics')
+      estimatedTimeMinutes : this.parentForm.get('estimatedTimeMinutes'),
+      topics: this.parentForm.get('topics'),
     };
   }
 
   onCreateCurriculum(): void {
     if (this.parentForm?.valid) {
-      this.showFeedback = true;
       const formData = this.parentForm.value;
       const formattedModules = formData.modules.map((module: any, index: number) => ({
         ...module,
-        files: this.uploadedFiles[index]?.map(file => ({
+        fileUrl: this.uploadedFiles[index]?.map(file => ({
           name: file.name,
           size: file.size,
-          type: file.type
+          type: file.type,
+          file: file.file
         })) || []
       }));
-      const curriculumData = {
+
+      const curriculumData: curriculum = {
         ...formData,
         modules: formattedModules,
-        id: this.curriculums.length + 1,
-        createdAt: new Date().toISOString()
       };
-      this.curriculumService.create(curriculumData).subscribe({
-        next: () => {
-          setTimeout(() => {
-            this.showFeedback = false;
-            this.router.navigate(['home', 'admin', 'curriculum-management']);
-          }, 3000);
-        },
-        error: (error) => {
-          this.showFeedback = false;
-          console.error('Error creating curriculum:', error);
+        if (this.isUpdate && this.curriculumId) {
+          this.curriculumService.update(this.curriculumId, curriculumData).subscribe({
+            next: () => {
+              this.showFeedback = true;
+              setTimeout(() => {
+                this.showFeedback = false;
+                this.router.navigate(['home', 'admin', 'curriculum-management']);
+              }, 3000);
+            },
+            error: (error) => {
+              this.showFeedback = false;
+              console.error('Error updating curriculum:', error);
+            }
+          });
+        } else {
+          this.curriculumService.create(curriculumData).subscribe({
+            next: () => {
+              this.showFeedback = true;
+              setTimeout(() => {
+                this.showFeedback = false;
+                this.router.navigate(['home', 'admin', 'curriculum-management']);
+              }, 3000);
+            },
+            error: (error) => {
+              this.showFeedback = false;
+              console.error('Error creating curriculum:', error);
+            }
+          });
         }
-      });
     } else {
       this.markFormGroupTouched(this.parentForm);
     }
   }
+
+
 
   private markFormGroupTouched(formGroup: FormGroup | FormArray): void {
     Object.values(formGroup.controls).forEach(control => {
@@ -197,19 +256,38 @@ export class ModuleComponent implements OnInit {
     }
   }
 
+  private updateModuleFiles(moduleIndex: number): void {
+    const moduleGroup = this.modules.at(moduleIndex);
+    const fileUrlArray = moduleGroup.get('fileUrl') as FormArray;
+
+
+    while (fileUrlArray.length) {
+      fileUrlArray.removeAt(0);
+    }
+
+    this.uploadedFiles[moduleIndex]?.forEach(file => {
+      fileUrlArray.push(this.fb.group({
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        file: file.file
+      }));
+    });
+  }
+
 
   private processFile(file: File, moduleIndex: number): void {
-    const uploadedFile = this.fileUploadService.handleFile(file);
-    if (uploadedFile) {
+    if (this.allowedFileTypes.includes(file.type)) {
       if (!this.uploadedFiles[moduleIndex]) {
         this.uploadedFiles[moduleIndex] = [];
       }
-      this.uploadedFiles[moduleIndex].push(uploadedFile);
-      const moduleGroup = this.modules.at(moduleIndex);
-      const files = this.uploadedFiles[moduleIndex].map(f => f.file);
-      moduleGroup.patchValue({
-        moduleFile: files
+      this.uploadedFiles[moduleIndex].push({
+        name: file.name,
+        size: this.fileUploadService.formatFileSize(file.size),
+        type: file.type,
+        file: file
       });
+      this.updateModuleFiles(moduleIndex);
     } else {
       alert('Please upload only PNG, JPG, JPEG, WEBP, or PDF files');
     }

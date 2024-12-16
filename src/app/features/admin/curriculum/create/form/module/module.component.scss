@@ -289,10 +289,10 @@ section{
 
                 .file-name {
                   margin: 0;
-                  font-size: 1.4rem;
+                  font-size: 1.6rem;
                   color: #676767;
                   overflow: hidden;
-                  text-overflow: ellipsis;
+                  text-overflow: ellipsis !important;
                   white-space: nowrap;
                 }
               }

@@ -1,26 +1,30 @@
-
 export interface module {
+  id:number;
   title: string;
   description: string;
+  estimatedTimeMinutes: string;
   topics: string[];
-  files: ModuleFile[];
+  fileUrl: ModuleFile[];
 }
-
 interface ModuleFile {
   name: string;
   size: string;
   type: string;
+  file?: File;
 }
 
 
 export interface curriculum {
-  id:number;
+  id:string;
   createdAt: string;
   title: string;
   description: string;
-  assignedSpecialization: string;
-  assignedCohort: string;
+  specialization: string;
   learningObjectives: string[];
-  thumbnail: string;
+  thumbnailImageUrl: string ;
   modules: module[];
+}
+
+export interface content{
+  content: curriculum[]
 }

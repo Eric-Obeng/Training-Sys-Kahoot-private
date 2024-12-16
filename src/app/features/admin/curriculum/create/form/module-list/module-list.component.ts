@@ -17,6 +17,7 @@ export class ModuleListComponent {
   @Input() showFeedback!: boolean;
   @Input() activeModuleIndex!: number;
   @Input() parentFormValid!: boolean;
+  @Input() isUpdate: boolean = false;
 
   @Output() moduleSelected = new EventEmitter<number>();
   @Output() moduleRemoved = new EventEmitter<number>();
