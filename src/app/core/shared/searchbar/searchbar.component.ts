@@ -56,7 +56,9 @@ export class SearchbarComponent implements OnInit {
     this.allSpecializations$ = this.usermanagementService.getAllspecializations();
   }
 
-  onSearchInput(): void {
+  onSearchInput(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    this.searchbarService.updateSearchTerm(inputElement.value)
     this.searchChanged.emit(this.searchValue);
   }
 

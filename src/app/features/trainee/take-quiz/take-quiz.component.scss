@@ -192,3 +192,85 @@ button.current-question-indicator {
         border: .1rem solid $clr-primary-500;
     }
 }
+
+
+
+
+/* Container for the custom radio button */
+.custom-radio {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+  
+    label {
+      width: 789px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: $font-size-body;
+      font-family: $font-lato;
+      color: $clr-gray-500;
+      padding-left: 16px;
+  
+      input[type="radio"] {
+        display: none; /* Hide default radio button */
+      }
+  
+      /* Custom radio circle */
+      .radio-custom {
+        width: 28px;
+        height: 28px;
+        border: 1px solid #f28500; /* Outer border color */
+        border-radius: 50%;
+        margin-right: 24px;
+        position: relative;
+  
+        /* Checked state */
+        &::after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 10px;
+          height: 10px;
+          background-color: #f28500; /* Inner filled circle color */
+          border-radius: 50%;
+          transform: translate(-50%, -50%) scale(0);
+          transition: transform 0.2s ease;
+        }
+      }
+
+      /* Apply background color when radio button is checked */
+    input[type="radio"]:checked ~ .radio-custom,
+    input[type="radio"]:checked ~ .radio-label {
+      background-color: #fff5ec; /* Light orange background */
+    }
+  
+      /* Checked state activation */
+      input[type="radio"]:checked + .radio-custom::after {
+        transform: translate(-50%, -50%) scale(1);
+      }
+  
+      /* Custom radio label styling */
+      .radio-label {
+        font-size: 14px;
+        color: #333;
+      }
+    }
+  
+    /* Highlight container when selected */
+    input[type="radio"]:checked + .radio-custom + label {
+      font-weight: 600;
+      color: #f28500; /* Highlighted text color */
+      background: #fef2e6;
+    }
+  
+    label:hover{
+      background-color: #fef2e6;
+    }
+
+
+  }
+  

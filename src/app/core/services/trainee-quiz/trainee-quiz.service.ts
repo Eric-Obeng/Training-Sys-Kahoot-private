@@ -14,18 +14,9 @@ export class TraineeQuizService {
     private http: HttpClient,
   ) { }
 
-  private getHeaders(): HttpHeaders {
-    return new HttpHeaders({
-      "ngrok-skip-browser-warning": "69420"
-    });
-  }
-
   getAllAssignments(traineeEmail: string | undefined) {
-    const params = new HttpParams().set('traineeEmail', traineeEmail || '')
-    return this.http.get<any[]>(this.quizUrl, {
-      params,
-      headers: this.getHeaders() 
-    })
+    const params = new HttpParams().set('traineeEmail', traineeEmail || '');
+    return this.http.get<any[]>(this.quizUrl, { params });
   }
-
+  
 }

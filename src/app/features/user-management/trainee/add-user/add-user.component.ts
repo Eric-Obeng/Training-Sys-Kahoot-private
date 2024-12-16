@@ -49,6 +49,7 @@ export class AddUserComponent {
     private router: Router,
     private traineesInsystemService: TraineeInsystemService,
     private trainersService: TrainerService,
+    private searchbarService: SearchbarService,
   ) {}
 
   ngOnInit(): void {

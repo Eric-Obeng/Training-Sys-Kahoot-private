@@ -53,18 +53,12 @@ export class CohortDataService {
 
   //(HTTP Request) Make a post request to backend to add cohort
   addCohort(formData: Cohort) {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '54657',
-    });
-    return this.http
-      .post<CohortList>(
-        this.cohortsListUrl,
-        {
-          formData,
-        },
-        { headers }
-      )
-      .pipe(catchError((error) => this.errorhandlerService.handleError(error)));
+    console.log("formdata: ", formData)
+    return this.http.post<CohortList>(this.cohortsListUrl, {
+      ...formData,
+    }).pipe(
+      catchError(error => this.errorhandlerService.handleError(error))
+    )
   }
 
   //(HTTP Request) Make a post request to backend for Cohort Details including trainee list
@@ -92,18 +86,12 @@ export class CohortDataService {
   }
 
   updateCohort(formData: Cohort) {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '54657',
-    });
-    return this.http
-      .put<Cohort>(
-        `${this.cohortsListUrl}/${this.selectedCohortForUpdate}`,
-        {
-          formData,
-        },
-        { headers }
-      )
-      .pipe(catchError((error) => this.errorhandlerService.handleError(error)));
+    console.log(formData)
+    return this.http.put<Cohort>(`${this.cohortsListUrl}/${this.selectedCohortForUpdate}`, {
+      ...formData,
+    }).pipe(
+      catchError(error => this.errorhandlerService.handleError(error))
+    )
   }
 
   deleteCohort(id: string) {

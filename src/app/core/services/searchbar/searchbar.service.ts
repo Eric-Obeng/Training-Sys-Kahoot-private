@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchbarService {
 
-  searchValue: string = '';
+  private searchValue = new BehaviorSubject<string>('');
 
   constructor() { }
 
-  getFilteredList() {
-    
+  updateSearchTerm(term: string): void {
+    this.searchValue.next(term);
   }
 }
