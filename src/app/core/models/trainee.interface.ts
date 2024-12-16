@@ -5,15 +5,24 @@ export interface TraineeList {
 }
 
 export interface Assignment {
+    assessmentType: string;
+    coverImage: string;
+    createdAt: string | null;
+    description: string;
+    focusArea: string;
     id: number;
     title: string;
-    dateCreated: string;
-    type: string;
-    action: string;
-    questionCount: number;
-}
+    questionsCount: number;
+  }
+  
 
 export interface Quiz {
     quizCount: number;
     assignments: Assignment[];
 }
+
+export interface QuizSubmission {
+    traineeEmail: string;
+    submittedAnswers: { questionId: number; selectedAnswerId: number }[];
+  }
+  

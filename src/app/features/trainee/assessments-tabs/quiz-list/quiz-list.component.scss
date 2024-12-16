@@ -1,5 +1,6 @@
 @import '../../../../../styleSheet/grade_management_mixins';
 @import '../../../../../styleSheet/variables';
+@import '../../../../../styleSheet/loading';
 
 .container {
     width: 100%;
@@ -156,6 +157,12 @@
     justify-content: right;
     color: $clr-gray-500;
     cursor: pointer;
+}
+
+
+.spinner {
+    @include spinner;
+    // @include spinner-overlay;
 }
 
 

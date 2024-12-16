@@ -23,6 +23,9 @@ export class AssessmentsTabsComponent {
     private searchQuiz: SearchQuizService,
   ) {}
 
+
+
+  
   handleChildEmpty(isEmpty: boolean) {
     if (isEmpty) {
       this.empty = true;

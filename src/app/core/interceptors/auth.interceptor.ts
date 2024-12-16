@@ -14,16 +14,19 @@ export const authInterceptor: HttpInterceptorFn = (
 ): Observable<HttpEvent<any>> => {
   const token = localStorage.getItem('token');
 
+  // Add Authorization header if token exists
   const modifiedReq = req.clone({
     headers: req.headers
-      .set('ngrok-skip-browser-warning', '69420')
+      .set('ngrok-skip-browser-warning', '69420') // Add ngrok header
       .set('Authorization', token ? `Bearer ${token}` : ''),
   });
 
+  // Skip token refresh logic for login URL
   if (!req.url.includes('/login')) {
     return next(modifiedReq);
   }
 
+  // Add token persistence logic for login endpoint responses
   return next(modifiedReq).pipe(
     tap({
       next: (event) => {

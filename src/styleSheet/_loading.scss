@@ -1,0 +1,20 @@
+@import '../styleSheet/variables';
+
+// spinner.scss
+@mixin spinner($size: 30px, $color: $clr-primary-500, $speed: 1s) {
+  width: $size;
+  height: $size;
+  border: calc(#{$size} / 10) solid rgba(0, 0, 0, 0.1); 
+  border-top: calc(#{$size} / 10) solid $color;
+  border-radius: 50%;
+  animation: spin $speed linear infinite;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
