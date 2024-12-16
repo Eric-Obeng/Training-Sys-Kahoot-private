@@ -111,7 +111,13 @@
 
   <div class="form-actions">
     <button class="save" type="button" (click)="save()">Save</button>
-    <button class="submit" type="submit" [disabled]="quizForm.invalid">Submit</button>
+    <button
+      class="submit"
+      type="submit"
+      [disabled]="isSubmitDisabled()"
+    >
+      Submit
+    </button>
   </div>
 
   <app-feedback

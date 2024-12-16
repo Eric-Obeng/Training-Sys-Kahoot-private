@@ -218,4 +218,8 @@ export class QuizCreationComponent {
   save() {
     this.saveQuizData();
   }
+
+  isSubmitDisabled(): boolean {
+    return this.quizForm.invalid || this.questions.controls.some(q => q.get('marks')?.value === 0);
+  }
 }
