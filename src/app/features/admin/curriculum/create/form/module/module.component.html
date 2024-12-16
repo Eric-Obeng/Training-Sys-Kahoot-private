@@ -41,6 +41,9 @@
                   [class.invalid]="module.get('title')?.touched && module.get('title')?.invalid"
                   placeholder="Enter module name here"
                   aria-label="Module title">
+                  <small class="error" *ngIf="module.get('title')?.touched && module.get('title')?.invalid">
+                    Module title is required*
+                  </small>
               </div>
 
               <!-- Description Field -->
@@ -56,6 +59,9 @@
                   rows="8"
                   aria-label="Module description">
                 </textarea>
+                <small class="error" *ngIf="module.get('description')?.touched && module.get('description')?.invalid">
+                  Description is required*
+                </small>
               </div>
 
               <!-- Duration Field -->
@@ -71,6 +77,9 @@
                   placeholder="Enter number of minutes to take this module"
                   min="1"
                   aria-label="Module duration in minutes">
+                  <small class="error" *ngIf="module.get('estimatedTimeMinutes')?.touched && module.get('estimatedTimeMinutes')?.invalid">
+                    Duration is required*
+                  </small>
               </div>
 
               <!-- Topics Section -->
@@ -97,6 +106,9 @@
                       <img src="assets/Images/svg/delete.svg" alt="Remove topic">
                     </button>
                   </div>
+                  <small class="error" *ngIf="getTopics(moduleIndex).length === 0">
+                    At least one topic is required*
+                  </small>
                 </div>
 
                 <button
