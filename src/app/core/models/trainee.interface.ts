@@ -20,3 +20,9 @@ export interface Quiz {
     quizCount: number;
     assignments: Assignment[];
 }
+
+export interface QuizSubmission {
+    traineeEmail: string;
+    submittedAnswers: { questionId: number; selectedAnswerId: number }[];
+  }
+  

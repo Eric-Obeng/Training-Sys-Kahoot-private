@@ -38,6 +38,7 @@ export class QuizListComponent {
     private searchQuiz: SearchQuizService,
     private traineeAssessentsService: TraineeQuizService,
     private tokenService: TokenService,
+    private quizService: QuizService,
   ) {}
 
 
@@ -215,14 +216,20 @@ export class QuizListComponent {
   }
 
   
-  takeAssessment(id: number, quizType: string) {
+  takeAssessment(id: number, quizType: string, assessment: Assignment) {
     if(quizType === 'QUIZ') {
+      this.quizService.quizId = id;
+      this.quizService.selectedAssessment$ = of(assessment);
       this.router.navigate([`home/trainee/assessments/quiz/${id}`]);
     }
     else if(quizType === 'LAB') {
+      this.quizService.quizId = id;
+      this.quizService.selectedAssessment$ = of(assessment);
       this.router.navigate([`home/trainee/assessments/lab/${id}`]);
     }
     else if(quizType === 'PRESENTATION') {
+      this.quizService.quizId = id;
+      this.quizService.selectedAssessment$ = of(assessment);
       this.router.navigate([`home/trainee/assessments/presentation/${id}`]);
     }
   }
