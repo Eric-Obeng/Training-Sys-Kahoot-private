@@ -45,6 +45,8 @@ export class AssessmentFormComponent {
   feedbackMessage: string = '';
   feedbackImageSrc: string = '';
 
+  isSubmitting = false;
+
   showFeedback(title: string, message: string, imageSrc: string) {
     this.feedbackTitle = title;
     this.feedbackMessage = message;
@@ -102,6 +104,11 @@ export class AssessmentFormComponent {
   }
 
   onSubmit() {
+    if (this.type === 'quiz' && this.isSubmitting) {
+      return;
+    }
+    this.isSubmitting = true;
+
     if (this.form.valid) {
       const formData = new FormData();
       Object.keys(this.form.value).forEach((key) => {
@@ -121,6 +128,7 @@ export class AssessmentFormComponent {
           next: (response) => {
             this.router.navigate(['/home/trainer/assessment/quiz-creation']);
             localStorage.setItem('quizId', JSON.stringify(response));
+            this.isSubmitting = false;
           },
           error: (err) => {
             this.showFeedback(
@@ -129,6 +137,7 @@ export class AssessmentFormComponent {
               'assets/Images/svg/add-spec.svg'
             );
             console.error(err);
+            this.isSubmitting = false;
           },
         });
       } else if (this.type === 'lab' || this.type === 'presentation') {
@@ -139,6 +148,7 @@ export class AssessmentFormComponent {
               `Your ${this.type} assignment has been successfully created. You can now proceed to assign it to the relevant trainees or cohorts when ready!`,
               'assets/Images/svg/add-spec.svg'
             );
+            this.isSubmitting = false;
           },
           error: (err) => {
             this.showFeedback(
@@ -147,6 +157,7 @@ export class AssessmentFormComponent {
               'assets/Images/svg/add-spec.svg'
             );
             console.error(err);
+            this.isSubmitting = false;
           },
         });
       }
