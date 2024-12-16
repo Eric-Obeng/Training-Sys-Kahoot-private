@@ -61,9 +61,10 @@
             [class.invalid]="formControls.specialization?.touched && formControls.specialization?.invalid"
             >
               <option value="" disabled selected>Select specialization</option>
-              <option *ngFor="let option of allSpecializations$ | async" [value]="option.id">
+              <option *ngFor="let option of allSpecializations$ | async" [value]="option.name">
                 {{ option.name }}
               </option>
+
             </select>
 
             <small class="error" *ngIf="formControls.specialization?.touched && formControls.specialization?.invalid">
