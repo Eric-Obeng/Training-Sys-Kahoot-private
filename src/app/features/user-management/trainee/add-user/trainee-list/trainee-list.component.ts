@@ -20,7 +20,8 @@ export class TraineeListComponent {
   trainerTabClicked: boolean = true;
   deleteTraineeEmail: string = '';
 
-  private searchTerm$ = new BehaviorSubject<string>(''); 
+  public searchTermSubject = new BehaviorSubject<string>('');
+  private searchTerm$ = this.searchTermSubject.asObservable(); 
   private statusFilter$ = new BehaviorSubject<string | null>(null);
   private specializationFilter$ = new BehaviorSubject<string | null>(null);
 
@@ -84,9 +85,6 @@ export class TraineeListComponent {
 
 
   // Update search term on changes from the search bar
-  onSearchChange(): void {
-    this.searchTerm$.next(this.searchService.searchValue);
-  }
 
   onSortList() {
     this.filteredTrainees$ = this.filteredTrainees$.pipe(
