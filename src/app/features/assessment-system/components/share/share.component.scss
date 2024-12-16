@@ -31,10 +31,12 @@
       gap: 1.9rem;
       background-color: #f1f1f1;
       height: 28.3rem;
+      width: 100%;
+      padding: 1rem 1.6rem;
 
       .card {
         height: 22.7rem;
-        width: 19.9rem;
+        width: 100%;
         background-color: $clr-white;
         border-radius: 0.8rem;
         overflow: hidden;
@@ -51,7 +53,7 @@
         }
 
         .col-1 {
-          @include flexbox(column, space-between, center);
+          @include flexbox(row, center, center);
           padding: 1.6rem 0px;
           height: calc(22.7rem - 3.5rem);
           text-align: center;
