@@ -1,12 +1,13 @@
 <div class="modules-list">
   <div class="modules">
+    <h3>Modules list</h3>
     <div
       class="module-item"
       *ngFor="let module of modules.controls; let moduleIndex = index"
       [class.active]="moduleIndex === activeModuleIndex"
       (click)="selectModule(moduleIndex)"
     >
-      Module {{ moduleIndex + 1 }}
+      {{ module.get('title')?.value || ('Module ' + (moduleIndex + 1)) }}
 
       <ng-container *ngIf="modules.controls.length > 1">
         <img
@@ -21,9 +22,19 @@
     type="button"
     matRipple
     class="form-section complete-btn"
-    [disabled]="!modules.valid"
+    [disabled]="!modules.valid || isLoading"
     (click)="onComplete()">
-    {{ isUpdate ? 'Update Curriculum' : 'Create Curriculum' }}
+    <ng-container *ngIf="isLoading">
+      <mat-spinner
+        class="button-spinner"
+        diameter="25"
+        color="primary"
+      ></mat-spinner>
+      {{ isUpdate ? 'Updating Curriculum' : 'Creating Curriculum' }}
+    </ng-container>
+    <ng-container *ngIf="!isLoading">
+      {{ isUpdate ? 'Update Curriculum' : 'Create Curriculum' }}
+    </ng-container>
   </button>
 </div>
 
@@ -34,4 +45,3 @@
     'Your curriculum has been updated successfully. The changes are now reflected in the system.' :
     'Your curriculum has been created successfully. It is now available for assignment to the appropriate cohorts and specializations'"
   [imagePath]="'../../../../../assets/Images/svg/add-spec.svg'"/>
-

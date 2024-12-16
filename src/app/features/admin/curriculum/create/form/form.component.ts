@@ -1,5 +1,6 @@
+import { specialization } from './../../../../../core/models/specialization.interface';
 import { curriculum } from './../../../../../core/models/curriculum.interface';
-import { NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatRipple } from '@angular/material/core';
 import { ModuleComponent } from "./module/module.component";
@@ -7,12 +8,14 @@ import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } fr
 import { ActivatedRoute, Router } from '@angular/router';
 import { CurriculumStateService } from '@core/services/curriculum-state/curriculum-state.service';
 import { CurriculumFacadeService } from '@core/services/curriculum-facade/curriculum-facade.service';
+import { Specialization } from '@core/models/cohort.interface';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-form',
   standalone: true,
   imports: [MatRipple, NgIf,NgFor,
-    ModuleComponent,ReactiveFormsModule],
+    ModuleComponent,ReactiveFormsModule,AsyncPipe],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss'
 })
@@ -25,6 +28,7 @@ export class FormComponent implements OnInit {
   curriculumData!: FormData;
   previewImage: string | null = null;
   curriculumId: string | null = null;
+  allSpecializations$!: Observable<Specialization[]>;
   private allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
   constructor(
     private fb: FormBuilder,
@@ -49,8 +53,8 @@ export class FormComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.allSpecializations$ = this.curriculumFacade.specialization$;
     this.prepareCurriculumForm();
-
     this.route.queryParams.subscribe(params => {
       if (params['id']) {
         this.curriculumId = params['id'];
@@ -75,15 +79,20 @@ export class FormComponent implements OnInit {
           title: curriculum.title,
           description: curriculum.description,
           specialization: curriculum.specialization,
-          thumbnailImageUrl: curriculum.thumbnailImageUrl,
+          thumbnailImage: curriculum.thumbnailImageUrl, 
         });
-
+  
+        
+        if (curriculum.thumbnailImageUrl) {
+          this.previewImage = curriculum.thumbnailImageUrl;
+        }
+  
         const learningObjectivesArray = this.curriculumForm.get('learningObjectives') as FormArray;
         learningObjectivesArray.clear();
         curriculum.learningObjectives.forEach(objective => {
           learningObjectivesArray.push(this.fb.control(objective, Validators.required));
         });
-
+  
         this.curriculumStateService.setCurriculumForm(this.curriculumForm);
       },
       error: (error: any) => {
@@ -101,7 +110,7 @@ export class FormComponent implements OnInit {
       learningObjectives: this.fb.array([
         this.fb.control('', [Validators.required])
       ]),
-      thumbnailImageUrl: [''],
+      thumbnailImage: [''],
       modules: this.fb.array([])
     });
   }
@@ -135,7 +144,7 @@ export class FormComponent implements OnInit {
   private handleFile(file: File) {
     if (this.allowedFileTypes.includes(file.type)) {
       this.curriculumForm.patchValue({
-        thumbnailImageUrl: file
+        thumbnailImage: file as File
       });
       const reader = new FileReader();
       reader.onload = (e: any) => {
@@ -148,7 +157,7 @@ export class FormComponent implements OnInit {
   removeImage() {
     this.previewImage = null;
     this.curriculumForm.patchValue({
-      thumbnailImageUrl: null
+      thumbnailImage: null
     });
   }
 

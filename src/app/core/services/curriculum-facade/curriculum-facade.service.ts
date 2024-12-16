@@ -1,8 +1,10 @@
+import { UserManagementTraineeService } from '@core/services/user-management/trainee/user-management-trainee.service';
 import { Injectable } from '@angular/core';
 import { curriculum } from '@core/models/curriculum.interface';
 import { BehaviorSubject,combineLatest, map,tap,catchError, Observable } from 'rxjs';
 import { ErrorHandleService } from '../error-handle/error-handle.service';
 import { CurriculumCrudService } from '../curriculum-crud/curriculum-crud.service';
+
 
 
 @Injectable({
@@ -13,6 +15,7 @@ export class CurriculumFacadeService {
   private curriculumSubject = new BehaviorSubject<curriculum[]>([]);
   private searchTermSubject = new BehaviorSubject<string>('');
   private sortDirectionSubject = new BehaviorSubject<'asc' | 'desc'>('asc');
+  specialization$ = this.UserManagementTrainee.getAllspecializations();
 
   readonly curriculum$ = this.curriculumSubject.asObservable();
   readonly searchTerm$ = this.searchTermSubject.asObservable();
@@ -20,10 +23,13 @@ export class CurriculumFacadeService {
 
   constructor(
     private errorService: ErrorHandleService,
-    private curriculumCrud: CurriculumCrudService
+    private curriculumCrud: CurriculumCrudService,
+    private UserManagementTrainee: UserManagementTraineeService
   ) {
     this.refreshCurriculum();
   }
+
+
 
 
   readonly filteredAndSortedCurriculum$ = combineLatest([
@@ -83,11 +89,10 @@ export class CurriculumFacadeService {
     return this.curriculumCrud.createCurriculum(curriculum)
     .pipe(
       catchError(error => {
-        console.error('Full error response:', error);
         return this.errorService.handleError(error);
       }),
       tap(() => {
-        this.refreshCurriculum()
+        this.loadCurriculum()
       })
     )
   }
@@ -96,7 +101,7 @@ export class CurriculumFacadeService {
     return this.curriculumCrud.deleteCurriculum(id).pipe(
       catchError(this.errorService.handleError),
       tap(() => {
-        this.refreshCurriculum();
+        this.loadCurriculum()
       })
     );
   }
@@ -104,7 +109,7 @@ export class CurriculumFacadeService {
   update(id: string, curriculum: curriculum){
     return this.curriculumCrud.updateCurriculum(id, curriculum)
     .pipe(
-      tap(() => this.refreshCurriculum()),
+      tap(() => this.loadCurriculum()),
       catchError(this.errorService.handleError)
     )
   }
