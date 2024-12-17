@@ -9,8 +9,9 @@ import {
   throwError,
 } from 'rxjs';
 import { environment } from '../../../../../environments/environment.development';
-import { ErrorHandleService } from '@core/services/error-handle/error-handle.service';
+
 import { Trainer } from '@core/models/trainer.interface';
+import { ErrorHandlerService } from '@core/services/error-handle/error-handle.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,7 @@ export class TrainerService {
 
   constructor(
     private http: HttpClient,
-    private errorHandler: ErrorHandleService
+    private errorHandler: ErrorHandlerService
   ) {}
 
   trainerCreation(formData: FormData): Observable<any> {

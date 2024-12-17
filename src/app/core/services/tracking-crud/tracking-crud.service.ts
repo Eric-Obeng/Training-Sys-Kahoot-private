@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { progress } from '@core/models/progress.interface';
 import { catchError,Observable,tap } from 'rxjs';
-import { ErrorHandleService } from '../error-handle/error-handle.service';
+import { ErrorHandlerService } from '../error-handle/error-handle.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { ErrorHandleService } from '../error-handle/error-handle.service';
 
 export class TrackingCrudService {
   private localServer = 'http://localhost:3000/progress';
-  constructor(private http:HttpClient,private errorHandle: ErrorHandleService) { }
+  constructor(private http:HttpClient,private errorHandle: ErrorHandlerService) { }
 
   getAllProgress(): Observable<progress[]> {
     return this.http.get<progress[]>(this.localServer).pipe(

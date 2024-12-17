@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {  catchError, Observable,tap } from 'rxjs';
-import { ErrorHandleService } from '../error-handle/error-handle.service';
+
 import { environment } from '../../../../environments/environment.development';
 import { specialization } from '../../models/specialization.interface';
+import { ErrorHandlerService } from '../error-handle/error-handle.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class SpecializationCrudService {
 
   constructor(
     private http: HttpClient,
-    private errorService: ErrorHandleService
+    private errorService: ErrorHandlerService
   ) {}
 
   getAllSpecializations():Observable<specialization[]>{
