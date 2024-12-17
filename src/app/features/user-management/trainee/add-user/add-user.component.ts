@@ -36,7 +36,8 @@ export class AddUserComponent {
   deleteTraineeEmail: string = '';
 
   private searchTerm$ = new BehaviorSubject<string>('');
-  private statusFilter$ = new BehaviorSubject<string | null>(null);
+  private statusFilterSubject = new BehaviorSubject<string | null>(null);
+  public statusFilter$: Observable<string | null> = this.statusFilterSubject.asObservable();
   private specializationFilter$ = new BehaviorSubject<string | null>(null);
 
   ellipsisClicked: boolean = false;
@@ -53,6 +54,8 @@ export class AddUserComponent {
   ) {}
 
   ngOnInit(): void {
+    console.log("add-user is working!!!")
+
     this.traineeUsers$ = this.traineesInsystemService.getAllTrainees();
     this.trainersData$ = this.trainersService.getAllTrainers();
   }
@@ -76,19 +79,19 @@ export class AddUserComponent {
 
   // Set the filter for each status and trigger re-evaluation
   filterByActive() {
-    this.statusFilter$.next('active');
+    this.statusFilterSubject.next('active');
   }
 
   filterByInactive() {
-    this.statusFilter$.next('inactive');
+    this.statusFilterSubject.next('inactive');
   }
 
   filterByDeactivated() {
-    this.statusFilter$.next('deactivated');
+    this.statusFilterSubject.next('deactivated');
   }
 
   clearStatusFilter() {
-    this.statusFilter$.next(null);
+    this.statusFilterSubject.next(null);
   }
 
   filterBySpecialization(spec: string) {

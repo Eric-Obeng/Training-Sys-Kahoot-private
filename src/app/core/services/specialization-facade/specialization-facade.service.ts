@@ -3,7 +3,7 @@ import { BehaviorSubject, catchError, tap, map, Observable } from 'rxjs';
 import { specialization } from '../../models/specialization.interface';
 
 import { SpecializationCrudService } from '../specialization-crud/specialization-crud.service';
-import { ErrorHandlerService } from '../error-handle/error-handle.service';
+import { ErrorHandleService } from '../error-handle/error-handle.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +25,7 @@ export class SpecializationFacadeService {
   sortDirection$ = this.sortSubject.asObservable();
 
   constructor(
-    private errorService: ErrorHandlerService,
+    private errorService: ErrorHandleService,
     private specializationCrud: SpecializationCrudService
   ) {
     this.loadSpecializations();

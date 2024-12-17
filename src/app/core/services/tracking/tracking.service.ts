@@ -2,7 +2,7 @@ import { BehaviorSubject, map, Observable, combineLatest, shareReplay, catchErro
 import { TrackingCrudService } from './../tracking-crud/tracking-crud.service';
 import { Injectable } from '@angular/core';
 import { progress } from '@core/models/progress.interface';
-import { ErrorHandlerService } from '../error-handle/error-handle.service';
+import { ErrorHandleService } from '../error-handle/error-handle.service';
 
 
 @Injectable({
@@ -41,7 +41,7 @@ export class TrackingService {
 
   constructor(
     private trackProgress: TrackingCrudService,
-    private errorHandle: ErrorHandlerService
+    private errorHandle: ErrorHandleService
   ) {
     this.fetchProgress().subscribe();
   }

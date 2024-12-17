@@ -15,7 +15,8 @@ import {
   throwError,
 } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
-import { ErrorHandlerService } from '../error-handle/error-handle.service';
+import { ErrorHandleService } from '../error-handle/error-handle.service';
+
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +39,7 @@ export class CohortDataService {
 
   constructor(
     private http: HttpClient,
-    public errorhandlerService: ErrorHandlerService
+    public errorhandlerService: ErrorHandleService,
   ) {}
 
   //(HTTP Request) Retriev a list of cohorts from backend

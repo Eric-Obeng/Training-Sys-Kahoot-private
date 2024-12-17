@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TraineeInsystemService } from '../../../../../core/services/user-management/trainee/trainee-insystem.service';
-import { BehaviorSubject, Observable, combineLatest, filter, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, filter, map, of, tap } from 'rxjs';
 import { User } from '../../../../../core/models/cohort.interface';
 import { AsyncPipe, DatePipe, NgIf, TitleCasePipe } from '@angular/common';
 import { PaginatorComponent } from '@core/shared/paginator/paginator.component';
 import { SearchbarService } from '@core/services/searchbar/searchbar.service';
+import { AddUserComponent } from '../add-user.component';
 
 @Component({
   selector: 'app-trainee-list',
@@ -22,7 +23,8 @@ export class TraineeListComponent {
 
   public searchTermSubject = new BehaviorSubject<string>('');
   private searchTerm$ = this.searchTermSubject.asObservable(); 
-  private statusFilter$ = new BehaviorSubject<string | null>(null);
+  private statusFilterSubject = new BehaviorSubject<string | null>('');
+  private statusFilter$: Observable<string | null> = this.statusFilterSubject.asObservable();
   private specializationFilter$ = new BehaviorSubject<string | null>(null);
 
   ellipsisClicked: boolean = false;
@@ -34,8 +36,12 @@ export class TraineeListComponent {
   //Pagination
   private pageSubject = new BehaviorSubject<number>(1);
   currentPage$ = this.pageSubject.asObservable();
-  pageSize = 4;
+  pageSize = 3;
   totalPages = 1;
+
+
+  // Get access into add user componet elements
+  // @ViewChild('addUser', { static: true }) addUser!: ElementRef;
   
   constructor(
     private router: Router,
@@ -46,6 +52,8 @@ export class TraineeListComponent {
 
 
   ngOnInit() {
+    this.onSearchChange()
+
     // Get cohort details with trainees list from service
     this.traineeUsers$ = this.traineesInsystemService.getAllTrainees();
 
@@ -53,31 +61,45 @@ export class TraineeListComponent {
       this.traineeUsers$, 
       this.searchTerm$, 
       this.statusFilter$, 
-      this.specializationFilter$
+      this.specializationFilter$, 
+      this.currentPage$ // Add current page observable
     ]).pipe(
-      map(([trainees, searchTerm, statusFilter, specFilter]) => {
+      map(([trainees, searchTerm, statusFilter, specFilter, currentPage]) => {
         const lowerSearchTerm = searchTerm.toLowerCase();
     
-        return trainees.filter((trainee: User) => {
-          // Check if trainee matches the search term
+        // Filter trainees based on search term, status, and specialization
+        const filteredTrainees = trainees.filter((trainee: User) => {
           const matchesSearch = 
             trainee.firstName.toLowerCase().includes(lowerSearchTerm) || 
             trainee.lastName.toLowerCase().includes(lowerSearchTerm) || 
             trainee.email.toLowerCase().includes(lowerSearchTerm) || 
             trainee.phoneNumber.includes(lowerSearchTerm);
     
-          // Check if trainee matches the status filter
           const matchesStatus = statusFilter ? trainee.status === statusFilter : true;
-    
-          // Check if trainee matches the specialization filter
           const matchesSpecialization = specFilter ? trainee.specialization === specFilter : true;
     
           return matchesSearch && matchesStatus && matchesSpecialization;
         });
+    
+        // Calculate total pages
+        this.totalPages = Math.ceil(filteredTrainees.length / this.pageSize);
+    
+        // Calculate start index for pagination
+        const startIndex = (currentPage - 1) * this.pageSize;
+    
+        // Return paginated filtered trainees
+        return filteredTrainees.slice(startIndex, startIndex + this.pageSize);
       })
     );
     
+    
   }
+
+
+  onSearchChange(): void {
+    this.searchTerm$ = this.searchService.searchTerm$;
+  }
+
 
   tabClicked() {
     this.trainerTabClicked = !this.trainerTabClicked;
@@ -91,23 +113,7 @@ export class TraineeListComponent {
       map((trainees: User[]) => trainees.sort((a, b) => a.firstName.localeCompare(b.firstName)))
     );
   }
-  
-  // Set the filter for each status and trigger re-evaluation
-  filterByActive() {
-    this.statusFilter$.next('active');
-  }
-  
-  filterByInactive() {
-    this.statusFilter$.next('inactive');
-  }
-  
-  filterByDeactivated() {
-    this.statusFilter$.next('deactivated');
-  }
 
-  clearStatusFilter() {
-    this.statusFilter$.next(null);
-  }
 
   filterBySpecialization(spec: string) {
     this.specializationFilter$.next(spec)

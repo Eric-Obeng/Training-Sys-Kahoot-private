@@ -11,7 +11,7 @@ import {
 import { environment } from '../../../../../environments/environment.development';
 
 import { Trainer } from '@core/models/trainer.interface';
-import { ErrorHandlerService } from '@core/services/error-handle/error-handle.service';
+import { ErrorHandleService } from '@core/services/error-handle/error-handle.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,7 @@ export class TrainerService {
 
   constructor(
     private http: HttpClient,
-    private errorHandler: ErrorHandlerService
+    private errorHandler: ErrorHandleService
   ) {}
 
   trainerCreation(formData: FormData): Observable<any> {

@@ -11,7 +11,8 @@ import { catchError } from 'rxjs/operators';
 import { environment } from '../../../../../environments/environment.development';
 import { CountryService } from '../country/country.service';
 import * as ct from 'countries-and-timezones';
-import { ErrorHandlerService } from '@core/services/error-handle/error-handle.service';
+import { ErrorHandleService } from '@core/services/error-handle/error-handle.service';
+
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +29,7 @@ export class UserManagementTraineeService {
 
   constructor(
     private http: HttpClient,
-    private errorHandlerService: ErrorHandlerService,
+    private errorHandlerService: ErrorHandleService,
     private countryService: CountryService
   ) {}
 

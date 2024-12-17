@@ -5,7 +5,8 @@ import {  catchError, Observable,tap } from 'rxjs';
 
 import { environment } from '../../../../environments/environment.development';
 import { specialization } from '../../models/specialization.interface';
-import { ErrorHandlerService } from '../error-handle/error-handle.service';
+import { ErrorHandleService } from '../error-handle/error-handle.service';
+
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,7 @@ export class SpecializationCrudService {
 
   constructor(
     private http: HttpClient,
-    private errorService: ErrorHandlerService
+    private errorService: ErrorHandleService
   ) {}
 
   getAllSpecializations():Observable<specialization[]>{

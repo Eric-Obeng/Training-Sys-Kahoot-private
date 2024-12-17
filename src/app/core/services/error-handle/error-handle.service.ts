@@ -1,42 +1,43 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SnackbarService } from '@core/services/snackbar/snackbar.service';
-import { throwError } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class ErrorHandlerService {
-  constructor(private snackbar: SnackbarService) {}
+export class ErrorHandleService {
 
-  /**
-   * Handles HTTP errors and displays an error message.
-   * @param error The HttpErrorResponse object.
-   * @returns An observable that throws a user-friendly error.
-   */
-  public handleError(error: HttpErrorResponse) {
-    // Extract a user-friendly error message
-    const errorMessage = this.getErrorMessage(error);
+  constructor(private snackBar: MatSnackBar) {}
 
-    // Display the error message in the snackbar
-    this.snackbar.showError(errorMessage);
+  handleError = (error: HttpErrorResponse): Observable<never> => {
+    let errorMessage = 'An error occurred. Please try again.';
 
-    // Rethrow the error for further handling if necessary
-    return throwError(() => new Error(errorMessage));
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = error.error.message;
+    } else {
+      errorMessage = error.error?.message || `Error: ${error.status} ${error.statusText}`;
+    }
+
+    this.showErrorSnackbar(errorMessage);
+    return throwError(() => error);
   }
 
-  /**
-   * Extracts a user-friendly error message from an HttpErrorResponse.
-   * @param error The HttpErrorResponse object.
-   * @returns A user-friendly error message.
-   */
-  private getErrorMessage(error: HttpErrorResponse): string {
-    if (error.status === 0) {
-      // Network or client-side error
-      return 'Network error: Unable to connect to the server. Please try again later.';
-    } else {
-      // Backend error with status code and optional error message
-      return error.error?.message || `Error ${error.status}: ${error.statusText}`;
-    }
+  showErrorSnackbar(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      panelClass: ['error-snackbar'],
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    });
+  }
+
+  showSuccessSnackbar(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      panelClass: ['success-snackbar'],
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    });
   }
 }

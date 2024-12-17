@@ -4,7 +4,8 @@ import { BehaviorSubject, Observable, catchError, map, of, tap, throwError } fro
 import { User } from '../../../models/cohort.interface';
 import { environment } from 'src/environments/environment.development';
 import { TraineeList } from '@core/models/trainee.interface';
-import { ErrorHandlerService } from '@core/services/error-handle/error-handle.service';
+import { ErrorHandleService } from '@core/services/error-handle/error-handle.service';
+
 
 @Injectable({
   providedIn: 'root',
@@ -48,7 +49,7 @@ export class TraineeInsystemService {
 
   constructor(
     private http: HttpClient,
-    private errorHandlerService: ErrorHandlerService
+    private errorHandlerService: ErrorHandleService
   ) {}
 
   private getHeaders(): HttpHeaders {
