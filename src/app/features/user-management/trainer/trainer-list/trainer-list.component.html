@@ -34,7 +34,14 @@
             {{ trainer.status | titlecase }}
           </div>
           <div class="menu">
-            <mat-icon svgIcon="dots" (click)="openMenu()"></mat-icon>
+            <mat-icon svgIcon="dots" (click)="openMenu(i, $event)"></mat-icon>
+
+            <div *ngIf="selectedTrainerId === i" class="menu-popup">
+              <div class="menu-item"><mat-icon>edit</mat-icon> Update</div>
+              <div class="menu-item">
+                <mat-icon>delete</mat-icon> Deactivate
+              </div>
+            </div>
           </div>
         </div>
       </div>
