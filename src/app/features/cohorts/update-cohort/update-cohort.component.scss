@@ -6,7 +6,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    overflow-x: scroll;
+    overflow-x: hidden;
     font-family: $font-lato;
     padding: 0 8rem;
 
@@ -109,6 +109,7 @@
                 }
                 & input {
                     width: 100%;
+                    font-family: $font-lato;
                 }
 
             } // Name section ends here
@@ -240,6 +241,7 @@
 
             & .description {
                 margin-bottom: 7.1rem;
+                font-family: $font-lato;
 
                 & span {
                     display: block;

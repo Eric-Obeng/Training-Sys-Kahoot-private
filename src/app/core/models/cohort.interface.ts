@@ -38,8 +38,8 @@ export interface Trainees {
     email: string;
     contact: string;
     status: string;
-    specialization: string;
-    date_added: string;
+    specializationName: string;
+    dateCreated: string;
 }
 
 

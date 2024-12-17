@@ -6,12 +6,12 @@ import {
   Gender,
   Specialization,
 } from '../../../models/cohort.interface';
-import { ErrorHandlerService } from '../../cohort-data/error-handling/error-handler.service';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../../../environments/environment.development';
 import { CountryService } from '../country/country.service';
 import * as ct from 'countries-and-timezones';
+import { ErrorHandlerService } from '@core/services/error-handle/error-handle.service';
 
 @Injectable({
   providedIn: 'root',

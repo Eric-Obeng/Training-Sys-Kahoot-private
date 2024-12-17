@@ -3,14 +3,15 @@ import { BehaviorSubject, Observable, combineLatest, filter, map, of } from 'rxj
 import { CohortDetails, CohortList, Trainees } from '../../../core/models/cohort.interface';
 import { Router } from '@angular/router';
 import { CohortDataService } from '../../../core/services/cohort-data/cohort-data.service';
-import { AsyncPipe, CommonModule, JsonPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, CommonModule, JsonPipe, NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import { SearchbarComponent } from '../../../core/shared/searchbar/searchbar.component';
 import { PaginatorComponent } from '@core/shared/paginator/paginator.component';
+import { SearchbarService } from '@core/services/searchbar/searchbar.service';
 
 @Component({
   selector: 'app-trainees-list',
   standalone: true,
-  imports: [AsyncPipe, NgFor, NgIf, SearchbarComponent, PaginatorComponent],
+  imports: [AsyncPipe, NgIf, SearchbarComponent, PaginatorComponent, TitleCasePipe],
   templateUrl: './trainees-list.component.html',
   styleUrl: './trainees-list.component.scss'
 })
@@ -20,12 +21,13 @@ export class TraineesListComponent {
   cohortTrainees$!: Observable<Trainees[]>; // holds list of trainees in cohort
   filteredTrainees$!: Observable<Trainees[]>;
   
-  private searchTerm$ = new BehaviorSubject<string>(''); 
+  private searchTerm$!: Observable<string>;
   private statusFilter$ = new BehaviorSubject<string | null>(null);
   private specializationFilter$ = new BehaviorSubject<string | null>(null);
 
   ellipsisClicked: boolean = false;
   selectedTraineeName: string | null = '';
+  traineesListEmpty: boolean = true;
 
   //Pagination 
   private pageSubject = new BehaviorSubject<number>(1);
@@ -36,11 +38,19 @@ export class TraineesListComponent {
   constructor(
     private cohortDataService: CohortDataService, 
     private router: Router,
+    private searchService: SearchbarService,
   ) {}
 
   ngOnInit() {
+    this.onSearchChange()
     // Get cohort details with trainees list from service
     this.cohort$ = this.cohortDataService.getSelectedCohortDetails(); 
+    this.cohort$.subscribe({
+      next: (res) => {
+        this.traineesListEmpty = res.trainees.length ? false : true;
+        console.log(res)
+      }
+    })
 
     this.cohortTrainees$ = this.cohort$.pipe(
       map(data => data.trainees)
@@ -61,7 +71,7 @@ export class TraineesListComponent {
           const matchesSearch = trainee.fullName.toLowerCase().includes(lowerSearchTerm) || 
                                 trainee.email.toLowerCase().includes(lowerSearchTerm);
           const matchesStatus = statusFilter ? trainee.status === statusFilter : true;
-          const matchesSpecialization = specFilter ? trainee.specialization === specFilter : true;
+          const matchesSpecialization = specFilter ? trainee.specializationName === specFilter : true;
     
           return matchesSearch && matchesStatus && matchesSpecialization;
         });
@@ -76,11 +86,12 @@ export class TraineesListComponent {
     );
     
   }
-  
+
   // Update search term on changes from the search bar
-  onSearchChange(searchTerm: string): void {
-    this.searchTerm$.next(searchTerm);
+  onSearchChange(): void {
+    this.searchTerm$ = this.searchService.searchTerm$;
   }
+
 
   onSortList() {
     this.filteredTrainees$ = this.filteredTrainees$.pipe(
@@ -125,8 +136,8 @@ export class TraineesListComponent {
   }
 
 
-  goToCreateCohort() {
-    this.router.navigate(['home/admin/cohorts/create-cohort'])
+  goToUserManagement() {
+    this.router.navigate(['home/admin/user-management'])
   }
 
   // Pagination 

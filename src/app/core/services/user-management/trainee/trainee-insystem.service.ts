@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ErrorHandlerService } from '../../cohort-data/error-handling/error-handler.service';
 import { BehaviorSubject, Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { User } from '../../../models/cohort.interface';
 import { environment } from 'src/environments/environment.development';
 import { TraineeList } from '@core/models/trainee.interface';
+import { ErrorHandlerService } from '@core/services/error-handle/error-handle.service';
 
 @Injectable({
   providedIn: 'root',

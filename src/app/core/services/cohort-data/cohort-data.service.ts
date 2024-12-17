@@ -14,8 +14,8 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-import { ErrorHandlerService } from './error-handling/error-handler.service';
 import { environment } from '../../../../environments/environment.development';
+import { ErrorHandlerService } from '../error-handle/error-handle.service';
 
 @Injectable({
   providedIn: 'root',

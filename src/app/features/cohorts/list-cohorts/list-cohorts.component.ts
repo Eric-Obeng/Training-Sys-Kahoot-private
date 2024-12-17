@@ -18,26 +18,26 @@ import { SearchbarService } from '@core/services/searchbar/searchbar.service';
   styleUrl: './list-cohorts.component.scss'
 })
 export class ListCohortsComponent {
-
-  cohortsList$!: Observable<CohortList[]>;
+  
+  cohortsList$!: Observable<CohortList[]>; 
   filteredCohorts$!: Observable<CohortList[]>;
   private searchTerm$!: Observable<string>;
   deleteCohortById: string = '';
 
   ellipsisClicked: boolean = false;
-  selectedCohortId: string | null = '';
+  selectedCohortId: string | null = ''; 
   hideDeleteModal: boolean = true;
 
   listEmptyCheck: boolean = true;
 
-  //Pagination
+  //Pagination 
   private pageSubject = new BehaviorSubject<number>(1);
   currentPage$ = this.pageSubject.asObservable();
   pageSize = 4;
   totalPages = 1;
 
   constructor(
-    private cohortDataService: CohortDataService,
+    private cohortDataService: CohortDataService, 
     private router: Router,
     public modalService: ModalService,
     private searchService: SearchbarService,
@@ -89,7 +89,7 @@ export class ListCohortsComponent {
   }
 
   //Get the Id of selected Cohort from list and make http request to get all details for cohort
-  getSelectedCohortDetails(selectedCohortId: string) {
+  getSelectedCohortDetails(selectedCohortId: string) { 
     this.cohortDataService.selectedCohortId = selectedCohortId;
     this.storeSelectedCohortId(selectedCohortId)
     console.log(selectedCohortId)
@@ -161,7 +161,7 @@ export class ListCohortsComponent {
   }
 
 
-  // Pagination
+  // Pagination 
   onPageChange(page: number) {
     this.pageSubject.next(page);
   }
