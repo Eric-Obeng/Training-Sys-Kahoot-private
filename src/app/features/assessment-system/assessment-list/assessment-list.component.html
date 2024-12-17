@@ -1,0 +1,60 @@
+<ng-container *ngIf="isLoading; else loadedContent">
+  <div class="load">
+    <app-loader></app-loader>
+  </div>
+</ng-container>
+
+<ng-template #loadedContent>
+  <ng-container *ngIf="!isAssessmentsEmpty; else noDataTemplate">
+    <div class="wrapper">
+      <div class="col-1">
+        <app-searchbar
+          [title]="'Assessment'"
+          [placeholder]="'Name'"
+          [hide]="true"
+          [showAddButton]="false"
+        />
+      </div>
+      <div class="assessments">
+        <div *ngFor="let assessment of assessments$ | async">
+          <app-assessment-card [assessment]="assessment"></app-assessment-card>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #noDataTemplate>
+  <div class="empty-assessment">
+    <div class="content">
+      <div class="col-1">
+        <img
+          src="assets/Images/png/no-assessment.png"
+          alt="No Assessment Available"
+          class="empty-icon"
+        />
+        <h2>No Assessment Available</h2>
+        <p>
+          You currently have no quizzes created. Click on "Create Quiz" to add
+          new quizzes and assign them to your trainees.
+        </p>
+      </div>
+
+      <div class="assessment-types">
+        <a
+          *ngFor="let item of assessmentTypes; trackBy: trackByType"
+          (click)="navigateToAssessmentForm(item.type)"
+          class="assessment-type"
+        >
+          <span class="icon">
+            <img [src]="item.icon" />
+          </span>
+          <span class="label">{{ item.label }}</span>
+          <span class="plus">+</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<app-modal *ngIf="showModal" (closeModal)="handleCloseModal()"></app-modal>

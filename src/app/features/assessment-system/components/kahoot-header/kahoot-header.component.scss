@@ -1,0 +1,42 @@
+@import "../../../../../styleSheet/mixins";
+@import "../../../../../styleSheet/variables";
+
+.header {
+  @include flexbox(row, space-between, center);
+  padding: 1.6rem;
+  background: white;
+  border-bottom: 1px solid #eee;
+  width: 100%;
+
+  .generate-btn {
+    padding: 1.2rem 3.2rem;
+    background: #9f4f04;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .actions {
+    display: flex;
+    gap: 1rem;
+
+    .btn {
+      padding: 1.2rem 3.2rem;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      background: #f0f0f0;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #9f4f04;
+
+      &.btn.primary {
+        background: #ff7518;
+        color: white;
+        border: none;
+      }
+    }
+  }
+}

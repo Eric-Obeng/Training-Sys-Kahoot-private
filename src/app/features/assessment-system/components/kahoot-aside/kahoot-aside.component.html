@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="wrapper">
+    <div class="select">
+      <label for="timeLimit">
+        <img src="assets/Images/png/clock.png" alt="clock icon" />
+        <p>Time Limit</p>
+      </label>
+      <p-dropdown
+        [options]="timeLimitOptions"
+        optionLabel="name"
+        id="timeLimit"
+        placeholder="select level"
+        [(ngModel)]="timeLimit"
+        (onChange)="onTimeLimitChange($event)"
+      ></p-dropdown>
+    </div>
+    <div class="select">
+      <label for="points">
+        <img src="assets/Images/png/gem.png" alt="icon" />
+        <p>Points</p></label
+      >
+      <p-dropdown
+        [options]="pointsOptions"
+        optionLabel="name"
+        id="points"
+        placeholder="select level"
+        [(ngModel)]="points"
+        (onChange)="onPointsChange($event)"
+      ></p-dropdown>
+    </div>
+  </div>
+</div>

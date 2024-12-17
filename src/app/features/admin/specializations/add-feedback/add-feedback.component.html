@@ -3,13 +3,15 @@
 [modal]="true"
 [closable]="false"
 [showHeader]="false"
-[style]="{ width: '627px' }"
-[contentStyle]="{ padding: '2rem' }">
-<div class="add-container">
-  <div class="add-info feedback-info">
-    <img src="../../../../../assets/Images/svg/add-spec.svg" alt="">
-    <h3>{{ title }}</h3>
-    <p>{{ message }}</p>
+[style]="{ width: '627px' }">
+  <button class="close-btn" (click)="close()">
+    <img src="../../../../../assets/Images/svg/close-del.svg" alt="">
+  </button>
+  <div class="add-container">
+    <div class="add-info feedback-info">
+      <img src="../../../../../assets/Images/svg/add-spec.svg" alt="">
+      <h3>{{ title }}</h3>
+      <p>{{ message }}</p>
+    </div>
   </div>
-</div>
 </p-dialog>

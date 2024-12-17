@@ -77,22 +77,14 @@ export const adminRoutes: Routes = [
     ],
   },
   {
-    path: 'cohorts',
-    loadComponent: () => import('@views/admin/cohorts/cohorts-management.component')
-    .then(m => m.CohortsManagementComponent),
-    data: { role: 'admin' }
-  },
-  {
     path: 'progression-tracking',
-    loadComponent: () => import('@views/admin/progress-tracking/progress-tracking.component')
+    loadComponent: () => import('@views/trainer/progress-tracking/progress-tracking.component')
     .then(m => m.ProgressTrackingComponent)
   },
   {
     path: 'user-management',
-    loadComponent: () =>
-      import('@views/admin/users/user-management.component').then(
-        (m) => m.UserManagementComponent
-      ),
+    loadComponent: () => import('@views/admin/users/user-management.component')
+    .then(m => m.UserManagementComponent),
     data: { role: 'admin' },
     children: [
       {
@@ -146,6 +138,7 @@ export const adminRoutes: Routes = [
     ],
   },
   {
+
     path: 'curriculum-management',
     loadComponent: () => import('@views/admin/curriculum/curriculum.component')
     .then(m => m.CurriculumComponent),

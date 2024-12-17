@@ -1,17 +1,17 @@
+@use '../../../../styleSheet/mixins' as *;
+@use '../../../../styleSheet/variables' as *;
+
 .paginator {
-  display: flex;
-  justify-content: center;
+  @include flexbox($justify:center);
   height: 3.6rem;
   gap: 1.1rem;
 
   .pg-btn {
     background-color: transparent;
-    border: 1px solid #f0f0f0;
+    border: 1px solid $clr-gray-50;
     border-radius: 0.8rem;
     width: 5.2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flexbox($justify:center,$align:center);
     cursor: pointer;
     color: #c2c2c2;
     transition: background-color .3s ease-out;

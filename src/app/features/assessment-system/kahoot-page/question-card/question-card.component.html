@@ -1,0 +1,15 @@
+<div *ngIf="question" class="container">
+  <div class="col-1">
+    <p class="text">{{ question.questionText }}</p>
+    <button class="btn" type="button" (click)="onAddQuestion(question)">Add</button>
+  </div>
+  <div *ngIf="question.image" class="col-2">
+    <img [src]="question.image" alt="question icon" />
+  </div>
+  <div class="col-3">
+    <div class="option" *ngFor="let option of question.options">
+      <img src="assets/Images/png/answer-icon.png" alt="" />
+      <div>{{ option }}</div>
+    </div>
+  </div>
+</div>

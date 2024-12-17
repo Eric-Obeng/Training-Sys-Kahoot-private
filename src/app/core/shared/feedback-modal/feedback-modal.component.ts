@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 
 @Component({
@@ -16,6 +16,11 @@ export class FeedbackModalComponent {
   @Input() customTitle?: string;
   @Input() customMessage?: string;
   @Input() imagePath: string = '../../../../../assets/Images/svg/add-spec.svg';
+  
+
+  close(): void {
+    this.visible = false;
+  }
 
   get title(): string {
     if (this.customTitle) {

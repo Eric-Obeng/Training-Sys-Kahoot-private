@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -49,19 +49,27 @@ export class AuthService {
           }
         }),
         catchError((error) => {
-          return throwError(() => new Error(error.error.message || 'Login failed'));
+          return throwError(
+            () => new Error(error.error.message || 'Login failed')
+          );
         })
       );
   }
 
   resetPassword(email: string): Observable<any> {
     const url = `${environment.BaseUrl}/auth/send-otp?email=${email}`;
-    return this.http.post(url, {});
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': '69420',
+    });
+    return this.http.post(url, {},{headers});
   }
 
   verifyOtp(otp: string): Observable<any> {
     const url = `${environment.BaseUrl}/auth/verify-otp?otp=${otp}`;
-    return this.http.post(url, {}, { responseType: 'text' }).pipe(
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': '69420',
+    });
+    return this.http.post(url, {}, { responseType: 'text',headers }).pipe(
       map((response) => {
         try {
           return JSON.parse(response);

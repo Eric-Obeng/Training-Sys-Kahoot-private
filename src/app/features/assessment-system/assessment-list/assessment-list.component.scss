@@ -1,0 +1,85 @@
+@import "../../../../styleSheet/mixins";
+@import "../../../../styleSheet/variables";
+
+.load {
+  height: 80vh;
+}
+
+.wrapper {
+  @include flexbox(column, flex-start, flex-start);
+  gap: 2.9rem;
+  width: 100%;
+  padding: 4.4rem 2.4rem;
+
+  .col-1 {
+    width: 100%;
+  }
+
+  & .assessments {
+    width: 100%;
+  }
+}
+
+.empty-assessment {
+  @include flexbox(row, center, center);
+  width: 100%;
+  height: calc(100vh - 20rem);
+
+  .content {
+    @include flexbox(column, center, center);
+    width: 61.1rem;
+    gap: 4.4rem;
+    background-color: $clr-white;
+    padding: 2.4rem;
+
+    .col-1 {
+      @include flexbox(column, center, center);
+      gap: 1.9rem;
+
+      img {
+        width: 19.3rem;
+      }
+
+      h2 {
+        font-size: 2.4rem;
+        font-weight: 600;
+        color: $clr-gray-800;
+      }
+
+      p {
+        text-align: center;
+        color: $clr-gray-500;
+      }
+    }
+
+    .assessment-types {
+      width: 46.1rem;
+      margin-bottom: 2.4rem;
+      @include flexbox(row, center, center);
+      gap: 3.8rem;
+
+      .assessment-type {
+        @include flexbox(row, center, center);
+        gap: 0.9rem;
+        cursor: pointer;
+
+        &:link,
+        &:visited {
+          text-decoration: none;
+        }
+
+        .label {
+          font-size: 1.6rem;
+          font-weight: 400;
+          color: $clr-gray-500;
+        }
+
+        .plus {
+          font-weight: 600;
+          font-size: 2.5rem;
+          color: $clr-gray-800;
+        }
+      }
+    }
+  }
+}

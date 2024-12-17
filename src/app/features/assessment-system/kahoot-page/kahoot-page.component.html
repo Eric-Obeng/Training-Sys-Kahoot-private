@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="quiz-builder-container">
+    <app-kahoot-sidebar
+      [questions]="questions"
+      (questionSelected)="onSelectQuestion($event)"
+      (questionsUpdated)="onQuestionsUpdated($event)"
+    ></app-kahoot-sidebar>
+
+    <div class="main-content">
+      <app-kahoot-header
+        [questions]="questions"
+        (questionsAdded)="onQuestionsAdded($event)"
+        (currentQuestionSubmitted)="handleCurrentQuestionSubmitted($event)"
+      ></app-kahoot-header>
+
+      <div class="question-area">
+        <app-kahoot-questions
+          [question]="currentQuestion"
+          class="question"
+        ></app-kahoot-questions>
+        <app-kahoot-aside
+          class="aside"
+          [timeLimit]="currentQuestion.timeLimit"
+          [points]="currentQuestion.points"
+          (timeLimitChange)="currentQuestion.timeLimit.value = $event.value"
+          (pointsChange)="currentQuestion.points.value = $event.value"
+        ></app-kahoot-aside>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,9 +3,10 @@
 
 
 ::ng-deep {
-  .delete-dialog {
+  .feedback-dialog {
     .p-dialog-header {
-      display: none;
+
+      display: none !important;
     }
 
     .p-dialog-content {
@@ -20,7 +21,19 @@
   }
 }
 
+
+.close-btn{
+  border: none;
+  position: absolute;
+  background-color: transparent;
+  top: 1.6rem;
+  right: 1.6rem;
+  font-size: 2.4rem;
+  cursor: pointer;
+}
+
 .delete-container {
+  
   display: flex;
   padding: 1.6rem;
   flex-direction: column;
@@ -41,6 +54,7 @@
     }
 
     p {
+      text-align: center;
       font-size: 1.6rem !important;
       color: #676767;
     }
@@ -72,6 +86,10 @@
 }
 
 
+.feedback-container{
+  height: 37.1rem;
+  animation: popIn 0.15s ease-out forwards;
+}
 
 
 

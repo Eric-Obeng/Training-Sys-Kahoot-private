@@ -1,7 +1,8 @@
-@use './typography' as *;
-*,
-*::before,
-*::after {
+@use "./typography" as *;
+
+*:not(.p-component),
+*::before:not(.p-component),
+*::after:not(.p-component) {
   margin: unset;
   padding: unset;
   box-sizing: border-box;
@@ -13,11 +14,25 @@ html {
 
 body {
   font-size: 1.6rem;
-  font-family: $font-lato ;
+  font-family: $font-lato;
 }
 
 img {
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+ul {
+  margin: unset;
+  padding: unset;
+  box-sizing: inherit;
 }

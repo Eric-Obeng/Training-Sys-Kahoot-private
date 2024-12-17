@@ -17,12 +17,14 @@
           ></app-list-card>
         </ul>
 
-        <app-paginator
-          [currentPage$]="currentPage$"
-          [totalPages]="totalPages"
-          [pageSize]="pageSize"
-          (pageChange)="onPageChange($event)"
-        ></app-paginator>
+        <div class="paginator">
+          <app-paginator
+            [currentPage$]="currentPage$"
+            [totalPages]="totalPages"
+            [pageSize]="pageSize"
+            (pageChange)="onPageChange($event)"
+          ></app-paginator>
+        </div>
       </section>
     </ng-container>
 

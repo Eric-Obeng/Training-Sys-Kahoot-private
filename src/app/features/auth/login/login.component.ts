@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
               this.showError = true;
             } else {
               this.errorMessage =
-                'An error occured while processing your request. Please try again!';
+                `${err.message}`;
             }
             this.isLoading = false;
           },

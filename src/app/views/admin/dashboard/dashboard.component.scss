@@ -1,0 +1,181 @@
+@import "../../../../styleSheet/variables";
+@import "../../../../styleSheet/mixins";
+@import "../../../../styleSheet/user_management_dashboard";
+@import "../../../../styleSheet/grade_management_mixins";
+
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+
+  & div.left-partition {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+    width: 70%;
+    height: calc(32.3rem + 49rem + 2rem);
+
+    & section.top {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2.4rem;
+      width: 100%;
+
+      & section.top-left-card {
+        @include cards;
+        width: 37.4rem;
+        height: 32.3rem;
+        @include flexbox(column, space-evenly, center);
+        padding-top: 0;
+
+        div.total {
+          @include card-numeric-data;
+          width: 30rem;
+
+          .details {
+            span {
+              font-size: 1.2rem;
+              font-weight: 600;
+              color: $clr-gray-500;
+            }
+
+            p {
+              font-size: 1.8rem;
+              font-weight: 600;
+              color: $clr-gray-800;
+            }
+          }
+        }
+      }
+
+      & section.top-right-card {
+        @include cards;
+        flex: 1;
+        height: 32.3rem;
+        padding: 2.4rem;
+        @include flexbox(column, flex-start, flex-start);
+        gap: 4.6rem;
+
+        .col-1 {
+          width: 120px;
+          @include flexbox(column, flex-start, flex-start);
+          gap: 0.8rem;
+
+          h3 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: $clr-gray-800;
+          }
+
+          p {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: $clr-gray-500;
+          }
+        }
+
+        .col-2 {
+          width: 100%;
+          @include flexbox(row, space-between, center);
+
+          .info {
+            @include flexbox(column, space-between, flex-start);
+            gap: 2.4rem;
+
+            .stats {
+              @include flexbox(row, space-between, flex-start);
+              gap: 1.6rem;
+
+              .content {
+                @include flexbox(column, flex-start, flex-start);
+                gap: 0.4rem;
+                font-size: 1.6rem;
+                font-weight: 700;
+
+                .title {
+                  color: $clr-gray-800;
+                }
+
+                .value {
+                  color: $clr-gray-300;
+                }
+              }
+            }
+          }
+
+          .progress-circle {
+            width: 126px;
+            height: 126px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .progress-circle::before {
+            content: "";
+            position: absolute;
+            width: 126px;
+            height: 126px;
+            border-radius: 50%;
+            background: conic-gradient(#4caf50 75%, #e0e0e0 75% 100%);
+            transform: rotate(-180deg)
+          }
+
+          .progress-circle::after {
+            content: "";
+            position: absolute;
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: white;
+          }
+
+          .progress-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            border-radius: 0.8rem;
+          }
+
+          .percentage {
+            font-size: 2.492rem;
+            font-weight: bold;
+            color: #4caf50;
+            margin-bottom: 8px;
+            border-radius: 0.8rem;
+          }
+
+          .label {
+            color: #9e9e9e;
+            border-radius: 0.8rem;
+            font-size: 13.85px;
+          }
+        }
+      }
+    }
+
+    & .bottom {
+      @include table;
+      width: 100%;
+
+      .card {
+        width: 100%;
+      }
+    }
+  }
+
+  & div.right-partition {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+
+    & section.top {
+      @include cards;
+      width: 27.5rem;
+      height: 45.3rem;
+    }
+  }
+}

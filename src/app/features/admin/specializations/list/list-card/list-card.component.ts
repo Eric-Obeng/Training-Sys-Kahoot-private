@@ -22,7 +22,11 @@ export class ListCardComponent {
     this.dropdownToggled.emit(event);
   }
 
+  Math = Math;
+
   onActionClick(event: Event, action: string): void {
     this.actionTriggered.emit({ event, action, spec: this.specialization });
   }
+
+
 }

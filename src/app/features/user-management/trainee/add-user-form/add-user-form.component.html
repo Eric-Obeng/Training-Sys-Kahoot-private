@@ -7,7 +7,7 @@
             <span>Back</span>
         </div>
         <div class="cohort-info">
-            <span>User  Information</span>
+            <span>Cohort Information</span>
             <p>Fill in the required details to create a new trainee profile. Ensure that all necessary information, such as the trainee's full name, contact information, and enrollment details, are accurate.</p>
         </div>
         <form [formGroup]="newUserForm" (ngSubmit)="onSubmit()"  enctype="multipart/form-data">
@@ -26,7 +26,7 @@
                 </div>
                 <div class="error" *ngIf="newUserForm.controls['email'].hasError('email') && (newUserForm.controls['email'].touched || newUserForm.controls['email'].dirty)">
                     <span>Enter correct email</span>
-                </div>            
+                </div>
             </div>
 
             <div class="first-last-name">
@@ -65,7 +65,7 @@
 
             <div class="gender-country">
                 <div class="error-wrapper">
-                    <div class="form-field gender">
+                    <div class="form-field  gender">
                         <div class="label-wrapper">
                             <label for="first-name">Gender</label>
                             <span>*</span>
@@ -81,7 +81,7 @@
                     </div>
                 </div>
                 <div class="error-wrapper">
-                    <div class="form-field country">
+                    <div class="form-field last-name">
                         <div class="label-wrapper">
                             <label for="last-name">Country</label>
                             <span>*</span>
@@ -167,9 +167,9 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn">Continue</button>
+          <button type="submit" class="btn">Continue</button>
 
-        </form>
-    </div>
+      </form>
+  </div>
 
 </div>

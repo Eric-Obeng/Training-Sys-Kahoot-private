@@ -1,0 +1,105 @@
+@import "../../../../../styleSheet/variables";
+@import "../../../../../styleSheet/mixins";
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  gap: 2rem;
+  @media (min-width: 1440px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  width: 100%;
+
+  .cards {
+    padding: 1.6rem;
+    border-radius: 0.8rem;
+    border: 1px solid $clr-gray-100;
+    width: 100%;
+
+    .content {
+      @include flexbox(column, flex-start, flex-start);
+      gap: 1.6rem;
+      width: 100%;
+
+      .img-div {
+        width: 100%;
+        height: 11.4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+
+        img {
+          border-radius: 0.4rem;
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .col-1 {
+        @include flexbox(column, flex-start, flex-start);
+        gap: 2.4rem;
+        width: 100%;
+
+        .content {
+          @include flexbox(column, flex-start, flex-start);
+          gap: 2rem;
+
+          h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: $clr-gray-700;
+          }
+
+          .label {
+            @include flexbox(row, flex-start, flex-start);
+            width: 100%;
+            gap: 0.6rem;
+            color: $clr-gray-500;
+
+            div {
+              @include flexbox(row, flex-start, flex-start);
+              gap: 1rem;
+            }
+          }
+
+          p {
+            font-size: 1.4rem;
+            color: $clr-gray-300;
+          }
+        }
+
+        button {
+          width: 100%;
+          background: none;
+          border: 1px solid $clr-gray-50;
+          padding: 1.6rem 3.2rem;
+          @include flexbox(row, center, center);
+          gap: 1.6rem;
+          color: $clr-primary-500;
+          border-radius: 0.8rem;
+          cursor: pointer;
+
+          &:hover,
+          &:focus {
+            background-color: $clr-primary-500;
+            color: $clr-white;
+            border: none;
+          }
+          // font-weight: 700;
+
+          span {
+            font-size: 1.8rem;
+            text-align: center;
+          }
+
+          p {
+            font-weight: 700;
+          }
+        }
+      }
+    }
+  }
+}

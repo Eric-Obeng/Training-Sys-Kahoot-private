@@ -1,6 +1,20 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { InputFieldComponent } from '../../../../core/shared/input-field/input-field.component';
-import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subject, catchError, combineLatest, debounceTime, distinctUntilChanged, filter, first, map, of, switchMap, takeUntil, tap, } from 'rxjs';
 import { Countries, Gender, Specialization, User } from '../../../../core/models/cohort.interface';
@@ -14,10 +28,9 @@ import { specialization } from '@core/models/specialization.interface';
   standalone: true,
   imports: [ReactiveFormsModule, FormsModule, AsyncPipe, NgFor, NgIf, TitleCasePipe],
   templateUrl: './add-user-form.component.html',
-  styleUrl: './add-user-form.component.scss'
+  styleUrl: './add-user-form.component.scss',
 })
 export class AddUserFormComponent implements OnInit, OnDestroy {
-
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   newUserForm!: FormGroup;
@@ -32,14 +45,14 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
   selectedFile: File | null = null;
 
   maxDate!: string;
-  
+
   private unsubscribe$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     public traineeInsystemService: TraineeInsystemService,
-    public usermanagementService: UserManagementTraineeService,
+    public usermanagementService: UserManagementTraineeService
   ) {}
 
   ngOnInit() {
@@ -52,7 +65,7 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
 
   private initializeFormData() {
     this.setMaxDateOfBirth();
-    
+
     // Initialize observables
     this.genders$ = this.usermanagementService.getAllGenders();
     this.countries$ = this.usermanagementService.getAllCountries();
@@ -66,7 +79,7 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
       email: [
         '',
         [Validators.required, Validators.email],
-        [this.emailAsyncValidator.bind(this)]
+        [this.emailAsyncValidator.bind(this)],
       ],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -79,7 +92,7 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
       userProfilePhoto: ['']
     });
 
-    
+
   }
 
   private setupEmailSubscriptions() {
@@ -100,14 +113,14 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
     this.traineeInsystemService.firstFormState$
       .pipe(
         takeUntil(this.unsubscribe$),
-        switchMap(firstFormState => 
-          firstFormState 
-            ? of(firstFormState) 
+        switchMap(firstFormState =>
+          firstFormState
+            ? of(firstFormState)
             : this.traineeInsystemService.retreivedUserData$
         ),
         // Change filter to explicitly check for non-null data
         filter(data => data !== null && data !== undefined),
-        distinctUntilChanged((prev, curr) => 
+        distinctUntilChanged((prev, curr) =>
           JSON.stringify(prev) === JSON.stringify(curr)
         )
       )
@@ -121,7 +134,7 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
 
 
   onSubmit() {
-  
+
 
     const formData = this.newUserForm;
 
@@ -139,20 +152,19 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
     else {
       this.newUserForm.markAllAsTouched()
     }
-
   }
 
   setFirstFormState() {
-    this.traineeInsystemService.setFirstFormState(this.newUserForm.value)
+    this.traineeInsystemService.setFirstFormState(this.newUserForm.value);
   }
 
   emailAsyncValidator(control: AbstractControl): Observable<ValidationErrors | null> {
     const trimmedValue = (control.value || '').trim();
-    
+
     if (!trimmedValue) {
       return of(null);
     }
-  
+
     return this.traineeInsystemService.checkEmail(trimmedValue).pipe(
       debounceTime(1000),
       distinctUntilChanged(),
@@ -166,9 +178,8 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
 
 
   goToSecondSection() {
-    this.router.navigate(['/home/admin/user-management/section-two'])
+    this.router.navigate(['/home/admin/user-management/section-two']);
   }
-
 
   goBack() {
     this.resetFormFields();
@@ -177,7 +188,7 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
 
   resetFormFields() {
     this.unsubscribe$.next(); // Stop active subscriptions
-  
+
     // Reset service-related states
     this.newUserForm.reset();
     this.traineeInsystemService.selectedEmailSubject.next(null);
@@ -190,7 +201,7 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
   //Image upload
   onFileSelected(event: Event) {
     const fileInput = event.target as HTMLInputElement;
-    if(fileInput.files && fileInput.files.length > 0) {
+    if (fileInput.files && fileInput.files.length > 0) {
       this.selectedFile = fileInput.files[0];
 
       const reader = new FileReader();
@@ -212,22 +223,19 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
   }
 
   setMaxDateOfBirth() {
-    const today = new Date(); 
+    const today = new Date();
     // Calculate the date 7 years ago
     const sevenYearsAgo = new Date(today);
     sevenYearsAgo.setFullYear(today.getFullYear() - 7);
-    this.maxDate = this.formatDate(sevenYearsAgo); 
-  } 
-  
+    this.maxDate = this.formatDate(sevenYearsAgo);
+  }
 
   formatDate(date: Date): string {
     return date.toISOString().split('T')[0];
   }
 
-
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
 }

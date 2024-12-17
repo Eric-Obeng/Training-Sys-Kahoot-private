@@ -1,8 +1,11 @@
+import { UserManagementTraineeService } from '@core/services/user-management/trainee/user-management-trainee.service';
 import { Injectable } from '@angular/core';
 import { curriculum } from '@core/models/curriculum.interface';
 import { BehaviorSubject,combineLatest, map,tap,catchError, Observable } from 'rxjs';
 import { ErrorHandleService } from '../error-handle/error-handle.service';
 import { CurriculumCrudService } from '../curriculum-crud/curriculum-crud.service';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +15,23 @@ export class CurriculumFacadeService {
   private curriculumSubject = new BehaviorSubject<curriculum[]>([]);
   private searchTermSubject = new BehaviorSubject<string>('');
   private sortDirectionSubject = new BehaviorSubject<'asc' | 'desc'>('asc');
+  specialization$ = this.UserManagementTrainee.getAllspecializations();
 
   readonly curriculum$ = this.curriculumSubject.asObservable();
   readonly searchTerm$ = this.searchTermSubject.asObservable();
   readonly sortDirection$ = this.sortDirectionSubject.asObservable();
 
-
-
   constructor(
     private errorService: ErrorHandleService,
-    private curriculumCrud: CurriculumCrudService
+    private curriculumCrud: CurriculumCrudService,
+    private UserManagementTrainee: UserManagementTraineeService
   ) {
     this.refreshCurriculum();
   }
+
+
+
+
   readonly filteredAndSortedCurriculum$ = combineLatest([
     this.curriculum$,
     this.searchTerm$,
@@ -48,9 +55,8 @@ export class CurriculumFacadeService {
 
   private loadCurriculum() {
     this.curriculumCrud.getAllCurriculums().subscribe({
-      next: (curriculums) => this.curriculumSubject.next(curriculums),
+      next: (curriculums) => this.curriculumSubject.next(curriculums.content),
       error: (error) => {
-        console.error('Error occurred while fetching curriculums:', error);
         this.errorService.handleError(error);
       }
     });
@@ -71,12 +77,10 @@ export class CurriculumFacadeService {
   }
 
 
-  getSelectedCurriculum(id:number){
-    return this.curriculumCrud.getCurriculumById(id).pipe(
-      tap((data) => {
-        console.log(data);
-        this.loadCurriculum();
-      }),
+  getSelectedCurriculum(id:string | null ){
+    return this.curriculumCrud.getCurriculumById(id)
+    .pipe(
+      tap(() => { this.loadCurriculum(); }),
       catchError(this.errorService.handleError)
     )
   }
@@ -84,19 +88,29 @@ export class CurriculumFacadeService {
   create(curriculum: curriculum):Observable<any>{
     return this.curriculumCrud.createCurriculum(curriculum)
     .pipe(
-       catchError(this.errorService.handleError),
-       tap(() => {
-        this.refreshCurriculum()
-       })
+      catchError(error => {
+        return this.errorService.handleError(error);
+      }),
+      tap(() => {
+        this.loadCurriculum()
+      })
     )
   }
 
-  delete(id: number): Observable<any> {
+  delete(id: string): Observable<any> {
     return this.curriculumCrud.deleteCurriculum(id).pipe(
       catchError(this.errorService.handleError),
       tap(() => {
-        this.refreshCurriculum();
+        this.loadCurriculum()
       })
     );
+  }
+
+  update(id: string, curriculum: curriculum){
+    return this.curriculumCrud.updateCurriculum(id, curriculum)
+    .pipe(
+      tap(() => this.loadCurriculum()),
+      catchError(this.errorService.handleError)
+    )
   }
 }

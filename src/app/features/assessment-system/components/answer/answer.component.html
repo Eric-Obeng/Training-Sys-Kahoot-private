@@ -1,0 +1,24 @@
+<div class="answer">
+  <span class="drag-handle">
+    <img
+      src="assets/Images/svg/drag-dots.svg"
+      alt="drag icon"
+      aria-label="drag Question"
+    />
+  </span>
+  <span class="option">{{ option }}.</span>
+  <input
+    type="text"
+    placeholder="Enter Answer"
+    class="answer-input"
+    [ngModel]="answer"
+    (ngModelChange)="onAnswerInputChange($event)"
+  />
+
+  <button class="mark-correct" type="button" [class.active]="isCorrect" (click)="toggleMarkCorrect($event)">
+    <mat-icon>check</mat-icon> Mark as correct
+  </button>
+  <button class="delete-answer" type="button" (click)="onDeleteAnswer()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>

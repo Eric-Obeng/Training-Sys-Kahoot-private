@@ -1,0 +1,122 @@
+@import "../../../../../styleSheet/variables";
+@import "../../../../../styleSheet/mixins";
+
+.container {
+  @include flexbox(row, center, center);
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  background: #00000052;
+  height: 100vh;
+  width: 100%;
+
+  .wrapper {
+    width: 58.9rem;
+    background-color: $clr-white;
+    border-radius: 1.5rem;
+
+    .header {
+      height: 6rem;
+      padding: 2.05rem 1.6rem;
+
+      p {
+        font-weight: 600;
+        font-size: 1.6rem;
+      }
+    }
+
+    .content {
+      @include flexbox(row, center, center);
+      gap: 1.9rem;
+      background-color: #f1f1f1;
+      height: 28.3rem;
+
+      .card {
+        height: 22.7rem;
+        width: 19.9rem;
+        background-color: $clr-white;
+        border-radius: 0.8rem;
+        overflow: hidden;
+        cursor: pointer;
+
+        & .card-title {
+          @include flexbox(row, center, center);
+          width: 100%;
+          background-color: $clr-primary-500;
+          color: $clr-white;
+          height: 3.5rem;
+          text-align: center;
+          font-weight: 600;
+        }
+
+        .col-1 {
+          @include flexbox(column, space-between, center);
+          padding: 1.6rem 0px;
+          height: calc(22.7rem - 3.5rem);
+          text-align: center;
+
+          &.popular {
+            @include flexbox(column, flex-start, center);
+            gap: 2rem;
+          }
+
+          .edit-btn {
+            width: 4.4rem;
+            height: 4.4rem;
+            border: none;
+            cursor: pointer;
+            border-radius: 0.446rem;
+            @include flexbox(column, center, center);
+          }
+
+          .text {
+            @include flexbox(column, space-between, center);
+            gap: 1rem;
+            color: #676767;
+
+            .title {
+              font-weight: 600;
+            }
+
+            .sub {
+              font-size: 1.2rem;
+            }
+          }
+
+          .ai-btn {
+            border: 1px solid #e0e0e0;
+            background: none;
+            color: $clr-primary-500;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            border-radius: 0.4rem;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    .footer {
+      height: 6rem;
+      @include flexbox(row, center, center);
+
+      button {
+        width: 9.5rem;
+        height: 4rem;
+        background: #c2c2c2;
+        color: $clr-white;
+        font-weight: 700;
+        border: none;
+        border-radius: 0.4rem;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+          background: $clr-primary-500;
+        }
+      }
+    }
+  }
+}

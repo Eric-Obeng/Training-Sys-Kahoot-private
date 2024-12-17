@@ -1,0 +1,118 @@
+<div class="assessment-form">
+  <div class="description">
+    <h6>Set General Information</h6>
+    <p class="subtitle">
+      Set the general details for assessment by entering a title and brief
+      description. This information will help trainees understand the purpose of
+      the assessment.
+    </p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+    <!-- cover image upload -->
+    <div class="label-div">
+      <label>Assessment Cover</label>
+    </div>
+    <div class="form-group image-wrapper" (click)="fileInput.click()">
+      <div class="file-upload">
+        <input
+          type="file"
+          #fileInput
+          style="display: none"
+          (change)="onCoverImageSelected($event)"
+          accept="image/png, image/jpeg, image/webp"
+        />
+        <p class="img" *ngIf="!selectedFileName">Add image here</p>
+        <p class="img image-name" *ngIf="selectedFileName">
+          {{ selectedFileName }}
+        </p>
+        <p class="file-info">Supports: PNG, JPG, JPEG, WEBP</p>
+      </div>
+    </div>
+
+    <!-- Assessment Type -->
+    <div class="form-group">
+      <label for="assessmentType">Assessment Type</label>
+      <select id="assessmentType" formControlName="assessmentType">
+        <option [value]="type">{{ type | titlecase }}</option>
+      </select>
+    </div>
+
+    <!-- Title -->
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input
+        id="title"
+        type="text"
+        formControlName="title"
+        [placeholder]="
+          type === 'quiz' ? 'Enter quiz title here' : 'Enter lab title here'
+        "
+      />
+      @if (form.get('title')?.errors?.['required'] &&
+      form.get('title')?.touched) {
+      <span class="error">Title is required</span>
+      }
+    </div>
+
+    <!-- Focus Area -->
+    <div class="form-group">
+      <label for="focusArea">Focus Area</label>
+      <input
+        id="focusArea"
+        type="text"
+        formControlName="focusArea"
+        placeholder="Enter focus area here"
+      />
+      @if (form.get('focusArea')?.errors?.['required'] &&
+      form.get('focusArea')?.touched) {
+      <span class="error">Focus area is required</span>
+      }
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label for="description">Assessment description</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        rows="4"
+      ></textarea>
+    </div>
+
+    <!-- File Upload for Lab -->
+    @if (type === 'lab' || type === 'presentation') {
+    <div class="label-div">
+      <label>File upload</label>
+    </div>
+    <div class="form-group image-wrapper" (click)="fileInput.click()">
+      <div class="file-upload">
+        <input
+          type="file"
+          #fileInput
+          style="display: none"
+          (change)="onFileSelected($event)"
+          accept="image/png, image/jpeg, image/webp, application/pdf"
+        />
+        <p class="img" *ngIf="!upLoadedFile">Add image here</p>
+        <p class="img image-name" *ngIf="upLoadedFile">
+          {{ upLoadedFile }}
+        </p>
+        <p class="file-info">Supports: PNG, JPG, JPEG, WEBP, PDF</p>
+      </div>
+    </div>
+    }
+
+    <button type="submit" class="continue-btn" [disabled]="!form.valid || isSubmitting">
+      Continue
+    </button>
+  </form>
+
+  <app-feedback
+      [visible]="feedbackVisible"
+      [title]="feedbackTitle"
+      [message]="feedbackMessage"
+      [imageSrc]="feedbackImageSrc"
+      (closeDialog)="onCloseFeedback()"
+    ></app-feedback>
+</div>

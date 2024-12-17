@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="wrapper">
+    <div class="header">
+      <p>Create New QuestBee</p>
+    </div>
+    <div class="content">
+      <div
+        [routerLink]="['/home/trainer/create-kahoot']"
+        class="card recommended"
+        title="AI quiz creation"
+      >
+        <div class="card-title">Recommended</div>
+        <div class="col-1">
+          <button class="edit-btn">
+            <img src="assets/Images/png/edit-btn.png" alt="edit icon" />
+          </button>
+          <div class="text">
+            <p class="title">QuestBee Generator</p>
+            <p class="sub">Generate Quiz based on topic</p>
+          </div>
+          <button class="ai-btn">AI Assisted</button>
+        </div>
+      </div>
+      <div
+        class="card popular"
+        [routerLink]="['/home/trainer/assessment/create/quiz']"
+        title="Manual quiz creation"
+      >
+        <div class="card-title">Popular</div>
+        <div class="col-1 popular">
+          <button class="edit-btn">
+            <img src="assets/Images/png/add-sign.png" alt="edit icon" />
+          </button>
+          <div class="text">
+            <p class="title">Blank Quiz</p>
+            <p class="sub">Create from scratch</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <button (click)="onClose()">Close</button>
+    </div>
+  </div>
+</div>

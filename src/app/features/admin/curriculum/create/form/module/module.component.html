@@ -1,12 +1,15 @@
 <section>
-  <a class="nav" (click)="navigateToCreateCurriculum()">
-    <img src="../../../../assets/Images/svg/backicon.svg" alt="">
+  <!-- Navigation -->
+  <nav class="nav" (click)="navigateToCreateCurriculum()">
+    <img src="assets/Images/svg/backicon.svg" alt="Back">
     <p class="back-link">Back</p>
-  </a>
+  </nav>
 
+  <!-- Main Module Section -->
   <div class="modules-section">
     <form class="module" [formGroup]="parentForm" *ngIf="parentForm">
-      <div class="create-module-head">
+      <!-- Header -->
+      <header class="create-module-head">
         <h3>Module Creation</h3>
         <p>
           Create a new module by providing a title, description,
@@ -14,104 +17,145 @@
           to specific curriculum items to break down content into
           manageable sections
         </p>
-      </div>
+      </header>
 
+      <!-- Module Accordion -->
       <div class="scrollable-content" formArrayName="modules">
         <p-accordion [multiple]="true" styleClass="modules-accordion">
-          <p-accordionTab *ngFor="let module of modules.controls; let moduleIndex = index"
-                         [formGroupName]="moduleIndex"
-                         [selected]="moduleIndex === activeModuleIndex"
-                         [header]="'Module ' + (moduleIndex + 1)">
+          <p-accordionTab
+            *ngFor="let module of modules.controls; let moduleIndex = index"
+            [formGroupName]="moduleIndex"
+            [selected]="moduleIndex === activeModuleIndex"
+            [header]="module.get('title')?.value ||'Module ' + (moduleIndex + 1)">
+
             <div class="modules-container">
-              <!-- Module Title Input -->
+              <!-- Title Field -->
               <div class="type-field form-section">
-                <div class="field-title">
+                <label class="field-title">
                   <h4>Title</h4>
-                  <span>*</span>
-                </div>
+                  <span aria-label="required">*</span>
+                </label>
                 <input
                   type="text"
                   formControlName="title"
                   [class.invalid]="module.get('title')?.touched && module.get('title')?.invalid"
-                  placeholder="Enter module name here">
+                  placeholder="Enter module name here"
+                  aria-label="Module title">
+                  <small class="error" *ngIf="module.get('title')?.touched && module.get('title')?.invalid">
+                    Module title is required*
+                  </small>
               </div>
 
-              <!-- Module Description -->
+              <!-- Description Field -->
               <div class="type-field form-section">
-                <div class="field-title">
+                <label class="field-title">
                   <h4>Description</h4>
-                  <span>*</span>
-                </div>
+                  <span aria-label="required">*</span>
+                </label>
                 <textarea
                   formControlName="description"
                   [class.invalid]="module.get('description')?.touched && module.get('description')?.invalid"
                   placeholder="Enter Module description"
-                  rows="8">
+                  rows="8"
+                  aria-label="Module description">
                 </textarea>
+                <small class="error" *ngIf="module.get('description')?.touched && module.get('description')?.invalid">
+                  Description is required*
+                </small>
               </div>
 
-              <!-- Module Topics -->
+              <!-- Duration Field -->
               <div class="type-field form-section">
-                <div class="field-title">
+                <label class="field-title">
+                  <h4>Estimated Duration (minutes)</h4>
+                  <span aria-label="required">*</span>
+                </label>
+                <input
+                  type="number"
+                  formControlName="estimatedTimeMinutes"
+                  [class.invalid]="module.get('estimatedTimeMinutes')?.touched && module.get('estimatedTimeMinutes')?.invalid"
+                  placeholder="Enter number of minutes to take this module"
+                  min="1"
+                  aria-label="Module duration in minutes">
+                  <small class="error" *ngIf="module.get('estimatedTimeMinutes')?.touched && module.get('estimatedTimeMinutes')?.invalid">
+                    Duration is required*
+                  </small>
+              </div>
+
+              <!-- Topics Section -->
+              <div class="type-field form-section">
+                <label class="field-title">
                   <h4>Topics</h4>
-                  <span>*</span>
-                </div>
+                  <span aria-label="required">*</span>
+                </label>
                 <div formArrayName="topics">
-                  <div *ngFor="let topic of getTopics(moduleIndex).controls; let topicIndex = index">
-                    <div class="topic-section">
-                      <input
-                        [formControlName]="topicIndex"
-                        type="text"
-                        [class.invalid]="topic.touched && topic.invalid"
-                        placeholder="Enter topic">
-                      <img
-                        *ngIf="getTopics(moduleIndex).length > 1"
-                        class="close"
-                        src="../../../../../assets/Images/svg/delete.svg"
-                        alt="Remove topic"
-                        (click)="removeTopic(moduleIndex, topicIndex)">
-                    </div>
+                  <div *ngFor="let topic of getTopics(moduleIndex).controls; let topicIndex = index"
+                       class="topic-section">
+                    <input
+                      [formControlName]="topicIndex"
+                      type="text"
+                      [class.invalid]="topic.touched && topic.invalid"
+                      placeholder="Enter topic"
+                      aria-label="Topic name">
+                    <button
+                      *ngIf="getTopics(moduleIndex).length > 1"
+                      type="button"
+                      class="close"
+                      (click)="removeTopic(moduleIndex, topicIndex)"
+                      aria-label="Remove topic">
+                      <img src="assets/Images/svg/delete.svg" alt="Remove topic">
+                    </button>
                   </div>
+                  <small class="error" *ngIf="getTopics(moduleIndex).length === 0">
+                    At least one topic is required*
+                  </small>
                 </div>
 
                 <button
                   type="button"
-                  matRipple
                   class="add-topic-btn"
-                  (click)="addTopic(moduleIndex)">
+                  matRipple
+                  (click)="addTopic(moduleIndex)"
+                  aria-label="Add new topic">
                   + Add Topic
                 </button>
               </div>
 
-              <!-- Module File Upload -->
+              <!-- File Upload Section -->
               <div class="thumbnail-file form-section type-field">
                 <div class="field-title">
-                  <h4>Module file Upload</h4>
+                  <h4>Module File Upload</h4>
                   <p class="optional-txt">(Optional)</p>
                 </div>
                 <div class="file-field"
+                     [class.drag-over]="dragOver[moduleIndex]"
+                     [class.has-files]="getFileList(moduleIndex).length > 0"
                      (dragover)="onDragOver($event, moduleIndex)"
                      (dragleave)="onDragLeave($event, moduleIndex)"
                      (drop)="onFileDropped($event, moduleIndex)"
-                     [class.drag-over]="dragOver[moduleIndex]"
-                     [class.has-files]="getFileList(moduleIndex).length > 0"
-                     (click)="fileInput.click()">
+                     (click)="fileInput.click()"
+                     role="button"
+                     tabindex="0"
+                     aria-label="File upload area">
+
                   <input
                     #fileInput
-                    hidden
                     type="file"
                     [accept]="allowedFileTypes.join(',')"
-                    (change)="onFileSelected($event, moduleIndex)">
+                    (change)="onFileSelected($event, moduleIndex)"
+                    hidden>
 
+                  <!-- Empty State -->
                   <div class="file-hint" *ngIf="getFileList(moduleIndex).length === 0">
-                    <img src="../../../../../assets/Images/png/photo-fill.svg" alt="">
+                    <img src="assets/Images/png/photo-fill.svg" alt="">
                     <p class="file-inst">Click or drop image/files here</p>
-                    <p class="">Supports: PNG, JPG, JPEG, WEBP, PDF</p>
+                    <p>Supports: PNG, JPG, JPEG, WEBP, PDF</p>
                   </div>
 
+                  <!-- Files List -->
                   <div *ngIf="getFileList(moduleIndex).length > 0" class="file-list">
                     <div class="upload-more">
-                      <img src="../../../../../assets/Images/png/photo-fill.svg" alt="">
+                      <img src="assets/Images/png/photo-fill.svg" alt="">
                       <p>Drop more files or click to browse</p>
                     </div>
 
@@ -119,16 +163,18 @@
                       <div *ngFor="let file of getFileList(moduleIndex); let fileIndex = index"
                            class="file-item">
                         <div class="file-info">
-                          <img [src]="getFileIcon(file.type)" alt="file type icon" class="file-type-icon">
+                          <img [src]="getFileIcon(file.type)"
+                               [alt]="file.type + ' file icon'"
+                               class="file-type-icon">
                           <div class="file-details">
                             <p class="file-name" [title]="file.name">{{ file.name }}</p>
-                            <span class="file-size">{{ file.size }}</span>
                           </div>
                         </div>
                         <button
                           type="button"
                           class="remove-file"
-                          (click)="removeFile(moduleIndex, fileIndex); $event.stopPropagation()">
+                          (click)="removeFile(moduleIndex, fileIndex); $event.stopPropagation()"
+                          aria-label="Remove file">
                           ✕
                         </button>
                       </div>
@@ -137,12 +183,14 @@
                 </div>
               </div>
 
+              <!-- Remove Module Button -->
               <button
                 type="button"
                 *ngIf="modules.length > 1"
-                matRipple
                 class="remove-module-btn"
-                (click)="removeModule(moduleIndex)">
+                matRipple
+                (click)="removeModule(moduleIndex)"
+                aria-label="Remove this module">
                 Remove Module
               </button>
             </div>
@@ -150,30 +198,31 @@
         </p-accordion>
       </div>
 
-
+      <!-- Action Buttons -->
       <div class="button-container">
         <button
           type="button"
-          matRipple
           class="form-section add-btn"
-          (click)="addModule()">
+          matRipple
+          (click)="addModule()"
+          aria-label="Add new module">
           Add Module
         </button>
-
-
       </div>
     </form>
 
+    <!-- Module List Component -->
     <app-module-list
       [modules]="modules"
       [activeModuleIndex]="activeModuleIndex"
       [parentFormValid]="parentForm.valid || false"
       [showFeedback]="showFeedback"
+      [isUpdate]="isUpdate"
+      [isLoading]="isLoading"
       (moduleSelected)="onModuleSelected($event)"
       (moduleRemoved)="onModuleRemoved($event)"
       (createCurriculum)="onCreateCurriculum()">
     </app-module-list>
-
   </div>
 
   <app-feedback-modal/>

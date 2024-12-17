@@ -1,0 +1,58 @@
+@use '../../../../../styleSheet/mixins' as *;
+@use '../../../../../styleSheet/variables' as *;
+
+header{
+  height: 8rem;
+  @include flexbox($align:center, $justify: space-between);
+
+  .search-field{
+    @include flexbox($align:center);
+    padding-left: 2.073rem;
+    gap:1.45rem;
+    height: 4.3rem;
+    width: 43.5rem;
+    border-radius: .8rem;
+    border: 1px solid $clr-gray-100;
+
+    &:hover{
+      border: 1px solid $clr-primary-500;
+    }
+
+    img{
+      width: 1.89rem;
+      height: 1.89rem;
+    }
+
+    input{
+      width: 100%;
+      border: none;
+      background-color: transparent;
+      caret-color: $clr-primary-500;
+      &:focus{
+        outline: none;
+      }
+    }
+  }
+
+  .sort-btn{
+    border: none;
+    background-color: transparent;
+    @include flexbox($align:center);
+    gap: 1rem;
+    cursor: pointer;
+    height: 4.4rem;
+    width: 8.4rem;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+
+    &:hover{
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+
+    &.active img {
+      transform: scaleY(-1);
+    }
+  }
+
+}

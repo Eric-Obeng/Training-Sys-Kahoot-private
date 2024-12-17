@@ -5,7 +5,6 @@
   </a>
 
   <section class="curriculum-container" [formGroup]="curriculumForm">
-    <ng-container >
       <form class="curriculum-form">
         <div class="create-info-head">
           <h3>Curriculum Creation</h3>
@@ -57,21 +56,17 @@
               <h4>Assign to specialization</h4>
               <span>*</span>
             </div>
-            <select class="custom-select"  formControlName="assignedSpecialization"
-            [class.invalid]="formControls.assignedSpecialization?.touched && formControls.assignedSpecialization?.invalid"
+            <select class="custom-select"  formControlName="specialization"
+            [class.invalid]="formControls.specialization?.touched && formControls.specialization?.invalid"
             >
               <option value="" disabled selected>Select specialization</option>
-              <option value="frontend">Frontend Development</option>
-              <option value="backend">Backend Development</option>
-              <option value="fullstack">Full Stack Development</option>
-              <option value="mobile">Mobile Development</option>
-              <option value="cloud">Cloud Computing/Devops</option>
-              <option value="AI">AI/ML</option>
-              <option value="fullstack">Game Development</option>
-              <option value="cybersecurity">Cybersecurity</option>
+              <option *ngFor="let option of allSpecializations$ | async" [value]="option.name">
+                {{ option.name }}
+              </option>
+
             </select>
 
-            <small class="error" *ngIf="formControls.assignedSpecialization?.touched && formControls.assignedSpecialization?.invalid">
+            <small class="error" *ngIf="formControls.specialization?.touched && formControls.specialization?.invalid">
               Specialization is required*
             </small>
           </div>
@@ -152,7 +147,6 @@
           </button>
         </div>
       </form>
-    </ng-container>
   </section>
 </main>
 

@@ -1,0 +1,20 @@
+[
+  {
+    "type": "quiz",
+    "label": "Quiz",
+    "icon": "assets/Images/png/quiz.png",
+    "route": "/home/trainer/assessment/create/quiz"
+  },
+  {
+    "type": "lab",
+    "label": "Lab",
+    "icon": "assets/Images/png/lab.png",
+    "route": "/home/trainer/assessment/create/lab"
+  },
+  {
+    "type": "presentation",
+    "label": "Presentation",
+    "icon": "assets/Images/png/presentation.png",
+    "route": "/home/trainer/assessment/create/presentation"
+  }
+]

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-assessment',
   standalone: true,
-  imports: [],
+  imports: [RouterOutlet],
   templateUrl: './assessment.component.html',
   styleUrl: './assessment.component.scss'
 })

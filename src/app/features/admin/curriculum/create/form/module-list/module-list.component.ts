@@ -3,11 +3,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { FeedbackModalComponent } from "../../../../../../core/shared/feedback-modal/feedback-modal.component";
 import { MatRipple } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-module-list',
   standalone: true,
-  imports: [NgIf, NgFor, FeedbackModalComponent,MatRipple],
+  imports: [NgIf, NgFor, FeedbackModalComponent, MatRipple, MatProgressSpinnerModule],
   templateUrl: './module-list.component.html',
   styleUrl: './module-list.component.scss'
 })
@@ -17,6 +18,8 @@ export class ModuleListComponent {
   @Input() showFeedback!: boolean;
   @Input() activeModuleIndex!: number;
   @Input() parentFormValid!: boolean;
+  @Input() isUpdate: boolean = false;
+  @Input() isLoading: boolean = false; 
 
   @Output() moduleSelected = new EventEmitter<number>();
   @Output() moduleRemoved = new EventEmitter<number>();

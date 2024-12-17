@@ -1,14 +1,17 @@
 <p-dialog
-      [(visible)]="visible"
-      [modal]="true"
-      [style]="{ width: '629px' }"
-      [draggable]="false"
-      [resizable]="false"
-      styleClass="delete-dialog"
-      [closeOnEscape]="true"
-      [dismissableMask]="true"
-      (onHide)="close()">
-  <ng-container>
+    [(visible)]="visible"
+    [modal]="true"
+    [style]="{ width: '611px' }"
+    [draggable]="false"
+    [resizable]="false"
+    styleClass="delete-dialog"
+    [closeOnEscape]="true"
+    [dismissableMask]="true"
+    [showHeader]="true"
+    (onHide)="close()">
+     <button class="close-btn" (click)="close()">
+      <img src="../../../../../assets/Images/svg/close-del.svg" alt="">
+     </button>
     <div class="delete-container">
       <div class="delete-info">
         <img src="../../../../../assets/Images/svg/trash-can.svg" alt="">
@@ -28,14 +31,12 @@
         </button>
       </div>
     </div>
-  </ng-container>
 </p-dialog>
 
 <app-delete-feedback
   [(visible)]="showDeleteFeedback"
   (visibleChange)="onFeedbackClose()"
   [title]="'Specialization'"
-  [description]="' Are you sure you want to delete this specialization?
-    This action cannot be undone, and all associated information
-    will be permanently removed from the system.'">
+  [description]="' The specialization has been
+  deleted successfully and all associated information has been permanently removed from the system. '">
 </app-delete-feedback>

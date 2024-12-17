@@ -20,7 +20,7 @@ export class HeaderComponent {
   ){}
 
   navigateToCreate() {
-    this.router.navigate(['home', 'admin', 'specialization', 'create']);
+    this.router.navigate(['home', 'admin', 'specialization-management', 'create']);
   }
 
   toggleSort(){

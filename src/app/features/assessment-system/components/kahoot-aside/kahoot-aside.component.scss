@@ -1,0 +1,25 @@
+@import "../../../.././../styleSheet/mixins";
+@import "../../../.././../styleSheet/variables";
+
+.container {
+  width: 100%;
+  height: 100vh;
+  padding: 1.6rem 1.2rem;
+
+  .wrapper {
+    width: 100%;
+    padding: 3.2rem auto;
+    @include flexbox(column, flex-start, center);
+    gap: 2.4rem;
+
+    .select {
+      @include flexbox(column, flex-start, flex-start);
+      gap: 0.4rem;
+
+      label {
+        @include flexbox(row, flex-start, center);
+        gap: .4rem;
+      }
+    }
+  }
+}

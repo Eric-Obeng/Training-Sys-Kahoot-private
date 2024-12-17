@@ -1,1 +1,95 @@
-<p>Admin dasboard</p>
+<div class="container">
+  <div class="left-partition">
+    <section class="top">
+      <section class="top-left-card">
+        <div class="total">
+          <img src="assets/Images/png/dash-trainee.png" alt="image" />
+          <div class="details">
+            <span>Total Trainees</span>
+            <p>100 Trainees</p>
+          </div>
+        </div>
+        <div class="total trainers">
+          <img src="assets/Images/png/dash-trainer.png" alt="image" />
+          <div class="details">
+            <span>Total Trainers</span>
+            <p>112 Trainers</p>
+          </div>
+        </div>
+        <div class="total average-learning-time">
+          <img src="assets/Images/png/dash-avg.png" alt="image" />
+          <div class="details">
+            <span>Average Learning Time</span>
+            <p>42 Minutes</p>
+          </div>
+        </div>
+      </section>
+      <section class="top-right-card">
+        <div class="col-1">
+          <h3>Statistics</h3>
+          <p>Sep-Oct 2024</p>
+        </div>
+        <div class="col-2">
+          <div class="info">
+            <div class="stats">
+              <div class="img-div blue">
+                <img src="assets/Images/png/dash-adsence.png" alt="" />
+              </div>
+              <div class="content">
+                <p class="title">Absence</p>
+                <p class="value">30%</p>
+              </div>
+            </div>
+            <div class="stats">
+              <div class="img-div green">
+                <img src="assets/Images/png/dash-lab.png" alt="" />
+              </div>
+              <div class="content">
+                <p class="title">Labs</p>
+                <p class="value">60%</p>
+              </div>
+            </div>
+            <div class="stats">
+              <div class="img-div yellow">
+                <img src="assets/Images/png/dash-quiz.png" alt="" />
+              </div>
+              <div class="content">
+                <p class="title">Quiz</p>
+                <p class="value">70%</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="progress-circle">
+            <div class="progress-content">
+              <div class="percentage">75%</div>
+              <div class="label">Task<br />Completed</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+    <div class="bottom">
+      <div class="card">
+        <p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Topic</th>
+              <th>Specialization</th>
+              <th>Trainer</th>
+              <th>Time</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-product>
+            <tr>
+              <td>{{ product.topic }}</td>
+              <td>{{ product.specialization }}</td>
+              <td>{{ product.trainer }}</td>
+              <td>{{ product.time }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</div>

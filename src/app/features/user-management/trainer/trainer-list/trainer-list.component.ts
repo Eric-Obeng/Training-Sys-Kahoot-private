@@ -13,7 +13,7 @@ import { SearchbarComponent } from '../../../../core/shared/searchbar/searchbar.
 @Component({
   selector: 'app-trainer-list',
   standalone: true,
-  imports: [CommonModule, MatIconModule, SearchbarComponent],
+  imports: [CommonModule, MatIconModule],
   templateUrl: './trainer-list.component.html',
   styleUrl: './trainer-list.component.scss',
 })
@@ -22,6 +22,9 @@ export class TrainerListComponent {
   filteredTrainees$!: Observable<User[]>;
   trainerTabClicked: boolean = true;
   deleteTraineeEmail: string = '';
+  selectedTrainerId: number | null = null;
+
+
 
   private searchTerm$ = new BehaviorSubject<string>('');
   private statusFilter$ = new BehaviorSubject<string | null>(null);
@@ -55,8 +58,6 @@ export class TrainerListComponent {
         );
       })
     );
-
-
   }
 
   tabClicked() {
@@ -101,16 +102,11 @@ export class TrainerListComponent {
     this.specializationFilter$.next(null);
   }
 
-  toggleEllipsis(selectedTrainee: string, event: Event) {
+  toggleMenu(trainerId: number, event: Event) {
     event.stopPropagation();
-    this.selectedTraineeName =
-      this.selectedTraineeName === selectedTrainee ? null : selectedTrainee;
-    if (this.selectedTraineeName === null) {
-      this.ellipsisClicked = false;
-    } else if (this.selectedTraineeName === selectedTrainee) {
-      this.ellipsisClicked = true;
-    }
+    this.selectedTrainerId = this.selectedTrainerId === trainerId ? null : trainerId;
   }
+
 
   getSelectedUser(traineeId: string, trainee: User) {
     this.traineesInsystemService.getSelectedTrainee(trainee);
@@ -146,8 +142,10 @@ export class TrainerListComponent {
     this.deleteModalSuccess = !this.deleteModalSuccess;
   }
 
-  openMenu() {
-    console.log('testing');
+  openMenu(index: number, event: Event) {
     this.ellipsisClicked = true;
+    event.stopPropagation(); // Prevent unwanted bubbling
+    // Toggle the selected trainer's menu
+    this.selectedTrainerId = this.selectedTrainerId === index ? null : index;
   }
 }

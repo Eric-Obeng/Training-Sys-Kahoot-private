@@ -1,0 +1,21 @@
+<header>
+  <h3>Trainees</h3>
+
+  <div class="search-field">
+    <img src="../../../../../../assets/Images/svg/iconoir_search.svg" alt="search-icon">
+    <input
+      type="text"
+      placeholder="Search trainee"
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearch($event)"
+      >
+  </div>
+
+  <button class="sort-btn" (click)="sort()" [class.active]="sortDirection === 'asc'">
+    <img src="../../../../../../assets/Images/svg/sort-icon.svg" alt="sort-icon">
+    Sort {{ sortDirection === 'asc' ? '↑' : '↓' }}
+  </button>
+
+
+</header>
+<mat-divider></mat-divider>

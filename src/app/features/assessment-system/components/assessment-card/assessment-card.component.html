@@ -1,0 +1,88 @@
+<ng-container *ngIf="assessment">
+  <div class="container">
+    <!-- quizzes -->
+    <div *ngFor="let quiz of assessment.quizzes" class="cards">
+      <div class="content">
+        <div class="img-div">
+          <img
+            [src]="quiz.coverImage ? 'data:image/png;base64,' + quiz.coverImage : 'assets/Images/png/default-image.png'"
+            alt="Quiz Cover"
+          />
+        </div>
+        <div class="col-1">
+          <div class="content">
+            <h3>{{ quiz.title }}</h3>
+            <div class="label">
+              <div><span>&#8226;</span> {{ quiz.assessmentType }}</div>
+              <div><span>&#8226;</span> {{ quiz.focusArea }}</div>
+            </div>
+            <p>{{ quiz.description }}</p>
+          </div>
+          <button (click)="onShowAssignAssessmentModal(quiz.id)">
+            <span>+</span>
+            <p>Assign</p>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- labs -->
+    <div *ngFor="let lab of assessment.labs" class="cards">
+      <div class="content">
+        <div class="img-div">
+          <img
+            [src]="lab.coverImage ? 'data:image/png;base64,' + lab.coverImage : 'assets/Images/png/default-image.png'"
+            alt="Lab Cover"
+          />
+        </div>
+        <div class="col-1">
+          <div class="content">
+            <h3>{{ lab.title }}</h3>
+            <div class="label">
+              <div><span>&#8226;</span> {{ lab.assessmentType }}</div>
+              <div><span>&#8226;</span> {{ lab.focusArea }}</div>
+            </div>
+            <p>{{ lab.description }}</p>
+          </div>
+          <button (click)="onShowAssignAssessmentModal(lab.id)">
+            <span>+</span>
+            <p>Assign</p>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- presentations -->
+    <div *ngFor="let presentation of assessment.presentations" class="cards">
+      <div class="content">
+        <div class="img-div">
+          <img
+            [src]="presentation.coverImage ? 'data:image/png;base64,' + presentation.coverImage : 'assets/Images/png/default-image.png'"
+            alt="Presentation Cover"
+          />
+        </div>
+        <div class="col-1">
+          <div class="content">
+            <h3>{{ presentation.title }}</h3>
+            <div class="label">
+              <div><span>&#8226;</span> {{ presentation.assessmentType }}</div>
+              <div><span>&#8226;</span> {{ presentation.focusArea }}</div>
+            </div>
+            <p>{{ presentation.description }}</p>
+          </div>
+          <button (click)="onShowAssignAssessmentModal(presentation.id)">
+            <span>+</span>
+            <p>Assign</p>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<div *ngIf="showAssignAssessmentModal">
+  <app-assign-assessment
+    [currentAssessmentId]="assessmentId"
+    (cancel)="onCloseAssignAssessmentModal()"
+  />
+</div>

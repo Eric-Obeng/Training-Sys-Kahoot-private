@@ -1,7 +1,5 @@
 @use'../../../../../styleSheet/mixins' as *;
 
-
-
 ::ng-deep {
   .delete-dialog {
     .p-dialog-header {
@@ -19,16 +17,22 @@
     backdrop-filter: blur(2px);
   }
 }
+.close-btn{
+  border: none;
+  position: absolute;
+  background-color: transparent;
+  top: 1.6rem;
+  right: 1.6rem;
+  font-size: 2.4rem;
+  cursor: pointer;
+}
+
 
 .delete-container {
-  display: flex;
   padding: 1.6rem;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @include flexbox($direction: column, $justify:center,$align:center );
   gap: 4.1rem;
   background-color: #fff;
-
   .delete-info {
     display: flex;
     flex-direction: column;
@@ -41,6 +45,7 @@
     }
 
     p {
+      text-align: center;
       font-size: 1.6rem !important;
       color: #676767;
     }

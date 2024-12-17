@@ -1,3 +1,5 @@
+@use '../../../../../styleSheet/mixins' as *;
+
 ::ng-deep {
   .delete-dialog {
     .p-dialog-header {
@@ -5,8 +7,9 @@
     }
 
     .p-dialog-content {
-      padding: 1.6rem;
       border-radius: 0.8rem;
+      padding: 1.6rem;
+      overflow:hidden;
     }
   }
 
@@ -17,14 +20,11 @@
 }
 
 .add-container {
-    display: flex;
+    height: 37.1rem ;
     padding: 1.6rem;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    @include flexbox($direction: column, $justify:center, $align:center);
     gap: 4.1rem;
     background-color: #fff;
-    border-radius: .8rem;
 
     .add-info {
       display: flex;
@@ -38,6 +38,7 @@
       }
 
       p {
+        text-align: center;
         font-size: 1.6rem !important;
         color: #676767;
       }

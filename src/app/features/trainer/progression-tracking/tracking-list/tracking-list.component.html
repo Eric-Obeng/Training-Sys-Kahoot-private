@@ -1,0 +1,67 @@
+<p-table
+  [value]="progressData"
+  styleClass="custom-table"
+  [sortField]="sortField"
+  [sortOrder]="sortOrder"
+  (onSort)="onSort($event)">
+  <ng-template pTemplate="header" class="custom-table ">
+    <tr class="header-row">
+      <th class="header-cell" pSortableColumn="traineeName"
+       matTooltip="sort by trainee's name"
+       matTooltipPosition="below"
+      >
+        Trainee Name
+        <p-sortIcon field="traineeName"></p-sortIcon>
+      </th>
+      <th class="header-cell" pSortableColumn="currentPhase"
+        matTooltip="sort by phase/level"
+        matTooltipPosition="below"
+      >
+        Current Phase/Level
+        <p-sortIcon field="currentPhase"></p-sortIcon>
+      </th>
+      <th class="header-cell" pSortableColumn="progress"
+        matTooltip="sort by progress"
+        matTooltipPosition="below"
+      >
+        Progress Indicator
+        <p-sortIcon field="progress"></p-sortIcon>
+      </th>
+      <th class="header-cell" pSortableColumn="completionDate"
+        matTooltip="sort by date completed"
+        matTooltipPosition="below"
+      >
+        Completion Date
+        <p-sortIcon field="completionDate"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-trainee>
+    <tr>
+      <td class="profile-name">
+        <img [src]="getAvatarUrl(trainee.traineeName)" alt="trainee-name" *ngIf="!trainee.profileImage">
+        <img [src]="trainee.profileImage" alt="trainee-name" *ngIf="trainee.profileImage">
+        {{trainee.traineeName}}
+      </td>
+      <td>
+        <p-dropdown
+          [options]="phaseOptions"
+          [(ngModel)]="trainee.currentPhase"
+          (onChange)="updateTraineePhase(trainee, $event.value)"
+
+        >
+          <ng-template let-item pTemplate="selectedItem">
+            {{item | titlecase}}
+          </ng-template>
+          <ng-template let-item pTemplate="item">
+            {{item | titlecase}}
+          </ng-template>
+        </p-dropdown>
+      </td>
+      <td>
+        <p-progressBar [value]="trainee.progress" [showValue]="false"></p-progressBar>
+      </td>
+      <td>{{trainee.completionDate | date:'shortDate'}}</td>
+    </tr>
+  </ng-template>
+</p-table>

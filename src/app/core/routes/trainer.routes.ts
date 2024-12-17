@@ -1,5 +1,6 @@
 
 import { Routes } from '@angular/router';
+import { AssessmentTabsSecondComponent } from '@features/grade-management/assessment-tabs-second/assessment-tabs-second.component';
 import { WelcomePageComponent } from '@features/grade-management/welcome-page/welcome-page.component';
 
 
@@ -7,7 +8,7 @@ export const trainerRoutes: Routes = [
   {
     path: '',
     redirectTo: 'dashboard',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'dashboard',
@@ -16,9 +17,34 @@ export const trainerRoutes: Routes = [
   },
   {
     path: 'assessment',
-    loadComponent : ()=> import('@views/trainer/assessment/assessment.component')
-    .then(m => m.AssessmentComponent),
-    data: { role: 'trainerer' }
+    loadComponent: () =>
+      import('@views/trainer/assessment/assessment.component').then(
+        (m) => m.AssessmentComponent
+      ),
+    data: { role: 'trainer' },
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import(
+            '@features/assessment-system/assessment-list/assessment-list.component'
+          ).then((m) => m.AssessmentListComponent),
+      },
+      {
+        path: 'create/:type',
+        loadComponent: () =>
+          import(
+            '@features/assessment-system/assessment-form/assessment-form.component'
+          ).then((m) => m.AssessmentFormComponent),
+      },
+      {
+        path: ':quiz-creation',
+        loadComponent: () =>
+          import(
+            '@features/assessment-system/quiz-creation/quiz-creation.component'
+          ).then((m) => m.QuizCreationComponent),
+      },
+    ],
   },
   {
     path: 'grade-management',
@@ -41,6 +67,16 @@ export const trainerRoutes: Routes = [
             loadComponent: () => import('../../features/grade-management/view-ungraded-trainees-list/trainees-list/trainees-list.component')
             .then(m => m.TraineesListComponent),
           },
+          {
+            path: 'graded-trainees-list',
+            loadComponent: () => import('../../features/grade-management/graded-trainees-list/graded-trainees-list.component')
+            .then(m => m.GradedTraineesListComponent),
+          },
+          {
+            path: 'grade-assignment',
+            loadComponent: () => import('../../features/grade-management/grade-assignment/grade-assignment.component')
+            .then(m => m.GradeAssignmentComponent)
+          }
         ]
       },
       {
@@ -51,8 +87,13 @@ export const trainerRoutes: Routes = [
           {
             path: '',
             loadComponent: () => import('../../features/grade-management/view-grade-history-list/view-grade-history/view-grade-history.component')
-            .then(m => m.ViewGradeHistoryComponent),
+            .then(m => m.ViewGradeHistoryComponent), 
           },
+          {
+            path: 'assessment-overview',
+            loadComponent: () => import('../../features/grade-management/assessment-overview/assessment-overview.component')
+            .then(m => m.AssessmentOverviewComponent)
+          }
         ]
       },
     ]
@@ -64,13 +105,42 @@ export const trainerRoutes: Routes = [
     data: { role: 'trainer' }
   },
   {
-    path: 'curriculum',
+    path: 'curriculum-management',
     loadComponent: () => import('@views/admin/curriculum/curriculum.component')
     .then(m => m.CurriculumComponent),
-    data: { role: 'trainer' }
+    data: { role: 'trainer' },
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('@features/admin/curriculum/curriculum-list/curriculum-list.component')
+       .then(m => m.CurriculumListComponent)
+      },
+      {
+        path: 'curriculum/:id',
+        loadComponent: () => import('@features/admin/curriculum/detail/detail.component')
+        .then(m => m.DetailComponent)
+      },
+      {
+        path: 'create-curriculum',
+        loadComponent: () => import('@features/admin/curriculum/create/create.component')
+       .then(m => m.CreateComponent),
+       children:[
+         {
+           path: '',
+           loadComponent: () => import('@features/admin/curriculum/create/form/form.component')
+          .then(m => m.FormComponent)
+         },
+         {
+           path: 'create-module',
+           loadComponent: () => import('@features/admin/curriculum/create/form/module/module.component')
+          .then(m => m.ModuleComponent)
+         },
+       ]
+      }
+    ]
   },
   {
-    path: 'progress-tracking',
+    path: 'progression-tracking',
     loadComponent: () => import('@views/trainer/progress-tracking/progress-tracking.component')
     .then(m => m.ProgressTrackingComponent)
   },
@@ -93,10 +163,16 @@ export const trainerRoutes: Routes = [
     data: { role: 'trainer' }
   },
   {
-    path:'help',
-    loadComponent: () => import('@views/help/help.component')
-    .then(m => m.HelpComponent),
-    data: { role: 'trainer' }
-  }
-
+    path: 'help',
+    loadComponent: () =>
+      import('@views/help/help.component').then((m) => m.HelpComponent),
+    data: { role: 'trainer' },
+  },
+  {
+    path: 'create-kahoot',
+    loadComponent: () =>
+      import(
+        '@features/assessment-system/kahoot-page/kahoot-page.component'
+      ).then((m) => m.KahootPageComponent),
+  },
 ];

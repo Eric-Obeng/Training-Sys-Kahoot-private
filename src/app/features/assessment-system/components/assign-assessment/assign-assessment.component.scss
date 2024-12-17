@@ -1,0 +1,123 @@
+@import "../../../../../styleSheet/variables";
+@import "../../../../../styleSheet/mixins";
+
+.container {
+  @include flexbox(row, center, center);
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  background: #00000052;
+  height: 100vh;
+  width: 100%;
+
+  .wrapper {
+    width: 96.9rem;
+    height: 69.6rem;
+    background-color: $clr-white;
+    border-radius: 0.8rem;
+    padding: 2.4rem;
+    @include flexbox(column, flex-start, center);
+    gap: 1.6rem;
+    position: relative;
+    overflow: hidden;
+
+    .col-1 {
+      width: 100%;
+
+      .header {
+        @include flexbox(row, space-between, center);
+        width: 100%;
+
+        .assign {
+          color: $clr-gray-500;
+          font-size: 2rem;
+          font-weight: 700;
+        }
+
+        .close {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .col-2 {
+      width: 100%;
+      position: relative;
+
+      .filters-wrapper {
+        width: 100%;
+        // @include flexbox(row, space-between, center);
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+
+      .filters-container {
+        @include flexbox(row, flex-end, center);
+        gap: 1rem;
+      }
+    }
+
+    .actions-container {
+      width: 100%;
+      @include flexbox(row, space-between, center);
+      gap: 1.2rem;
+      position: absolute;
+      z-index: 10;
+      right: 0;
+      bottom: 0;
+      padding: 1rem;
+      background: #fff;
+
+      .expires {
+        @include flexbox(column, flex-start, flex-start);
+        gap: 0.8rem;
+
+        label {
+          font-size: 1.6rem;
+          color: $clr-gray-500;
+        }
+
+        input {
+          padding: 0.6rem 1rem;
+          border: 0.15rem solid $clr-gray-300;
+          outline: none;
+
+          &:focus {
+            border: 0.15rem solid $clr-primary-500;
+          }
+        }
+      }
+
+      .actions {
+        @include flexbox(row, space-between, center);
+        gap: 1.8rem;
+
+        .btn {
+          padding: 1.6rem 3.2rem;
+          border-radius: 0.8rem;
+          font-size: 1.8rem;
+          font-weight: 700;
+          border: none;
+          background: none;
+          cursor: pointer;
+
+          &.assign {
+            background: $clr-primary-500;
+            color: $clr-white;
+
+            & .disabled {
+              cursor: not-allowed;
+            }
+          }
+
+          &.cancel {
+            border: 1.5px solid $clr-primary-500;
+            color: $clr-primary-500;
+          }
+        }
+      }
+    }
+  }
+}

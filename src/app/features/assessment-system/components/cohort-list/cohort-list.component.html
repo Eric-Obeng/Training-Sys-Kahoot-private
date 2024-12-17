@@ -1,0 +1,24 @@
+<div class="card">
+  <p-table [value]="activeCohort" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Cohorts</th>
+        <th>Start date</th>
+        <th>End date</th>
+        <th>Trainees Enrolled</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-cohort>
+      <tr>
+        <td>{{ cohort.name }}</td>
+        <td>{{ cohort.startDate }}</td>
+        <td>{{ cohort.endDate }}</td>
+        <td>{{ cohort.traineesEnrolled }}</td>
+        <td>
+          <input type="checkbox" (change)="onCohortSelectionChange(cohort.id, $event)" />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

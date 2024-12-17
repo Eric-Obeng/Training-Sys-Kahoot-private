@@ -4,7 +4,7 @@ export interface specialization {
   description: string;
   prerequisites: string[];
   createdAt: string;
-  traineesCount?: number;
+  traineeCount?: number;
 }
 
 
@@ -46,3 +46,8 @@ export interface ContentResponse <T>{
   totalPages: number;
 }
 
+export interface ActionEvent {
+  event: Event;
+  action: string;
+  spec: specialization;
+}

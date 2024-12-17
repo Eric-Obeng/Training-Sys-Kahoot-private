@@ -1,13 +1,16 @@
 <p-dialog
       [(visible)]="visible"
       [modal]="true"
-      [style]="{ width: '629px' }"
+      [style]="{ width: '611px' }"
       [draggable]="false"
       [resizable]="false"
       styleClass="feedback-dialog"
       [closeOnEscape]="true"
       [dismissableMask]="true"
       (onHide)="close()">
+      <button class="close-btn" (click)="close()">
+        <img src="../../../../../assets/Images/svg/close-del.svg" alt="">
+      </button>
   <div class="delete-container feedback-container">
     <div class="delete-info feedback-info">
       <img src="../../../../../assets/Images/svg/delete-feedback.png" alt="">

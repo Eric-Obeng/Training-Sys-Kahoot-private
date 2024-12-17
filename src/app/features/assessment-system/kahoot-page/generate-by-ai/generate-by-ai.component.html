@@ -1,0 +1,93 @@
+<div class="container">
+  <div class="wrapper">
+    <div class="header">
+      <button class="btn" (click)="onClose()">
+        <img src="assets/Images/png/left-arrow.png" alt="letf-arrow icon" />
+      </button>
+      <p>Generate question with AI</p>
+    </div>
+    <form
+      [formGroup]="generateQuizForm"
+      class="content"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="col-1">
+        <div class="input-div">
+          <input
+            type="text"
+            placeholder="Enter quiz topic here.."
+            formControlName="topic"
+          />
+          <button type="submit" [disabled]="generateQuizForm.invalid">
+            <div>
+              <img src="assets/Images/png/ai.png" alt="ai icon" />
+            </div>
+            <p>Generate</p>
+          </button>
+        </div>
+        <div class="questions-div">
+          <div class="questions-container">
+            <div class="load">
+              @if (isLoading) {
+              <app-loader />
+              } @if (errorMessage) {
+              <p class="error">{{ errorMessage }}</p>
+              }
+            </div>
+
+            <app-question-card
+              class="questions"
+              *ngFor="let quiz of quizzes"
+              [question]="quiz"
+              (addQuestion)="onAddQuestionToKahootQuestions($event)"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="top">
+          <p>Quiz Options</p>
+        </div>
+        <div class="actions">
+          <div class="select">
+            <label for="skill">Skill Level</label>
+            <p-dropdown
+              [options]="levels"
+              optionLabel="name"
+              id="skill"
+              placeholder="select level"
+              formControlName="level"
+            ></p-dropdown>
+          </div>
+
+          <div class="select">
+            <label for="skill">Question Type</label>
+            <p-dropdown
+              [options]="questionType"
+              optionLabel="name"
+              placeholder="select answer option"
+              id="skill"
+              formControlName="questionType"
+            ></p-dropdown>
+          </div>
+          <div class="select">
+            <label for="skill">Include Code</label>
+            <p-dropdown
+              [options]="includeCode"
+              optionLabel="name"
+              id="skill"
+              placeholder="Include code"
+              formControlName="includeCode"
+            ></p-dropdown>
+          </div>
+        </div>
+        <div class="add">
+          <button type="button" class="btn" (click)="onAddAllQuestions()">
+            Add all {{ quizzes.length }}
+          </button>
+          <button type="button" class="btn" (click)="onDone()">Done</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="wrapper">
+    <div class="col-1">
+      <div class="header">
+        <p class="assign">Assign</p>
+        <span class="close" (click)="onCancel()">
+          <img src="assets/Images/svg/close.svg" alt="close icon"
+        /></span>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="filters-wrapper">
+        <div class="filters-container">
+          <p-dropdown
+            [options]="filterOptions.cohort"
+            [(ngModel)]="selectedCohort"
+            placeholder="Cohort"
+            (onChange)="applyFilters()"
+          ></p-dropdown>
+          <p-dropdown
+            [options]="filterOptions.specialization"
+            [(ngModel)]="selectedSpecialization"
+            placeholder="Specialization"
+            (onChange)="applyFilters()"
+          ></p-dropdown>
+          <mat-checkbox
+            (change)="onSelectAll($event)"
+            [checked]="selectAllChecked"
+            >Select All</mat-checkbox
+          >
+        </div>
+        <p-tabView>
+          <p-tabPanel header="Trainee">
+            <app-trainee-list
+              [trainees]="filteredTrainees"
+              [selectAllChecked]="selectAllChecked"
+              (selectedTrainees)="onTraineeSelectionChange($event)"
+            ></app-trainee-list>
+          </p-tabPanel>
+          <p-tabPanel header="Cohort">
+            <app-cohort-list
+              [activeCohort]="activeCohort"
+              (cohortSelectionChange)="onCohortSelectionChange($event)"
+            />
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+    </div>
+    <div class="actions-container">
+      <form [formGroup]="assignAssessmentForm" class="expires">
+        <p-dropdown
+          [options]="selectedExpiry"
+          placeholder="Expires in"
+          optionLabel="name"
+          optionValue="value"
+          formControlName="deadline"
+        ></p-dropdown>
+      </form>
+      <div class="actions">
+        <button class="btn cancel" (click)="onCancel()">Cancel</button>
+        <button class="btn assign" [disabled]="assignAssessmentForm.invalid" (click)="onAssign()">Assign</button>
+      </div>
+    </div>
+  </div>
+  <app-feedback
+    [visible]="feedbackVisible"
+    [title]="feedbackTitle"
+    [message]="feedbackMessage"
+    [imageSrc]="feedbackImageSrc"
+    (closeDialog)="onCloseFeedback()"
+  ></app-feedback>
+</div>

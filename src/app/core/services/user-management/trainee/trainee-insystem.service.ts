@@ -53,7 +53,7 @@ export class TraineeInsystemService {
 
   private getHeaders(): HttpHeaders {
     return new HttpHeaders({
-      "ngrok-skip-browser-warning": "69420" 
+      "ngrok-skip-browser-warning": "69420"
     });
   }
 
@@ -78,9 +78,9 @@ export class TraineeInsystemService {
       })
     );
   }
-  
-  
-  
+
+
+
 
   setFinalFormState(data: User) {
     this.finalFormStateSubject.next(data);
@@ -125,6 +125,7 @@ export class TraineeInsystemService {
     );
   }
 
+
   updateExistingUser(formData: FormData) {
     return this.http.put<User>(`${this.baseUrl}/profiles/trainees/${this.selectedTraineeId}`, formData).pipe(
       tap(() => {
@@ -138,9 +139,9 @@ export class TraineeInsystemService {
       })
     );
   }
-  
+
   // Get all trainees
-  getAllTrainees() { 
+  getAllTrainees() {
     return this.http.get<TraineeList>(`${this.baseUrl}/profiles/trainees`, { headers: this.getHeaders() }).pipe(
       map(res => {
         const trainees = res.content;
@@ -167,6 +168,4 @@ export class TraineeInsystemService {
       catchError((error) => this.errorHandlerService.handleError(error))
     );
   }
-  
-
 }

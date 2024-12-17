@@ -1,0 +1,47 @@
+<div *ngIf="question" class="container">
+  <div class="question-container">
+    <div class="col-1">
+      <input
+        class="question-input"
+        placeholder="Type your question here"
+        [(ngModel)]="question.questionText"
+      />
+
+      <div class="image-upload">
+        <div class="upload-area">
+          <span>Add image here</span>
+          <p class="support-text">Supports: PNG, JPG, JPEG, WEBP</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="answers">
+      <div class="answer-list-container">
+        <div
+          *ngFor="
+            let answer of question.options;
+            let i = index;
+            trackBy: trackByIndex
+          "
+          class="answer-item"
+        >
+          <input
+            #answerInput
+            type="text"
+            placeholder="Add answer"
+            [value]="answer"
+            (input)="updateAnswer(i, $event, answerInput)"
+          />
+          <div class="answer-actions">
+            <button class="image-btn">🖼️</button>
+            <input
+              type="checkbox"
+              [checked]="question.correctAnswer === answer"
+              (change)="markAsCorrect(answer)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

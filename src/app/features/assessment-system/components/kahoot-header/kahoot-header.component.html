@@ -1,0 +1,16 @@
+<header class="header">
+  <button class="generate-btn" (click)="onOpenAiModal()">Generate</button>
+  <div class="actions">
+    <button class="btn" [routerLink]="['/home/trainer/assessment']">Exit</button>
+    <button class="btn primary" (click)="onSubmit()">Share</button>
+  </div>
+</header>
+
+<div *ngIf="openAiModal">
+  <app-generate-by-ai (closeModal)="onCloseAiModal()" (questionsAdded)="handleQuestionsAdded($event)"></app-generate-by-ai>
+</div>
+
+
+<div *ngIf="showShareModal">
+  <app-share (closeModal)="onCloseShareModal()" />
+</div>

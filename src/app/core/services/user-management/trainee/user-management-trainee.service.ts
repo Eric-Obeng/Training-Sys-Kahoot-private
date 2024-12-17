@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   Cohort,
+  CohortDetails,
   Gender,
   Specialization,
 } from '../../../models/cohort.interface';
@@ -19,6 +20,7 @@ export class UserManagementTraineeService {
   private endpoints = {
     specializations: `${environment.BaseUrl}/specializations`,
     assignableCohorts: `${environment.BaseUrl}/cohorts/assignable`,
+    active: `${environment.BaseUrl}/cohorts/active`,
     // restCountries: 'https://api.first.org/data/v1/countries',
   };
 
@@ -47,6 +49,14 @@ export class UserManagementTraineeService {
   getAllCohorts(): Observable<Cohort[]> {
     return this.http
       .get<Cohort[]>(this.endpoints.assignableCohorts, {
+        headers: this.getHeaders(),
+      })
+      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+  }
+
+  getAllActiveCohorts(): Observable<CohortDetails[]> {
+    return this.http
+      .get<CohortDetails[]>(this.endpoints.active, {
         headers: this.getHeaders(),
       })
       .pipe(catchError((error) => this.errorHandlerService.handleError(error)));

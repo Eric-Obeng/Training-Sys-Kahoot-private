@@ -1,1 +1,16 @@
-<p>progress-tracking works!</p>
+<main>
+  <app-track-header/>
+  <div class="scrollable-content">
+    <app-tracking-list/>
+  </div>
+  <button class="update-btn" matRipple (click)="updateProgress()">
+    update progress
+  </button>
+
+  <app-feedback-modal
+    [visible]="showFeedbackModal"
+    [customTitle]="'Update Successful'"
+    [customMessage]="'Your changes have been successfully saved. All updates are now reflected in the system.'"
+    [imagePath]="'../../../../assets/Images/svg/add-spec.svg'"
+  />
+</main>

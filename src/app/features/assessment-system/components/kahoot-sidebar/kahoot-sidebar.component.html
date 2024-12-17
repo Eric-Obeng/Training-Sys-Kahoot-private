@@ -1,0 +1,24 @@
+<div class="sidebar">
+  <div class="logo">
+    <img src="assets/Images/svg/logo.svg" alt="logo icon" />
+    <div class="logo-text">Training<span>Suite</span></div>
+  </div>
+  <div class="content">
+    <div
+      *ngFor="let question of questions; let i = index"
+      class="question-item"
+      [ngClass]="{ active: question === selectedQuestion }"
+      (click)="onQuestionClick(question)"
+    >
+      <div *ngIf="question === selectedQuestion" class="delete-div" (click)="deleteQuestion(question)">
+        <img src="assets/Images/svg/delete-icon-gm.svg" alt="delete icon" />
+      </div>
+      <div class="card">
+        <span class="question-number">{{ i + 1 }} Quiz</span>
+        <div class="question-preview">
+          {{ question.questionText }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

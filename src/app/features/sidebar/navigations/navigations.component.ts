@@ -22,12 +22,9 @@ import { TraineeNavigationsComponent } from "../trainee-navigations/trainee-navi
   styleUrl: './navigations.component.scss'
 })
 export class NavigationsComponent {
-  constructor(private roleService: UserRoleService,
-    private activeNav: ActiveNavService) {}
+  constructor(private roleService: UserRoleService) {}
 
-  ngOnInit(){
-    this.activeNav.currentNavSubject$.subscribe((value)=> console.log(value));
-  }
+
 
   get role() {
     return this.roleService.getUserRole();

@@ -14,7 +14,7 @@
 
     & .wrapper {
         width: 100%;
-        height: 85vh;   
+        height: 85vh;
         height: 90vh;
         overflow-y: hidden;
         margin-top: 2.6rem;
@@ -24,7 +24,7 @@
 
         & .back-button {
             width: fit-content;
-            display: flex;         
+            display: flex;
             align-items: Center;
             gap: 0.4rem;
             margin-bottom: 2.1rem;
@@ -63,7 +63,7 @@
             height: 80vh;
             overflow-y: scroll;
             padding-bottom: 14rem;
-                
+
             & .first-last-name {
                 display: flex;
                 justify-content: space-between;
@@ -172,7 +172,7 @@ select:focus {
 }
 
 .error {
-    text-align: right; 
+    text-align: right;
     color: $clr-red-500;
 }
-  
+

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
@@ -18,7 +18,10 @@ export class UserCreationService {
     token: string
   ): Observable<any> {
     const body = { newPassword: password, confirmPassword };
-    return this.http.put(this.apiUrl, body, { responseType: 'text' }).pipe(
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': '69420',
+    });
+    return this.http.put(this.apiUrl, body, { responseType: 'text',headers }).pipe(
       map((response) => {
         try {
           return JSON.parse(response);

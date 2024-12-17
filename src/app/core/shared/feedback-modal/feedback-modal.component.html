@@ -2,10 +2,11 @@
   [(visible)]="visible"
   [modal]="true"
   [closable]="false"
-  [showHeader]="false"
-  [style]="{ width: '627px' }"
-  [contentStyle]="{ padding: '2rem',textAlign: 'center' }">
+  [showHeader]="false">
   <div class="add-container">
+    <button type="button" class="close-btn"(click)="close()">
+      <img src="../../../../assets/Images/svg/close-del.svg" alt="close icon">
+    </button>
     <div class="add-info feedback-info">
       <img [src]="imagePath" alt="feedback icon">
       <h3>{{ title }}</h3>

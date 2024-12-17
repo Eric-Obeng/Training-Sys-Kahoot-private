@@ -1,0 +1,130 @@
+<form class="quiz-creation" [formGroup]="quizForm" (ngSubmit)="submitQuiz()">
+  <!-- Header Section -->
+  <header class="header">
+    <div class="answer-type">
+      <span>Answer Type</span>
+      <strong>Multichoice Answer</strong>
+    </div>
+    <div class="header-actions">
+      <div class="actions">
+        <button class="action-button" type="button" aria-label="Undo">
+          <mat-icon>undo</mat-icon>
+        </button>
+        <button class="action-button" type="button" aria-label="Redo">
+          <mat-icon>redo</mat-icon>
+        </button>
+      </div>
+      <div class="time-frame">
+        <span>Time frame</span>
+        <select formControlName="timeFrame">
+          <option
+            *ngFor="let time of [10, 20, 30, 40, 50, 60, 70, 80, 90]"
+            [value]="time"
+          >
+            {{ time }} minutes
+          </option>
+        </select>
+        <div *ngIf="showErrors && quizForm.get('timeFrame')?.invalid" class="error">
+          Time frame is required.
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Title Section -->
+  <section class="quiz-title">
+    <h1>{{ quizTitle }}</h1>
+  </section>
+
+  <!-- Main Content -->
+  <div class="content">
+    <!-- Question List -->
+    <aside class="question-list">
+      <div class="question_number">
+        <p class="active-question">Questions</p>
+
+        <button
+          class="add-question"
+          type="button"
+          aria-label="Add Question"
+          (click)="addQuestion()"
+        >
+          +
+        </button>
+      </div>
+      <ul>
+        <app-question-list-item
+          *ngFor="let question of questions.controls; let i = index"
+          [questionNumber]="i + 1"
+          [timestamp]="question.get('timestamp')?.value"
+          (click)="selectQuestion(i)"
+          [class.active]="selectedQuestionIndex === i"
+        ></app-question-list-item>
+      </ul>
+    </aside>
+
+    <!-- Question Editor -->
+    <div
+      class="question-editor"
+      *ngIf="selectedQuestionIndex !== null && questions.length > 0"
+      [formGroup]="questions.at(selectedQuestionIndex)"
+    >
+      <h3>State your Question</h3>
+      <textarea class="question-input" formControlName="text"></textarea>
+      <div *ngIf="showErrors && questions.at(selectedQuestionIndex).get('text')?.invalid" class="error">
+        Question is required.
+      </div>
+
+      <div class="answers" formArrayName="answers">
+        <app-answer
+          class="answer"
+          *ngFor="let answer of answers.controls; let i = index"
+          [option]="getOption(i)"
+          [answer]="answer.get('text')?.value"
+          [isCorrect]="answer.get('isCorrect')?.value"
+          [index]="i"
+          (deleteAnswer)="removeAnswer(selectedQuestionIndex, i)"
+          (answerChange)="updateAnswer(selectedQuestionIndex, i, $event)"
+          (toggleCorrect)="toggleCorrectAnswer(selectedQuestionIndex, i)"
+        />
+      </div>
+      <p *ngIf="showErrors && answers.length === 0" class="error">Add at least one answer.</p>
+
+      <!-- Add New Answer -->
+      <div class="col-2">
+        <button
+          class="add-answer"
+          type="button"
+          (click)="addAnswer(selectedQuestionIndex)"
+        >
+          + Add new Answer
+        </button>
+        <div class="mark-div">
+          <input type="number" placeholder="Add mark" formControlName="marks" />
+          <div *ngIf="showErrors && questions.at(selectedQuestionIndex).get('marks')?.invalid" class="error">
+            Marks are required.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button class="save" type="button" (click)="save()">Save</button>
+    <button
+      class="submit"
+      type="submit"
+      [disabled]="isSubmitDisabled()"
+    >
+      Submit
+    </button>
+  </div>
+
+  <app-feedback
+      [visible]="feedbackVisible"
+      [title]="feedbackTitle"
+      [message]="feedbackMessage"
+      [imageSrc]="feedbackImageSrc"
+      (closeDialog)="onCloseFeedback()"
+    ></app-feedback>
+</form>
