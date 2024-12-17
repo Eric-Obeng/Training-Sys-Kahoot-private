@@ -7,7 +7,6 @@
     display: flex;
     justify-content: center;
     overflow-x: scroll;
-    // padding-top: 5rem;
 
     & .wrapper {
         width: 100%;
@@ -15,8 +14,8 @@
         overflow-y: scroll;
         margin-top: 2.6rem;
         padding-bottom: 8rem;
-        padding-left: 5rem;
-        padding-right: 5rem;
+        padding-left: 8rem;
+        padding-right: 8rem;
 
         & .back-button {
             width: fit-content;
