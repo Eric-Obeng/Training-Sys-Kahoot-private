@@ -24,6 +24,8 @@ export class TrainerListComponent {
   deleteTraineeEmail: string = '';
   selectedTrainerId: number | null = null;
 
+
+
   private searchTerm$ = new BehaviorSubject<string>('');
   private statusFilter$ = new BehaviorSubject<string | null>(null);
   private specializationFilter$ = new BehaviorSubject<string | null>(null);
@@ -56,8 +58,6 @@ export class TrainerListComponent {
         );
       })
     );
-
-
   }
 
   tabClicked() {
@@ -142,22 +142,10 @@ export class TrainerListComponent {
     this.deleteModalSuccess = !this.deleteModalSuccess;
   }
 
-  openMenu() {
+  openMenu(index: number, event: Event) {
     this.ellipsisClicked = true;
-  }
-
-  closeMenu() {
-    this.selectedTrainerId = null;
-  }
-  updateTrainer(trainer: Trainer) {
-    // Implement update logic
-    console.log('Update trainer:', trainer);
-    this.closeMenu();
-  }
-
-  deactivateTrainer(trainer: Trainer) {
-    // Implement deactivate logic
-    console.log('Deactivate trainer:', trainer);
-    this.closeMenu();
+    event.stopPropagation(); // Prevent unwanted bubbling
+    // Toggle the selected trainer's menu
+    this.selectedTrainerId = this.selectedTrainerId === index ? null : index;
   }
 }
