@@ -18,7 +18,7 @@ interface DropdownOption {
 
 export class OptionsDropdownComponent {
   @Input() isActive = false;
-  @Input() optionsIcon = '../../../../../assets/Images/svg/options-icon.svg';
+  @Input() optionsIcon = '';
   @Input() options: DropdownOption[] = [];
 
   @Output() toggle = new EventEmitter<Event>();
