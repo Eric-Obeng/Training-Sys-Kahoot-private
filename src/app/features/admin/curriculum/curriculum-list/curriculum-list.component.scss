@@ -1,75 +1,122 @@
 @use '../../../../../styleSheet/variables' as *;
 @use '../../../../../styleSheet/mixins' as *;
 
-.curriculum-container{
-  overflow:hidden;
-  height: 80vh;
+.curriculum-container {
+  overflow: hidden;
+  height: 90vh;
 
-  .scrollable-content{
-    flex: 1;
-    @include custom-scrollbar;
-    height: calc(80vh - 2rem);
-    overflow-y: auto;
+  .curriculums {
+    .scrollable-content {
+      flex: 1;
+      @include custom-scrollbar;
+      height: calc(90vh - 2rem);
+      overflow-y: auto;
 
-    .list-section{
-      margin-top: 2rem;
-      width: 96.6rem;
-      background-color: $clr-white;
-      border: 1px solid $clr-gray-50;
-      border-radius: .8rem;
-      padding: 3rem;
+      .list-section {
+        width: 90%;
+        margin-top: 2rem;
+        background-color: $clr-white;
+        border: 1px solid $clr-gray-50;
+        border-radius: .8rem;
+        padding: 3rem;
 
-      .title{
-        width: 100%;
-        @include flexbox($justify: space-between);
+        .title {
+          width: 100%;
+          @include flexbox($justify: space-between);
+          margin-bottom: 2rem;
 
-        span{
-          color: $clr-gray-700;
-          @include flexbox;
-          font-weight: 600;
-          font-size: 1.6rem;
+          span {
+            color: $clr-gray-700;
+            @include flexbox;
+            font-weight: 600;
+            font-size: 1.6rem;
 
-          img{
-            width: 2.4rem;
-            height: 2.4rem;
+            img {
+              width: 2.4rem;
+              height: 2.4rem;
+            }
+          }
+
+          p {
+            color: $clr-gray-500;
+            font-size: $font-size-body;
+            font-weight: 600;
           }
         }
 
-        p{
-          color: $clr-gray-500;
-          font-size: $font-size-body;
-          font-weight: 600;
-        }
-      }
 
-      .list-header{
-        margin-top: 1.6rem;
-        padding-left: 7.56rem;
-        padding-right: 8.04rem;
-        background-color: #f8f8f8;
-        width: 100%;
-        height: 3.2rem;
-        @include flexbox($align:center,$justify:space-between);
+        ::ng-deep {
+          .p-datatable {
+            .p-datatable-header {
+              background-color: transparent;
+              border: none;
+            }
 
-        span{
-          font-weight: 600;
-          font-size: $font-size-body;
-          cursor: pointer;
+            .p-datatable-thead > tr > th {
+              background-color: #f8f8f8;
+              border: none;
+              color: $clr-gray-700;
+              font-weight: 600;
+              font-size: $font-size-body;
+              padding: 0.8rem 1rem;
 
+              &:last-child {
+                width: 5rem;
+                min-width: 5rem;
+              }
+            }
+
+            .p-datatable-tbody > tr {
+              cursor: pointer;
+              border: none;
+              color: $clr-gray-500;
+              position: relative;
+
+              &:hover {
+                background-color: #f8f8f8;
+              }
+
+              > td {
+                border: none;
+                padding: 1rem;
+                font-size: $font-size-body;
+
+                &:last-child {
+                  width: 5rem;
+                  min-width: 5rem;
+                  padding-right: 1.5rem;
+                  position: relative;
+                }
+              }
+            }
+          }
         }
 
-        .header-title-1{
-          width: 20.9rem;
+
+        .options-dropdown {
+          position: relative;
+          right: 4.675rem;
+
+          ::ng-deep {
+            .dropdown-content {
+              position: absolute;
+              right: 0;
+              top: 100%;
+              z-index: 2;
+
+            }
+          }
         }
-        .header-title-2{
-          width: 9.9rem;
-        }
-        .header-title-3{
-          width: 10.8rem;
-        }
-        .header-title-4{
-          width: 18rem;
-        }
+
+        .header-title-0 { width: 3rem; }
+        .header-title-1 { width: 20.9rem; }
+        .header-title-2 { width: 9.9rem; }
+        .header-title-3 { width: 10.8rem; }
+
+        .curriculum-txt-1 { width: 20.9rem; }
+        .curriculum-txt-2 { width: 9.9rem; }
+        .curriculum-txt-3 { width: 10.8rem; }
+        .curriculum-txt-4 { width: 21.125rem; }
       }
     }
   }
@@ -83,7 +130,7 @@
 
     .no-results-content {
       text-align: center;
-      @include flexbox($direction:column ,$align:center);
+      @include flexbox($direction: column, $align: center);
 
       img {
         width: 16rem;
