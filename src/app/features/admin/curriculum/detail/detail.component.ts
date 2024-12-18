@@ -8,8 +8,8 @@ import { FileUploadService } from '@core/services/file-upload/file-upload.servic
 import { AccordionModule } from 'primeng/accordion';
 import { extractFileNameFromUrl } from '@core/utils/urlToFile';
 import { convertISODurationToMinutes, formatDuration} from '@core/utils/duration';
-import {MatTooltipModule} from '@angular/material/tooltip';
-
+import { MatTooltipModule} from '@angular/material/tooltip';
+import { truncateFileName } from '@core/utils/filename'
 
 @Component({
   selector: 'app-detail',
@@ -33,10 +33,10 @@ export class DetailComponent implements OnInit{
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      const id = params['id'].toString(); 
+      const id = params['id'].toString();
       this.curriculumFacade.getSelectedCurriculum(id).subscribe(
         (curriculum) => {
-          this.curriculum = curriculum;          
+          this.curriculum = curriculum;
         }
       );
     });
@@ -48,7 +48,7 @@ export class DetailComponent implements OnInit{
       return total + minutes;
     }, 0);
   }
-  
+
 
   getTotalDuration(): string {
     if (!this.curriculum?.modules) return '0 minutes';
@@ -59,7 +59,7 @@ export class DetailComponent implements OnInit{
   showFileType(fileUrl: string){
     this.fileService.getFileIcon(fileUrl)
   }
-  
+
   extractFileName(fileUrl: string): string {
     return extractFileNameFromUrl(fileUrl);
   }
@@ -72,5 +72,9 @@ export class DetailComponent implements OnInit{
     return this.curriculum?.modules?.reduce(
       (sum, module) => sum + module.topics.length, 0
     ) || 0;
+  }
+
+  shortenFileName(filename:string){
+    truncateFileName(filename)
   }
 }
