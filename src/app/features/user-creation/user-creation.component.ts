@@ -20,6 +20,7 @@ import { MessageComponent } from '../../core/shared/message/message.component';
 import { PasswordValidator } from '../../core/services/passwordValidator/password-validator.service';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-creation',
@@ -29,6 +30,7 @@ import { switchMap } from 'rxjs/operators';
     ReactiveFormsModule,
     CommonModule,
     MessageComponent,
+    HttpClientModule, // Add HttpClientModule here
   ],
   templateUrl: './user-creation.component.html',
   styleUrls: ['./user-creation.component.scss'],
@@ -102,7 +104,6 @@ export class UserCreationComponent implements OnInit, OnDestroy {
         (passwordControl.touched || passwordControl.dirty);
     }
   }
-
   onSubmit() {
     this.isLoading = true;
     this.errorMessage = '';
@@ -115,14 +116,10 @@ export class UserCreationComponent implements OnInit, OnDestroy {
     }
 
     const { password, confirmPassword } = this.userCreationForm.value;
-    const token = localStorage.getItem('token');
-    if (!token) {
-      this.isLoading = false;
-      return;
-    }
+
 
     this.userCreationService
-      .createUser(password, confirmPassword, token)
+      .createUser(password, confirmPassword)
       .pipe(
         switchMap(() => timer(2000)),
         switchMap(() => {
@@ -138,7 +135,12 @@ export class UserCreationComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           this.isLoading = false;
-          this.errorMessage = `${err.error}`;
+          if (err instanceof SyntaxError) {
+            this.errorMessage = 'An error occurred while parsing the response. Please try again!';
+          } else {
+            this.errorMessage =
+              `${err.message}` || 'An error occurred while creating the user. Please try again!';
+          }
           console.error('Error creating user:', err);
         },
       });

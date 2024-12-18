@@ -15,7 +15,6 @@ export class UserCreationService {
   createUser(
     password: string,
     confirmPassword: string,
-    token: string
   ): Observable<any> {
     const body = { newPassword: password, confirmPassword };
     const headers = new HttpHeaders({
