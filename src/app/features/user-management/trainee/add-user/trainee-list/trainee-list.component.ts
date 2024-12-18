@@ -146,16 +146,17 @@ export class TraineeListComponent {
 
   deleteUser(email: string) {
     this.deleteTraineeEmail = email;
-    this.toggleConfirmDeleteModal();
+    this.toggleConfirmDeleteModal()
   }
 
   confirmDelete() {
-    this.traineesInsystemService.deleteSelectedTrainee(this.deleteTraineeEmail).pipe(
-      tap(res => {
-        console.log("deletion response: ", res)
-      })
-    )
-    this.toggleConfirmDeleteModal();
+    this.isConfirmDeleteModalOpen = false;
+    this.traineesInsystemService.deleteSelectedTrainee(this.deleteTraineeEmail).subscribe({
+      next: () => {
+        this.toggleDeleteModalSuccess();
+      }
+
+    })
   }
 
   toggleConfirmDeleteModal() {
@@ -164,6 +165,11 @@ export class TraineeListComponent {
 
   closeConfirmDeleteModal() {
     this.toggleConfirmDeleteModal();
+  }
+
+  closeDeleteModalSuccess() {
+    this.toggleDeleteModalSuccess();
+    this.ngOnInit()
   }
 
   toggleDeleteModalSuccess() {

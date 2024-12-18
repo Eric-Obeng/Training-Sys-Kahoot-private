@@ -44,6 +44,10 @@
             & div:nth-child(6) {
                 width: 13rem;
             }
+
+            & div:nth-child(7) {
+                width: 30px;
+            }
         }
 
         & .scroll-list-wrapper {
@@ -151,9 +155,17 @@
                 }
 
                 & .ellipsis {
-                    display: flex;
-                    align-items: center;
+                    width: 30px;
+                    height: 30px;
+                    display: grid;
+                    place-items: center;
                     position: relative;
+                    border-radius: 50%;
+                    transition: $btn-transition;
+                }
+
+                & .ellipsis:hover {
+                    background: $clr-gray-50;
                 }
             }
         }

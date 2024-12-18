@@ -160,8 +160,7 @@ export class TraineeInsystemService {
   }
 
   deleteSelectedTrainee(email: string) {
-    const params = new HttpParams().set('email', email); // Properly set the parameter
-    return this.http.delete<User>(`${this.baseUrl}/deactivate`, { params }).pipe(
+    return this.http.post<User>(`${this.baseUrl}/profiles/trainees/status`, { "email": email }).pipe(
       tap((response) => {
         this.deleteModalSuccessful = true;
         console.log('Delete Response:', response);
