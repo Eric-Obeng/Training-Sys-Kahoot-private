@@ -33,5 +33,9 @@
 
 <app-delete-feedback
   [(visible)]="showDeleteFeedback"
-  (visibleChange)="onFeedbackClose()">
+  (visibleChange)="onFeedbackClose()"
+  [title]="'Specialization'"
+  [description]="' Are you sure you want to delete this specialization?
+    This action cannot be undone, and all associated information
+    will be permanently removed from the system.'">
 </app-delete-feedback>

@@ -1,0 +1,77 @@
+@use'../../../../../styleSheet/mixins' as *;
+
+
+
+::ng-deep {
+  .delete-dialog {
+    .p-dialog-header {
+      display: none;
+    }
+
+    .p-dialog-content {
+      padding: 1.6rem;
+      border-radius: 0.8rem;
+    }
+  }
+
+  .p-dialog-mask.p-component-overlay {
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+  }
+}
+
+.delete-container {
+  display: flex;
+  padding: 1.6rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4.1rem;
+  background-color: #fff;
+
+  .delete-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.6rem;
+
+    h3 {
+      font-size: 2.4rem;
+    }
+
+    p {
+      font-size: 1.6rem !important;
+      color: #676767;
+    }
+  }
+
+  .delete-actions {
+    .cancel-btn {
+      margin-right: 2.7rem;
+    }
+
+    button {
+      transition: background-color .3s ease-in-out;
+      border: .15rem solid #F98416;
+      border-radius: .8rem;
+      background-color: transparent;
+      cursor: pointer;
+      width: 20rem;
+      height: 5.4rem;
+      color: #F98416;
+      font-size: 1.8rem;
+
+      &:hover {
+        border: none;
+        background-color: #F98416;
+        color: #fff;
+      }
+    }
+  }
+}
+
+
+
+
+

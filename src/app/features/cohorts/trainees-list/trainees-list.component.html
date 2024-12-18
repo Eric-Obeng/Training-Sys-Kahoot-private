@@ -19,8 +19,8 @@
 
         @if(cohort$ | async; as cohort) {
             <div class="title-enrolled">
-                <span>{{cohort.cohortName}}</span>
-                <span>{{ cohort.enrollmentCount }} Enrolled</span>
+                <span>{{cohort.name}}</span>
+                <span>{{ cohort.trainees.length }} Enrolled</span>
             </div>
         }
 
@@ -105,6 +105,12 @@
                 </div>
             </div>
         </div>
+        <app-paginator 
+                [currentPage$]="currentPage$"
+                [totalPages]="totalPages"
+                [pageSize]="pageSize"
+                (pageChange)="onPageChange($event)"
+            />
     </div>
 
 </div>

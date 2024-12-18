@@ -11,8 +11,7 @@ import { CurriculumStateService } from '@core/services/curriculum-state/curricul
 import { FeedbackModalComponent } from "../../../../../../core/shared/feedback-modal/feedback-modal.component";
 import { CurriculumFacadeService } from '@core/services/curriculum-facade/curriculum-facade.service';
 import { curriculum } from '@core/models/curriculum.interface';
-
-
+import { FileUploadService } from '@core/services/file-upload/file-upload.service';
 
 
 @Component({
@@ -40,7 +39,8 @@ export class ModuleComponent implements OnInit {
     private fb: FormBuilder,
     private curriculumStateService: CurriculumStateService,
     private router: Router,
-    private curriculumService: CurriculumFacadeService
+    private curriculumService: CurriculumFacadeService,
+    private fileUploadService: FileUploadService
   ) {
     this.parentForm = this.fb.group({
       modules: this.fb.array([])
@@ -129,7 +129,6 @@ export class ModuleComponent implements OnInit {
         id: this.curriculums.length + 1,
         createdAt: new Date().toISOString()
       };
-      console.log('Final curriculum data:', curriculumData);
       this.curriculumService.create(curriculumData).subscribe({
         next: () => {
           setTimeout(() => {
@@ -194,7 +193,25 @@ export class ModuleComponent implements OnInit {
     this.dragOver[moduleIndex] = false;
     const files = event.dataTransfer?.files;
     if (files?.length) {
-      this.handleFile(files[0], moduleIndex);
+      this.processFile(files[0], moduleIndex);
+    }
+  }
+
+
+  private processFile(file: File, moduleIndex: number): void {
+    const uploadedFile = this.fileUploadService.handleFile(file);
+    if (uploadedFile) {
+      if (!this.uploadedFiles[moduleIndex]) {
+        this.uploadedFiles[moduleIndex] = [];
+      }
+      this.uploadedFiles[moduleIndex].push(uploadedFile);
+      const moduleGroup = this.modules.at(moduleIndex);
+      const files = this.uploadedFiles[moduleIndex].map(f => f.file);
+      moduleGroup.patchValue({
+        moduleFile: files
+      });
+    } else {
+      alert('Please upload only PNG, JPG, JPEG, WEBP, or PDF files');
     }
   }
 
@@ -213,37 +230,7 @@ export class ModuleComponent implements OnInit {
   onFileSelected(event: Event, moduleIndex: number): void {
     const input = event.target as HTMLInputElement;
     if (input.files?.length) {
-      this.handleFile(input.files[0], moduleIndex);
-    }
-  }
-
-  private formatFileSize(bytes: number): string {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-  }
-
-  private handleFile(file: File, moduleIndex: number): void {
-    if (this.allowedFileTypes.includes(file.type)) {
-      if (!this.uploadedFiles[moduleIndex]) {
-        this.uploadedFiles[moduleIndex] = [];
-      }
-      const newFile: uploadedFile = {
-        file: file,
-        name: file.name,
-        size: this.formatFileSize(file.size),
-        type: file.type
-      };
-      this.uploadedFiles[moduleIndex].push(newFile);
-      const moduleGroup = this.modules.at(moduleIndex);
-      const files = this.uploadedFiles[moduleIndex].map(f => f.file);
-      moduleGroup.patchValue({
-        moduleFile: files
-      });
-    } else {
-      alert('Please upload only PNG, JPG, JPEG, WEBP, or PDF files');
+      this.processFile(input.files[0], moduleIndex);
     }
   }
 
@@ -257,12 +244,7 @@ export class ModuleComponent implements OnInit {
   }
 
   getFileIcon(fileType: string): string {
-    if (fileType.includes('pdf')) {
-      return '../../../../../assets/Images/svg/pdf-icon.svg';
-    } else if (fileType.includes('image')) {
-      return '../../../../../assets/Images/svg/image-icon.svg';
-    }
-    return '../../../../../assets/Images/svg/file-icon.svg';
+    return this.fileUploadService.getFileIcon(fileType);
   }
 
   getFileList(moduleIndex: number): uploadedFile[] {

@@ -4,6 +4,7 @@ import { filter } from 'rxjs';
 import { UserRoleService } from '../../core/services/user-role/user-role.service';
 import { TitleCasePipe } from '@angular/common';
 import { ButtonStateService } from '../../core/services/buttonState/buttonstate.service';
+import { ActiveNavService } from '@core/services/active-nav/active-nav.service';
 
 @Component({
   selector: 'app-header',
@@ -24,6 +25,7 @@ export class HeaderComponent implements OnInit {
     private router: Router, 
     private userRoleService: UserRoleService,
     private buttonStateService: ButtonStateService,
+    private activeNav: ActiveNavService,
   ) {}
 
   public toggleDropDownBtn() {
@@ -58,14 +60,9 @@ export class HeaderComponent implements OnInit {
     })
   }
 
-  // Helper method to update route name
   private updateRouteName(): void {
-    const urlSegments = this.router.url.split('/');
-    const currentPath = urlSegments[urlSegments.length - 1];
-
-    this.routeName = currentPath
-      .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+    this.activeNav.currentNavSubject$.subscribe(activeNav => {
+      this.routeName = activeNav;
+    })
   }
 }

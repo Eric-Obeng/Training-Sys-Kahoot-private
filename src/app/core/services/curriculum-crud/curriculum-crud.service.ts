@@ -9,7 +9,7 @@ import { catchError, Observable,tap } from 'rxjs';
 })
 
 export class CurriculumCrudService {
-  private localServer = 'http://localhost:3000/curriculums';
+  private hostedServer = 'http://localhost:3000/curriculums';
 
   constructor(private http: HttpClient,
     private errorService: ErrorHandleService
@@ -18,7 +18,7 @@ export class CurriculumCrudService {
    }
 
    getAllCurriculums():Observable<curriculum[]> {
-    return this.http.get<curriculum[]>(this.localServer)
+    return this.http.get<curriculum[]>(this.hostedServer)
     .pipe(
       tap((response: any) => console.log('Specializations from Backend:' + response)),
       catchError(this.errorService.handleError)
@@ -26,21 +26,21 @@ export class CurriculumCrudService {
   }
 
   getCurriculumById(id: number) {
-    const url = `${this.localServer}/${id}`;
+    const url = `${this.hostedServer}/${id}`;
     return this.http.get<curriculum>(url);
   }
 
   createCurriculum(curriculum: curriculum){
-    return this.http.post(this.localServer,curriculum)
+    return this.http.post<curriculum>(this.hostedServer,curriculum)
   }
 
-  updateCurriculum(id: number, curriculum: curriculum): Observable<any> {
-    const url = `${this.localServer}${id}`;
-    return this.http.put(url, curriculum)
+  updateCurriculum(id: number, curriculum: curriculum): Observable<curriculum> {
+    const url = `${this.hostedServer}/${id}`;
+    return this.http.put<curriculum>(url, curriculum)
   }
 
   deleteCurriculum(id: number): Observable<any> {
-    const url = `${this.localServer}${id}`;
+    const url = `${this.hostedServer}/${id}`;
     return this.http.delete(url)
   }
 }

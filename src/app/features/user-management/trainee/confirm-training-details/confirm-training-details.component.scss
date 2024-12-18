@@ -1,0 +1,175 @@
+@import '../../../../../styleSheet/variables';
+@import '../../../../../styleSheet/button';
+@import '../../../../../styleSheet/user_management_form';
+
+//MOdal 
+.modalOpen {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0,0, .5);
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+
+    .modal {
+        width: 61.1rem;
+        height: 37.1rem;
+        border-radius: .8rem;
+        background: $clr-white;
+        position: relative;
+        padding: 1.6rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        & .close-modal-icon {
+            position: absolute;
+            right: 1.6rem;
+            top: 1.6rem;
+            cursor: pointer;
+        }
+
+        & img {
+            width: 19rem;
+            height: 19rem;
+        }
+
+        & h2 {
+            font-size: 2.4rem;
+            font-weight: 600;
+            text-align: center;
+            color: #292929;
+            margin-bottom: 1.9rem;
+        }
+
+        & p {
+            font-size: 1.6rem;
+            font-weight: 400;
+            text-align: center;
+            color: #676767;
+        }
+    }
+}
+
+.modalClosed {
+    display: none;
+}
+
+
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow-x: scroll;
+    // padding-top: 5rem;
+
+    & .wrapper {
+        width: 67.5rem;
+        height: 90vh;
+        overflow-y: scroll;
+        margin-top: 2.6rem;
+        padding-bottom: 8rem;
+
+        & .back-button {
+            width: fit-content;
+            display: flex;         
+            // align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 2.1rem;
+            cursor: pointer;
+
+            & span {
+                padding-bottom: 0.2rem;
+                border: none;
+                border-bottom: 0.1rem solid $clr-gray-500;
+                color: $clr-gray-500;
+                font-size: $font-size-body;
+                font-weight: 400;
+            }
+        }
+
+        & .cohort-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.6rem;
+            margin-bottom: 5rem;
+
+            & span {
+                font-size: $font-size-subtitle;
+                font-weight: 600;
+                color: $clr-gray-800;
+            }
+
+            & p {
+                font-size: $font-size-body;
+                font-weight: 400;
+                color: $clr-gray-500;
+            }
+        }
+
+        & form {
+            overflow-y: scroll;
+
+            & button {
+                width: 100%;
+                height: 5.4rem;
+                border-radius: .8rem;
+            }
+        }
+     }
+}
+
+
+.form-field {
+    @include FormField;
+    margin-bottom: 1.6rem;
+}
+
+input {
+    @include InputEl;
+}
+input:focus {
+    @include InputElFocus;
+}
+
+select {
+    @include SelectEl;
+}
+select:focus {
+    @include SelectElFocus;
+}
+
+#optional {
+    color: $clr-gray-300;
+    font-style: italic;
+    font-weight: 400;
+}
+
+div.specialization {
+    @include DropDownField;
+}
+
+div.cohort {
+    @include DropDownField;
+}
+
+.btn-wrapper {
+    display: flex;
+    gap: 3.8rem;
+    margin-bottom: 3rem;
+
+    & button:first-of-type {
+        background: $clr-white;
+        border: 0.1rem solid $clr-primary-500;
+        color: $clr-primary-500;
+    }
+}
+
+.error {
+    text-align: right; 
+    color: $clr-red-500;
+}
+  

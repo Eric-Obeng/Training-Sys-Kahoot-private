@@ -92,7 +92,7 @@
 
         & .list-wrapper {
             width: 100%;
-            height: 90vh;
+            height: 50vh;
 
             & .headers {
                 display: flex;
@@ -123,11 +123,11 @@
             }
 
             & .scroll-list-wrapper {
-                height: 100%;
+                height: 50vh;
                 overflow-y: scroll;
 
                 & .list {
-                    height: 50px;
+                    height: 40px;
                     display: flex;
                     background: $clr-white;
                     font-size: $font-size-xbody;

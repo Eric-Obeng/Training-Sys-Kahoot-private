@@ -1,6 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, forwardRef, Input } from '@angular/core';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-input-field',
@@ -24,6 +28,7 @@ export class InputFieldComponent implements ControlValueAccessor {
     .toString(36)
     .substr(2, 9)}`;
   @Input() disabled!: boolean;
+  @Input() required!: boolean;
 
   isPasswordVisible: boolean = false;
   isDisabled: boolean = false;
@@ -54,7 +59,7 @@ export class InputFieldComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  setDisabledState?(isDisabled: boolean): void {
+  setDisabledState(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
   }
 

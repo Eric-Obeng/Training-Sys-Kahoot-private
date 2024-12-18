@@ -90,4 +90,13 @@ export class CurriculumFacadeService {
        })
     )
   }
+
+  delete(id: number): Observable<any> {
+    return this.curriculumCrud.deleteCurriculum(id).pipe(
+      catchError(this.errorService.handleError),
+      tap(() => {
+        this.refreshCurriculum();
+      })
+    );
+  }
 }

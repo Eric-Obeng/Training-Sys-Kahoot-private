@@ -26,7 +26,12 @@
               formControlName="title"
               [class.invalid]="formControls.title?.touched && formControls.title?.invalid"
               placeholder="Enter curriculum name here">
+              <small class="error" *ngIf="formControls.title?.touched && formControls.title?.invalid">
+                Curriculum title is required*
+              </small>
           </div>
+
+
 
           <!-- curriculum desc input field -->
           <div class="type-field form-section">
@@ -40,6 +45,9 @@
               placeholder="Enter Curriculum description Here"
               rows="8">
             </textarea>
+            <small class="error" *ngIf="formControls.description?.touched && formControls.description?.invalid">
+              Description is required*
+            </small>
           </div>
 
           <!-- curriculum assigned specialization select field -->
@@ -61,24 +69,13 @@
               <option value="fullstack">Game Development</option>
               <option value="cybersecurity">Cybersecurity</option>
             </select>
+
+            <small class="error" *ngIf="formControls.assignedSpecialization?.touched && formControls.assignedSpecialization?.invalid">
+              Specialization is required*
+            </small>
           </div>
 
-          <!-- curriculum assigned cohort select field -->
-          <div class="type-field form-section">
-            <div class="field-title">
-              <h4>Assign to Cohort</h4>
-              <span>*</span>
-            </div>
-            <select class="custom-select" formControlName="assignedCohort"
-            [class.invalid]="formControls.assignedCohort?.touched && formControls.assignedCohort?.invalid"
-            >
-              <option value="" disabled selected>Select Cohort</option>
-              <option value="cohort1">Cohort 1</option>
-              <option value="cohort2">Cohort 2</option>
-              <option value="cohort3">Cohort 3</option>
-              <option value="cohort4">Cohort 4</option>
-            </select>
-          </div>
+
 
           <!-- curriculum objectives input field -->
           <div class="type-field form-section">

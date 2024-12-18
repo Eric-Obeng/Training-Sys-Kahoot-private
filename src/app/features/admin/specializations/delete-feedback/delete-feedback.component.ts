@@ -13,6 +13,8 @@ import { DialogModule } from 'primeng/dialog';
 export class DeleteFeedbackComponent {
   @Input() visible = false;
   @Output() visibleChange = new EventEmitter<boolean>();
+  @Input() title!: string;
+  @Input() description!: string;
 
   close() {
     this.visible = false;

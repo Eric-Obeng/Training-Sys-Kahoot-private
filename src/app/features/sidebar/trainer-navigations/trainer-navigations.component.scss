@@ -1,6 +1,7 @@
 @use'../mixins' as *;
 
 .trainer-nav-list{
+  height: 100vh;
   @include nav-container;
   .nav-list{
     li{
@@ -15,7 +16,7 @@
 
   .nav-settings{
     li{
-        &:hover{
+      &:hover{
         background-color: #f9841653;
         transition: background-color .3s ease-in-out;
         border-right: 4px solid #F98416;

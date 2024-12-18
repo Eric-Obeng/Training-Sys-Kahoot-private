@@ -57,7 +57,6 @@ export class FormComponent implements OnInit {
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       assignedSpecialization: ['', [Validators.required]],
-      assignedCohort: ['', [Validators.required]],
       learningObjectives: this.fb.array([
         this.fb.control('', [Validators.required])
       ]),

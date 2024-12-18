@@ -1,5 +1,10 @@
 <div class="input-container">
-  <label [attr.for]="uniqueId">{{ label }}</label>
+  <div class="label">
+    <label [attr.for]="uniqueId">{{ label }}</label>
+    <ng-container *ngIf="required">
+      <span class="required">*</span>
+    </ng-container>
+  </div>
   <div class="input-wrapper">
     <input
       [type]="type === 'password' && isPasswordVisible ? 'text' : type"

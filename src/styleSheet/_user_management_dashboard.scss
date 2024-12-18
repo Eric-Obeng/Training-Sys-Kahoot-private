@@ -1,0 +1,31 @@
+@import '../styleSheet/variables';
+
+@mixin cards {
+    width: fit-content;
+    height: fit-content;
+    border-radius: 0.8rem;
+    background: $clr-white;
+    padding-top: 2.6rem;
+    border: 1px solid $clr-gray-50;
+}
+
+@mixin table {
+    @include cards;
+    width: 66.8rem;
+    height: 49rem;
+    padding: 1.6rem;
+    border: 1px solid $clr-gray-50;
+}
+
+@mixin card-numeric-data {
+    width: 24.2rem;
+    height: 7.3rem; 
+    border-radius: 8px;
+    border: 1px solid $clr-gray-100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.4rem;
+
+    
+}

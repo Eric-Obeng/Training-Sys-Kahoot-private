@@ -1,0 +1,59 @@
+<div class="container-with-list"
+*ngIf="(traineeUsers$ | async)?.length !== 0"
+        >
+            <div class="wrapper">
+                <app-searchbar 
+                    [title]="'Registered Users'" 
+                    [placeholder]="'Name, email'" 
+                    [hide]="false"
+                    [buttonContent]="trainerTabClicked ? 'Add Trainer': 'Add Trainee'"
+                    (searchChanged)="onSearchChange($event)"
+                    (sortClicked)="onSortList()" 
+                    (activeStatus)="filterByActive()"
+                    (inactiveStatus)="filterByInactive()"
+                    (deactivatedStatus)="filterByDeactivated()"
+                    (resetStatus)="clearStatusFilter()"
+                    (specializationFilter)="filterBySpecialization($event)"
+                    (resetSpecialization)="clearSpecializationFilter()"
+                    (addButtonClicked)="goToTrainerOrTrainee()"
+                />
+                <div class="divider"></div>
+
+                
+                <mat-tab-group (selectedTabChange)="onTabChanged($event)">
+                  <mat-tab label="Trainer"> Content 1 </mat-tab>
+                  <mat-tab label="Trainee"><app-trainee-list /> </mat-tab>
+                </mat-tab-group>              
+                
+            </div>
+        </div>
+
+
+
+        <div class="container" 
+        *ngIf="(traineeUsers$ | async)?.length === 0"
+>
+  <div class="add-trainer" (click)="goToAddTrainerForm()">
+    <img
+      src="../../../../../assets/Images/png/add trainer image.png"
+      alt="add-trainer-image"
+    />
+    <h3>Add Trainer</h3>
+    <p>
+      Select 'Add Trainer' to create a trainer account and assign them the role
+      to manage trainees
+    </p>
+  </div>
+
+  <div class="add-trainee" (click)="goToAddUserForm()">
+    <img
+      src="../../../../../assets/Images/png/add trainee image.png"
+      alt="add-trainee-image"
+    />
+    <h3>Add Trainee</h3>
+    <p>
+      Select 'Add Trainer' to create a trainer account and assign them the role
+      to manage trainees
+    </p>
+  </div>
+</div>

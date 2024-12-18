@@ -15,4 +15,12 @@
     (toggle)="toggleDropdown($event)"
     (optionSelected)="handleOptionSelect($event)">
   </app-options-dropdown>
+
+
+  <app-delete-modal
+    [visible]="isDeleteModalVisible"
+    [curriculumId]="curriculum.id"
+    (visibleChange)="isDeleteModalVisible = $event"
+  />
 </div>
+

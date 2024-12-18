@@ -3,7 +3,9 @@ import { SpecializationFacadeService } from '@core/services/specialization-facad
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
-import { DeleteFeedbackComponent } from "../delete-feedback/delete-feedback.component";
+import { DeleteFeedbackComponent } from '../delete-feedback/delete-feedback.component';
+
+
 
 @Component({
   selector: 'app-delete-modal',
