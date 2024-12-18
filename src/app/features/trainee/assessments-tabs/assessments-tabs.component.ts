@@ -18,21 +18,28 @@ export class AssessmentsTabsComponent {
   
   empty: boolean = false;
 
+  childEmptyStates: boolean[] = [false, false, false];
+  finalChildStates!: boolean[];
+
   constructor(
     private router: Router,
     private searchQuiz: SearchQuizService,
   ) {}
 
-
+  ngOnInit() {
+    this.setFinalChildStates;
+  }
 
   
-  handleChildEmpty(isEmpty: boolean) {
-    if (isEmpty) {
-      this.empty = true;
-    } else {
-      // If at least one child has data, set `empty` to false
-      this.empty = false;
-    }
+  handleChildEmpty(isEmpty: boolean, index: number) {
+    this.childEmptyStates[index] = isEmpty;
+    this.empty = this.childEmptyStates.every(state => state);
+
+    console.log(this.childEmptyStates)
+  }
+
+  setFinalChildStates() {
+    this.finalChildStates = this.childEmptyStates;
   }
 
 

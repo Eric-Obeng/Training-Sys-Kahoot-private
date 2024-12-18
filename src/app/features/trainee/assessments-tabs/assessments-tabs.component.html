@@ -10,17 +10,17 @@
     <div class="divider"></div>
 
     <div class="content" *ngIf="!empty">
-        <app-quiz-list
+        <app-quiz-list *ngIf="childEmptyStates.at(0) === false"
             [assessmentType]="'QUIZ'"
-            (dataEmpty)="handleChildEmpty($event)"
+            (dataEmpty)="handleChildEmpty($event, 0)"
         />
-        <app-quiz-list
+        <app-quiz-list *ngIf="childEmptyStates.at(1) === false"
             [assessmentType]="'LAB'"
-            (dataEmpty)="handleChildEmpty($event)"
+            (dataEmpty)="handleChildEmpty($event, 1)"
         />
-        <app-quiz-list
+        <app-quiz-list *ngIf="childEmptyStates.at(2) === false"
             [assessmentType]="'PRESENTATION'"
-            (dataEmpty)="handleChildEmpty($event)"
+            (dataEmpty)="handleChildEmpty($event, 2)"
         />
     </div>
 
