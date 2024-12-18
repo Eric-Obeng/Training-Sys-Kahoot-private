@@ -4,6 +4,9 @@
 .container  {
     background: #fcfcfc;
     margin-right: 2.6rem;
+    width: 100%;
+    max-width: 900px; // Set a max-width to maintain consistency
+    min-height: 700px; // Ensure consistent container height
 }
 
 .quiz-title {
@@ -11,6 +14,7 @@
     font-size: $font-size-subtitle-2;
     font-weight: 700;
     margin-bottom: 2rem;
+    height: 2.5rem; // Fixed height to prevent shifting
 }
 
 .circle {
@@ -41,10 +45,12 @@
 
         p {
             margin-right: 2.067rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 }
-
 
 button.current-question-indicator {
     width: 13.2rem;
@@ -59,40 +65,23 @@ button.current-question-indicator {
     font-family: $font-lato;
 }
 
-
 .main-question {
     margin-bottom: 5.7rem;
+    min-height: 350px; // Ensure consistent question area height
 
     & p.question {
         font-size: $font-size-subtitle-2;
         font-weight: 500;
         color: $clr-gray-700;
         margin-bottom: 3.6rem;
+        min-height: 3.5rem; // Fixed height for question text
     }
 
-    & .question-check {
-        display: flex;
-        align-items: center;
-        width: 80.9rem;
-        height: 4.8rem;
-        padding: 2rem 1.6rem;
-        gap: 2.4rem;
-        border-radius: .8rem;
-        margin-left: 1rem;
-        cursor: pointer;
-
-        
-
-        & label {
-            font-size: $font-size-body;
-            font-weight: 400;
-            color: $clr-gray-500;
-            cursor: pointer;
-        }
-    }
-
-    & div.question-check:hover {
-        background: $clr-primary-50;
+    // Ensure all answer options have consistent layout
+    .custom-radio {
+        width: 100%;
+        margin: 10px 0;
+        height: 48px; // Consistent height for radio options
     }
 }
 
@@ -103,7 +92,6 @@ button.current-question-indicator {
 }
 
 .btns {
-    
     span {
         display: flex;
         justify-content: space-between;
@@ -147,56 +135,7 @@ button.current-question-indicator {
     }
 }
 
-
-// radio button styling
-
-.clicked {
-    background: $clr-primary-50;
-
-    & input {
-        display: none;
-    }
-
-    & .radio-circle {
-        width: 2.8rem;
-        height: 2.8rem;
-        padding: 1rem;
-        border-radius: 50%;
-        // background : $clr-primary-500;
-        border: .1rem solid $clr-primary-500;
-        position: relative;
-    }
-
-    & .radio-circle::after {
-        content: '';
-        position: absolute;
-        width: 1.8rem;
-        height: 1.8rem;
-        border-radius: 50%;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: $clr-primary-500;
-    }
-}
-
-.not-clicked {
-    & input {
-        display: none;
-    }
-
-    & .radio-circle {
-        width: 2.8rem;
-        height: 2.8rem;
-        border-radius: 50%;
-        border: .1rem solid $clr-primary-500;
-    }
-}
-
-
-
-
-/* Container for the custom radio button */
+// Previous radio button styling remains unchanged
 .custom-radio {
     display: flex;
     align-items: center;
@@ -270,7 +209,4 @@ button.current-question-indicator {
     label:hover{
       background-color: #fef2e6;
     }
-
-
-  }
-  
+}

@@ -217,6 +217,9 @@ export class QuizListComponent {
 
   
   takeAssessment(id: number, quizType: string, assessment: Assignment) {
+    
+    this.setQuizIdAndAssessmentInLocalStorage(id, assessment)
+    
     if(quizType === 'QUIZ') {
       this.quizService.quizId = id;
       this.quizService.selectedAssessment$ = of(assessment);
@@ -233,4 +236,10 @@ export class QuizListComponent {
       this.router.navigate([`home/trainee/assessments/presentation/${id}`]);
     }
   }
+
+  setQuizIdAndAssessmentInLocalStorage(id: number, assessment: Assignment) {
+    localStorage.setItem('quizId', id.toString());
+    localStorage.setItem('assessment', JSON.stringify(assessment))
+  }
+
 }
