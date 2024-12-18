@@ -10,7 +10,7 @@
     <form class="module" [formGroup]="parentForm" *ngIf="parentForm">
       <!-- Header -->
       <header class="create-module-head">
-        <h3>Module Creation</h3>
+        <h3>Module {{ isUpdate ? 'Updation' : 'Creation' }}</h3>
         <p>
           Create a new module by providing a title, description,
           and relevant learning materials. Modules can be linked
@@ -167,7 +167,12 @@
                                [alt]="file.type + ' file icon'"
                                class="file-type-icon">
                           <div class="file-details">
-                            <p class="file-name" [title]="file.name">{{ file.name }}</p>
+
+                            <p class="file-name"
+                            [title]="file.name"
+                            [innerHTML]="shortFileName(file.name)">
+                            </p>
+
                           </div>
                         </div>
                         <button
