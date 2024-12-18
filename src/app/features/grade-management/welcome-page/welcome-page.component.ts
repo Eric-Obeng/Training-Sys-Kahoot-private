@@ -37,7 +37,7 @@ export class WelcomePageComponent implements OnInit {
   private setModalDisplayTime() {
     setTimeout(() => {
       this.toggleTimeUp();
-    }, 200);
+    }, 1000);
   }
 
   toggleTimeUp() {
