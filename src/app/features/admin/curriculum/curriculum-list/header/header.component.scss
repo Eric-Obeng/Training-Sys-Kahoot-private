@@ -5,7 +5,7 @@
   @include flexbox($direction: column);
 
   .grp-1{
-    width: 94.9rem;
+    width: 90%;
     @include flexbox($align:center,$justify:space-between);
     gap:2.26rem;
 
@@ -86,7 +86,7 @@
 
   mat-divider{
     margin-top: 2.9rem;
-    width: 94.9rem;
+    width: 90%;
   }
 
 }
