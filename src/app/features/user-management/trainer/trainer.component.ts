@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -22,6 +22,7 @@ import {
   Specialization,
   User,
 } from '../../../core/models/cohort.interface';
+import { Trainer } from '../../../core/models/trainer.interface';
 import { InputFieldComponent } from '../../../core/shared/input-field/input-field.component';
 import { TrainerService } from '@core/services/user-management/trainer/trainer.service';
 import { MatIconModule } from '@angular/material/icon';
@@ -43,20 +44,21 @@ import { TraineeInsystemService } from '@core/services/user-management/trainee/t
     FeedbackComponent,
   ],
   templateUrl: './trainer.component.html',
-  styleUrl: './trainer.component.scss',
+  styleUrls: ['./trainer.component.scss'],
 })
 export class TrainerComponent {
   trainerForm!: FormGroup;
   allSpecializations$!: Observable<Specialization[]>;
   allGenders: Gender[] = [{ sex: 'Male' }, { sex: 'Female' }];
-  selectedCountry!: string;
   selectedFileName: string | null = null;
   selectedFile: File | null = null;
-  restCountries!: any;
+  restCountries!: Countries[];
   feedbackVisible: boolean = false;
   feedbackTitle: string = '';
   feedbackMessage: string = '';
   feedbackImageSrc: string = '';
+  feedbackType: 'success' | 'error' = 'success';
+  trainerId: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -70,19 +72,72 @@ export class TrainerComponent {
 
   ngOnInit() {
     this.trainerForm = this.initTrainerForm();
-    this.countryService.getCountries().subscribe((data) => {
-      this.restCountries = data;
-    });
+    this.loadCountries();
+    this.loadSpecializations();
 
-    this.allSpecializations$ =
-      this.userManagementService.getAllspecializations();
-
-    this.allSpecializations$.subscribe((specializations) => {
-      console.log('Specializations', specializations);
+    this.trainerService.selectedTrainer$.subscribe((trainer) => {
+      if (trainer) {
+        this.trainerId = trainer.id;
+        this.populateForm(trainer);
+      }
     });
   }
 
-  initTrainerForm() {
+  private loadCountries(): void {
+    this.countryService
+      .getCountries()
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching countries:', error);
+          this.showFeedback(
+            'Error',
+            'Failed to fetch countries.',
+            'error-image-path',
+            'error'
+          );
+          return [];
+        })
+      )
+      .subscribe((data) => {
+        this.restCountries = data;
+      });
+  }
+
+  private loadSpecializations(): void {
+    this.allSpecializations$ = this.userManagementService
+      .getAllspecializations()
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching specializations:', error);
+          this.showFeedback(
+            'Error',
+            'Failed to fetch specializations.',
+            'error-image-path',
+            'error'
+          );
+          return [];
+        })
+      );
+  }
+
+  private populateForm(trainer: Trainer): void {
+    this.trainerForm.patchValue({
+      email: trainer.email,
+      firstName: trainer.firstName,
+      lastName: trainer.lastName,
+      gender: trainer.gender,
+      country: trainer.country,
+      phoneNumber: trainer.phoneNumber,
+      assignSpecialization: trainer.assignSpecialization,
+    });
+
+    if (trainer.profilePhoto) {
+      this.selectedFileName = trainer.profilePhoto.name;
+      this.selectedFile = trainer.profilePhoto;
+    }
+  }
+
+  private initTrainerForm(): FormGroup {
     return this.fb.group({
       email: [
         '',
@@ -99,18 +154,23 @@ export class TrainerComponent {
     });
   }
 
-  showFeedback(title: string, message: string, imageSrc: string) {
+  showFeedback(
+    title: string,
+    message: string,
+    imageSrc: string,
+    type: 'success' | 'error'
+  ): void {
     this.feedbackTitle = title;
     this.feedbackMessage = message;
     this.feedbackImageSrc = imageSrc;
+    this.feedbackType = type;
     this.feedbackVisible = true;
   }
 
-  onSubmit() {
-    // if (this.trainerForm.invalid) {
-    //   return;
-    // }
-    console.log('testing');
+  onSubmit(): void {
+    if (this.trainerForm.invalid) {
+      return;
+    }
 
     const formData = new FormData();
     Object.keys(this.trainerForm.controls).forEach((key) => {
@@ -129,27 +189,47 @@ export class TrainerComponent {
 
     formData.append('status', 'ACTIVE');
 
-    formData.forEach((value, key) => {
-      console.log(`${key}:`, value);
-    });
-
-    this.trainerService.trainerCreation(formData).subscribe({
-      next: () => {
-        this.showFeedback(
-          'User Created Successfully',
-          'The user profile has been created successfully. The new account is now active and assigned the specified role',
-          'assets/Images/svg/add-spec.svg'
-        );
-      },
-      error: (error) => {
-        console.error('Error creating trainer', error);
-        this.showFeedback(
-          'Error creating trainer',
-          `${error.error}`,
-          'assets/Images/svg/add-spec.svg'
-        );
-      },
-    });
+    if (this.trainerId) {
+      this.trainerService.updateTrainer(this.trainerId, formData).subscribe({
+        next: () => {
+          this.showFeedback(
+            'User Updated Successfully',
+            'The user profile has been updated successfully.',
+            'assets/Images/svg/add-spec.svg',
+            'success'
+          );
+        },
+        error: (error) => {
+          console.error('Error updating trainer:', error);
+          this.showFeedback(
+            'Error Updating Trainer',
+            `${error.message}`,
+            'assets/Images/svg/add-spec.svg',
+            'error'
+          );
+        },
+      });
+    } else {
+      this.trainerService.trainerCreation(formData).subscribe({
+        next: () => {
+          this.showFeedback(
+            'User Created Successfully',
+            'The user profile has been created successfully. The new account is now active and assigned the specified role.',
+            'assets/Images/svg/add-spec.svg',
+            'success'
+          );
+        },
+        error: (error) => {
+          console.error('Error creating trainer:', error);
+          this.showFeedback(
+            'Error Creating Trainer',
+            `${error.message}`,
+            'assets/Images/svg/add-spec.svg',
+            'error'
+          );
+        },
+      });
+    }
   }
 
   emailAsyncValidator(control: AbstractControl): Observable<User | null> {
@@ -157,32 +237,42 @@ export class TrainerComponent {
       debounceTime(500),
       distinctUntilChanged(),
       switchMap((value) => {
-        // Call the checkEmail method
         return this.traineeInsystemService.checkEmail(value).pipe(
-          catchError(() => {
-            return [];
-          })
+          catchError(() => []),
+          first()
         );
-      }),
-      first()
+      })
     );
-  }
-
-  goBack() {
-    window.history.back();
   }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
+      const validTypes = ['image/png', 'image/jpg', 'image/jpeg'];
+      const maxSize = 2 * 1024 * 1024; // 2MB
+
+      if (!validTypes.includes(file.type)) {
+        return;
+      }
+
+      if (file.size > maxSize) {
+        return;
+      }
+
       this.selectedFileName = file.name;
       this.selectedFile = file;
     }
   }
 
-  onCloseFeedback() {
+  onCloseFeedback(): void {
     this.feedbackVisible = false;
     this.router.navigate(['/home/admin/user-management']);
+  }
+
+  goBack(): void {
+    window.history.back();
+    this.trainerForm.reset();
+    this.trainerService.setSelectedTrainer(null);
   }
 }

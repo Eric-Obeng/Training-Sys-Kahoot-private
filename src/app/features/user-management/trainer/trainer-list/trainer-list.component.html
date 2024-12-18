@@ -18,20 +18,24 @@
           <div class="status" [ngClass]="trainer.status | lowercase">
             {{ trainer.status | titlecase }}
           </div>
-          <div class="menu relative">
-            <mat-icon
-              svgIcon="dots"
-              (click)="toggleMenu(trainer.id, $event)"
-            ></mat-icon>
+          <div class="menu">
+            <mat-icon svgIcon="dots" (click)="openMenu(i, $event)"></mat-icon>
+
+            <app-options-dropdown
+              *ngIf="selectedTrainerId === i"
+              [isActive]="true"
+              [options]="[{ icon: 'assets/Images/svg/update.svg', label: 'Update', action: 'update' }]"
+              (optionSelected)="handleOptionSelected($event, trainer)"
+            ></app-options-dropdown>
           </div>
         </div>
       </div>
     </div>
+    <ng-template #noTrainers>
+      <div class="no-trainer">
+        <mat-icon svgIcon="info"></mat-icon>
+        No Trainer Created
+      </div>
+    </ng-template>
   </div>
-  <ng-template #noTrainers>
-    <div class="no-trainer">
-      <mat-icon svgIcon="info"></mat-icon>
-      No Trainer Created
-    </div>
-  </ng-template>
 </div>

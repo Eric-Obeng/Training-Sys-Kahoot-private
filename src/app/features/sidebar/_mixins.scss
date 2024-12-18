@@ -1,7 +1,8 @@
+@use '../../../styleSheet/mixins' as *;
+
 @mixin list-item{
   height: 3.75rem;
-  display: flex;
-  align-items: center;
+  @include flexbox($align: center,$justify: flex-start);
   cursor: pointer;
   a{
     padding-left: 1rem;
@@ -9,6 +10,12 @@
     display: flex;
     align-items: center;
     gap: 1.25rem;
+
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+      flex-shrink: 0;
+    }
   }
 }
 

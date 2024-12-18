@@ -1,21 +1,43 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorHandleService {
 
-  constructor() { }
+  constructor(private snackBar: MatSnackBar) {}
 
+  handleError = (error: HttpErrorResponse): Observable<never> => {
+    let errorMessage = 'An error occurred. Please try again.';
 
-  handleError(error: HttpErrorResponse) {
-    if (error.status === 0) {
-      console.error('An error occurred:', error.error);
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = error.error.message;
     } else {
-      console.error(`Backend returned code ${error.status}, body was: `, error.error);
+      errorMessage = error.error?.message || `Error: ${error.status} ${error.statusText}`;
     }
-    return throwError(() => new Error('Something bad happened; please try again later.'));
+
+    this.showErrorSnackbar(errorMessage);
+    return throwError(() => error);
+  }
+
+  showErrorSnackbar(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      panelClass: ['error-snackbar'],
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    });
+  }
+
+  showSuccessSnackbar(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      panelClass: ['success-snackbar'],
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    });
   }
 }

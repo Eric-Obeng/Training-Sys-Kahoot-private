@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  BaseUrl: 'https://octopus-arriving-monthly.ngrok-free.app/api/v1',
+  BaseUrl: 'https://endlessly-alert-gnu.ngrok-free.app/api/v1',
 };

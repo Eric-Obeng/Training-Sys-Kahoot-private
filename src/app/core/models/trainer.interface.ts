@@ -1,8 +1,17 @@
 export interface Trainer {
-  id: number;
+  id: string;
+  email: string;
   firstName: string;
   lastName: string;
-  status: string;
-  role: string;
-  email: string;
+  assignSpecialization?: string;
+  gender: string;
+  country: string;
+  phoneNumber: string;
+  profilePhoto?: File;
+  status: 'ACTIVE' | 'INACTIVE' | 'DEACTIVATED';
+  role: 'TRAINER';
+}
+
+export interface TrainerList {
+  content: Trainer[];
 }
