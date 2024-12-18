@@ -11,23 +11,38 @@ export class ErrorHandleService {
   constructor(private snackBar: MatSnackBar) {}
 
   handleError = (error: HttpErrorResponse): Observable<never> => {
-    let errorMessage = 'An error occurred. Please try again.';
-  
-    if (error.error instanceof ErrorEvent) {
-      // Client-side error
-      errorMessage = error.error.message;
-    } else if (typeof error.error === 'object' && error.error.error) {
-      // Specific case: error object with an "error" property
-      errorMessage = error.error;
-    } else {
-      // Server-side error
-      errorMessage = error.error?.message || `Error: ${error.status} ${error.statusText}`;
+    let errorMessage = this.extractErrorMessage(error);
+
+    if (!errorMessage) {
+      // Default fallback if no specific error message is found
+      errorMessage = `Error: ${error.status} ${error.statusText}`;
     }
-  
+
     this.showErrorSnackbar(errorMessage);
     return throwError(() => error);
   }
-  
+
+  private extractErrorMessage(error: any): string {
+    if (!error) return '';
+
+    // Handle client-side or network errors
+    if (error.error instanceof ErrorEvent) {
+      return error.error.message;
+    }
+
+    // Handle error structures with nested error objects
+    let message = error.message || '';
+    if (error.error) {
+      if (typeof error.error === 'string') {
+        message = error.error;
+      } else if (typeof error.error === 'object') {
+        message = this.extractErrorMessage(error.error); // Recursive extraction
+      }
+    }
+
+    return message || 'An error occurred. Please try again.';
+  }
+
   showErrorSnackbar(message: string): void {
     this.snackBar.open(message, 'Close', {
       duration: 5000,
