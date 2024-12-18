@@ -4,7 +4,13 @@ import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } f
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuizSubmission } from '@core/models/trainee.interface';
 import { QuizService } from '@core/services/trainee/quiz-questions/quiz.service';
-import { Observable } from 'rxjs';
+import { Observable, map, first, combineLatest } from 'rxjs';
+
+interface QuizQuestion {
+  id: string;
+  text: string;
+  answersDTO: { id: string; text: string }[];
+}
 
 @Component({
   selector: 'app-take-quiz',
@@ -14,15 +20,14 @@ import { Observable } from 'rxjs';
   styleUrl: './take-quiz.component.scss'
 })
 export class TakeQuizComponent implements OnInit {
-
-  currentQuizTitle$!: Observable<any>;
-  currentQuizDetails$!: Observable<any>;
-  currentQuestion$!: Observable<any>;
-
-  quizQuestions$!: Observable<any>;
-  selectedAnswerId: number | null = null;
-
+  currentQuestionIndex = 0;
+  currentQuestion$!: Observable<QuizQuestion>;
+  quizQuestions$!: Observable<QuizQuestion[]>;
+  selectedAnswerId: string | null = null;
   quizForm: FormGroup;
+  totalQuestionCount: number = 0;
+
+  currentSelectedAnswer!: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,20 +42,25 @@ export class TakeQuizComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.currentQuizTitle$ = this.quizService.getQuizTitle();
-    // this.currentQuizDetails$ = this.quizService.getQuizDetails();
-    // this.currentQuestion$ = this.quizService.getQuestionById();
+    // Fetch all quiz questions
     this.quizQuestions$ = this.quizService.getQuizQuestionsById();
-    this.quizQuestions$.subscribe(data => console.log("res: ", data))
 
-    this.quizService.selectedAssessment$.subscribe(data => console.log("assess res: ", data))
+    // Create an observable for the current question
+    this.currentQuestion$ = this.quizQuestions$.pipe(
+      map(questions => {
+        this.totalQuestionCount = questions.length;
+        return questions[this.currentQuestionIndex];
+      })
+    );
+
+    console.log("currentQuestion: ", this.currentQuestionIndex, "lastquestion: ", this.totalQuestionCount)
   }
 
   get submittedAnswers(): FormArray {
     return this.quizForm.get('submittedAnswers') as FormArray;
   }
 
-  addAnswer(questionId: number, selectedAnswerId:number): void {
+  addAnswer(questionId: string, selectedAnswerId: string): void {
     const answerIndex = this.submittedAnswers.value.findIndex(
       (a: any) => a.questionId === questionId
     );
@@ -66,34 +76,68 @@ export class TakeQuizComponent implements OnInit {
 
   submitQuiz() {
     const quizSubmission: QuizSubmission = this.quizForm.value;
-    console.log('Quiz Submission', quizSubmission)
+    this.quizService.submitQuiz(quizSubmission).subscribe({
+      next: (res) => {console.log(res)},
+      error: (error) => {console.log(error)}
+    })
+    // console.log('Quiz Submission', quizSubmission);
   }
 
-
-  checkSelectedAnswer(id: number) {
+  checkSelectedAnswer(id: string) {
     this.selectedAnswerId = id;
   }
 
-
-
-  isAnswerSelected(id: number): boolean {
+  isAnswerSelected(id: string): boolean {
+    this.currentSelectedAnswer = id;
     return this.selectedAnswerId === id;
   }
 
   goBack() {
-    this.quizService.questionId = this.quizService.questionId - 1;
-    // this.currentQuestion$ = this.quizService.getQuestionById();
+    if (this.currentQuestionIndex > 0) {
+      this.currentQuestionIndex--;
+      this.selectedAnswerId = null;
+      this.currentQuestion$ = this.quizQuestions$.pipe(
+        map(questions => questions[this.currentQuestionIndex])
+      );
+    }
   }
 
   next() {
-    this.submitQuiz()
-    // this.quizService.questionId = this.quizService.questionId + 1;
-    // this.currentQuestion$ = this.quizService.getQuestionById();
+    // Ensure an answer is selected 
+    if (this.selectedAnswerId !== null) {
+      // Add the current question's answer
+      this.currentQuestion$.pipe(
+        first()
+      ).subscribe(currentQuestion => {
+        this.addAnswer(
+          currentQuestion.id, 
+          this.selectedAnswerId!
+        );
+
+        // Move to next question or submit if it's the last question
+        if (this.currentQuestionIndex < this.totalQuestionCount - 1) {
+          this.currentQuestionIndex++;
+          this.selectedAnswerId = null;
+          this.currentQuestion$ = this.quizQuestions$.pipe(
+            map(questions => questions[this.currentQuestionIndex])
+          );
+        } else {
+          this.submit();
+        }
+      });
+    } else {
+      // Prevent moving without selecting an answer
+      alert('Please select an answer before proceeding');
+    }
   }
 
   submit() {
+    this.submitQuiz();
     this.router.navigate(['/home/trainee/assessments/feedback'])
   }
 
-
+  // Helper method to check if it's the last question
+  isLastQuestion(): boolean {
+    return this.currentQuestionIndex === this.totalQuestionCount - 1;
+  }
 }

@@ -1,154 +1,247 @@
-@import "../../../../styleSheet/grade_management_mixins";
-@import "../../../../styleSheet/user_management_dashboard";
+@import '../../../../styleSheet/grade_management_mixins';
+@import '../../../../styleSheet/user_management_dashboard';
 
 .container {
-  // display: flex;
-  // justify-content: center;
+    // display: flex;
+    // justify-content: center;
+    width: 100%;
+    min-width: 1220px;
+    padding: 0 8rem;
+    display: flex;
 
-  .modal-like-card {
-    margin-top: 5rem;
-    @include modal-like-card;
-  }
+    .modal-like-card {
+      justify-content: center;
+      @include modal-like-card;
+      margin-top: auto 8rem;
+    }
 }
 
 .main-list {
-  width: 100%;
-
-  & .add-quiz-lab-presentation-icons {
+    width: 100%;
     display: flex;
-    gap: 3.801rem;
-    margin-bottom: 3.8rem;
+    flex-direction: column;
 
-    & .add-quiz {
-      @include addAssessmentBtns;
-      cursor: pointer;
-    }
-
-    & .add-labs {
-      @include addAssessmentBtns;
-      cursor: pointer;
-    }
-
-    & .add-presentation {
-      @include addAssessmentBtns;
-    }
-  }
-
-  & .top-three {
-    display: flex;
-    gap: 1.9rem;
-    margin-bottom: 1.6rem;
-
-    & .recent-lecture-stats {
-      @include cards;
-      width: 33.9rem;
-      height: 23.8rem;
-      padding: 2.4rem 1.6rem;
-
-      & .title {
+    & .add-quiz-lab-presentation-icons {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 2.65rem;
+        gap: 3.801rem;
+        margin-bottom: 3.8rem;
 
-        & .title-and-info-icon {
-          display: flex;
-          align-items: center;
-          gap: 1.3rem;
-
-          & span {
-            font-size: $font-size-body;
-            color: $clr-gray-700;
-            font-weight: 600;
-          }
+        & .add-quiz {
+            @include addAssessmentBtns;
         }
 
-        & span {
-          font-size: $font-size-xbody;
-          font-weight: 400;
-          color: $clr-gray-500;
+        & .add-labs {
+            @include addAssessmentBtns;
         }
-      }
 
-      & .content {
+        & .add-presentation {
+            @include addAssessmentBtns;
+        }
+    }
+
+
+    & .top-three {
         display: flex;
-        flex-direction: column;
+        gap: 3rem;
+        margin-bottom: 1.6rem;
 
-        & span:nth-child(1) {
-          font-size: $font-size-xbody;
-          color: $clr-gray-500;
-          font-weight: 400;
-          margin-bottom: 0.8rem;
+        & .recent-lecture-stats {
+            @include cards;
+            width: 100%;
+            min-width: 33.9rem;
+            height: 23.8rem;
+            padding: 2.4rem 1.6rem;
+
+            & .title {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 2.65rem;
+
+                & .title-and-info-icon {
+                    display: flex;
+                    align-items: center;
+                    gap: 1.3rem;
+
+                    & span {
+                        font-size: $font-size-body;
+                        color: $clr-gray-700;
+                        font-weight: 600;
+                    }
+                }
+
+                & span {
+                    font-size: $font-size-xbody;
+                    font-weight: 400;
+                    color: $clr-gray-500;
+                }
+            }
+
+            & .content {
+                display: flex;
+                flex-direction: column;
+
+                & span:nth-child(1) {
+                    font-size: $font-size-xbody;
+                    color: $clr-gray-500;
+                    font-weight: 400;
+                    margin-bottom: .8rem;
+                }
+
+                & span:nth-child(2) {
+                    font-size: $font-size-subtitle;
+                    color: $clr-gray-700;
+                    font-weight: 600;
+                    margin-bottom: .9rem;
+                }
+
+                & span:nth-child(3) {
+                    display: flex;
+                    gap: 1rem;
+                    margin-bottom: 2rem;
+
+                    & span {
+                        font-size: $font-size-xbody;
+                        font-weight: 400;
+                        color: $clr-gray-500;
+                    }
+                }
+
+                & span:nth-child(4) {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    & span {
+                        font-size: $font-size-xbody;
+                        font-weight: 700;
+                        color: $clr-gray-500;
+                        cursor: pointer;
+                    }
+
+                    & svg {
+                        cursor: pointer;
+                    }
+                }
+            }
         }
 
-        & span:nth-child(2) {
-          font-size: $font-size-subtitle;
-          color: $clr-gray-700;
-          font-weight: 600;
-          margin-bottom: 0.9rem;
+        & .assignment-stats {
+            @include cards;
+            // width: 33.9rem;
+            width: 100%;
+            min-width: 33.9rem;
+            height: 23.8rem;
+            padding: 2.4rem 1.6rem;
+
+            & .title {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 4rem;
+
+                & .title-and-info-icon {
+                    display: flex;
+                    align-items: center;
+                    gap: 1.3rem;
+
+                    & span {
+                        font-size: $font-size-body;
+                        color: $clr-gray-700;
+                        font-weight: 600;
+                    }
+                }
+            }
+
+            & .content {
+                display: flex;
+                flex-direction: column;
+
+                & .submission-stats {
+                    display: flex;
+                    justify-content: space-between;
+                    // margin-bottom: 1.4rem;
+
+                    & span:first-of-type {
+                        font-size: $font-size-subtitle-2;
+                        font-weight: 700;
+                        color: $clr-gray-700;
+                    }
+
+                    & span:last-of-type {
+                        font-size: $font-size-body;
+                        font-weight: 600;
+                        color: $clr-gray-500;
+                    }
+                }
+
+                & .progress-bar {
+                    width: 100%;
+                    position: relative;
+                    margin-bottom: .8rem;
+
+                    .prog-bar {
+                        height: .8rem;
+                        border-radius: 9.9rem;
+                    }
+
+                    & .gray-bar {
+                        width: 29.7rem;
+                        background: #E0EDFF;
+                    }
+
+                    & .blue-bar {
+                        width: 80%;
+                        background: #1A75FF;
+                        position: absolute;
+                        top: 0;
+                    }
+                }
+
+                & span:first-of-type {
+                    font-size: $font-size-body;
+                    font-weight: 600;
+                    color: $clr-gray-500;
+                    display: block;
+                    margin-bottom: 1.7rem;
+                }
+
+                & span:last-of-type {
+                    display: flex;
+                    justify-content: space-between;
+                    cursor: pointer;
+                }
+
+            }
+        }
+    }
+
+    & .top-trainees {
+        @include cards;
+        width: 100%;
+        height: 30rem;
+        border-radius: .8rem;
+        overflow-y: scroll;
+        padding: 2.4rem;
+        
+        
+        & .card-title {
+            @include cardTitle;
+            margin-bottom: 1.6rem;
         }
 
-        & span:nth-child(3) {
-          display: flex;
-          gap: 1rem;
-          margin-bottom: 2rem;
-
-          & span {
-            font-size: $font-size-xbody;
-            font-weight: 400;
-            color: $clr-gray-500;
-          }
+        & .table-header {
+            @include tableHeader;
+            margin-bottom: 1.6rem;
         }
 
-        & span:nth-child(4) {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-
-          & span {
-            font-size: $font-size-xbody;
-            font-weight: 700;
-            color: $clr-gray-500;
-            cursor: pointer;
-          }
-
-          & svg {
-            cursor: pointer;
-          }
+        & .table-trainee-list {
+            @include tableTraineeList;
         }
-      }
-    }
 
-    & .assignment-stats {
-      @include cards;
-      width: 33.9rem;
-      height: 23.8rem;
-    }
-  }
+        & .divider {
+            @include divider;
+        }
 
-  & .top-trainees {
-    @include cards;
-    width: 96.6rem;
-    height: 22rem;
-    border-radius: 0.8rem;
-    overflow-y: scroll;
-
-    & .card-title {
-      @include cardTitle;
-      margin-bottom: 1.6rem;
     }
-
-    & .table-header {
-      @include tableHeader;
-      margin-bottom: 1.6rem;
-    }
-
-    & .table-trainee-list {
-      @include tableTraineeList;
-    }
-
-    & .divider {
-      @include divider;
-    }
-  }
 }

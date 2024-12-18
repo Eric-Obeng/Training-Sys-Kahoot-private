@@ -7,6 +7,7 @@ import { CohortDataService } from '../../../core/services/cohort-data/cohort-dat
 import { Specialization } from '@core/models/cohort.interface';
 import { Observable } from 'rxjs';
 import { UserManagementTraineeService } from '@core/services/user-management/trainee/user-management-trainee.service';
+import { SnackbarService } from '@core/services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-create-new-cohort',
@@ -29,6 +30,7 @@ export class CreateNewCohortComponent {
     private router: Router,
     public cohortDataService: CohortDataService,
     public usermanagementservice: UserManagementTraineeService,
+    private snackBar: SnackbarService,
   ) {}
 
   ngOnInit() {

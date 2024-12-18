@@ -7,6 +7,7 @@ import { Specialization, Cohort } from '../../../../core/models/cohort.interface
 import { TraineeInsystemService } from '../../../../core/services/user-management/trainee/trainee-insystem.service';
 import { UserManagementTraineeService } from '../../../../core/services/user-management/trainee/user-management-trainee.service';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { SnackbarService } from '@core/services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-confirm-training-details',
@@ -30,6 +31,7 @@ export class ConfirmTrainingDetailsComponent implements OnDestroy {
     private router: Router,
     public userManagementTraineeService: UserManagementTraineeService,
     public traineeInSystemService: TraineeInsystemService,
+    private snackBar: SnackbarService,
   ) {}
 
   ngOnInit() {
@@ -146,6 +148,7 @@ export class ConfirmTrainingDetailsComponent implements OnDestroy {
             this.toggleModal();
           }),
           catchError(err => {
+            this.snackBar.showError(err)
             this.errorMessage = 'Failed to create user. Please try again.';
             throw err;
           }),

@@ -3,10 +3,13 @@
 
 .container-with-list {
   width: 100%;
+  min-width: 1220px;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: hidden;
+  padding: 0 8rem;
+  background: #fdfdfc;
 
   & .wrapper {
     width: 100%;

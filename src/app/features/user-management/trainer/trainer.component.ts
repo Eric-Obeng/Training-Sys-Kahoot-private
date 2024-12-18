@@ -131,9 +131,18 @@ export class TrainerComponent {
       assignSpecialization: trainer.assignSpecialization,
     });
 
-    if (trainer.profilePhoto) {
-      this.selectedFileName = trainer.profilePhoto.name;
-      this.selectedFile = trainer.profilePhoto;
+    if (typeof trainer.profilePhoto === 'string') {
+      const byteCharacters = atob(trainer.profilePhoto);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: 'image/jpeg' });
+      const file = new File([blob], 'profilePhoto.jpg', { type: 'image/jpeg' });
+
+      this.selectedFileName = file.name;
+      this.selectedFile = file;
     }
   }
 

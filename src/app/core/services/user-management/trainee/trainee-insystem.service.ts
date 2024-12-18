@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ErrorHandlerService } from '../../cohort-data/error-handling/error-handler.service';
 import { BehaviorSubject, Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { User } from '../../../models/cohort.interface';
 import { environment } from 'src/environments/environment.development';
 import { TraineeList } from '@core/models/trainee.interface';
+import { ErrorHandleService } from '@core/services/error-handle/error-handle.service';
+
 
 @Injectable({
   providedIn: 'root',
@@ -48,7 +49,7 @@ export class TraineeInsystemService {
 
   constructor(
     private http: HttpClient,
-    private errorHandlerService: ErrorHandlerService
+    private errorHandlerService: ErrorHandleService
   ) {}
 
   private getHeaders(): HttpHeaders {
@@ -159,8 +160,7 @@ export class TraineeInsystemService {
   }
 
   deleteSelectedTrainee(email: string) {
-    const params = new HttpParams().set('email', email); // Properly set the parameter
-    return this.http.delete<User>(`${this.baseUrl}/deactivate`, { params }).pipe(
+    return this.http.post<User>(`${this.baseUrl}/profiles/trainees/status`, { "email": email }).pipe(
       tap((response) => {
         this.deleteModalSuccessful = true;
         console.log('Delete Response:', response);

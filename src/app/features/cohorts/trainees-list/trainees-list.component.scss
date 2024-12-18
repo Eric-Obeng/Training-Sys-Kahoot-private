@@ -2,57 +2,67 @@
 @import '../../../../styleSheet/button';
 @import '../../../../styleSheet/mixins';
 
+.no-trainees-container {
+    width: 100%;
+    height: 65vh;
+    display: grid;
+    place-items: center;
+}
+
+.no-cohorts { 
+    width: 611px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+
+    & .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 44px;
+        
+        margin-top: 75px;
+
+        & img {
+            width: 191px;
+            height: 191px;
+        }
+
+        & span {
+            text-align: center;
+            font-size: $font-size-title;
+            font-weight: 600;
+            color: $clr-gray-800;
+        }
+
+        & p {
+            text-align: center;
+            font-size: $font-size-body;
+            font-weight: 400;
+            color: $clr-gray-500;
+        }
+    }
+
+    & .create-btn {
+        font-size: $font-size-subtitle-2;
+        height: 5.5rem;
+    }
+} // No cohorts div ends here
 
 .container {
     width: 100%;
+    min-width: 1220px;
     display: flex;
     justify-content: center;
-    padding-top: 1.8rem; 
+    padding-top: 1.8rem;
+    padding-left: 8rem;
+    padding-right: 8rem; 
  
-    .no-cohorts { 
-        width: 611px;
-        height: fit-content;
-        display: flex;
-        flex-direction: column; 
-        justify-content: center;
-
-        & .content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 44px;
-            
-            margin-top: 75px;
-
-            & img {
-                width: 191px;
-                height: 191px;
-            }
-
-            & span {
-                text-align: center;
-                font-size: $font-size-title;
-                font-weight: 600;
-                color: $clr-gray-800;
-            }
-
-            & p {
-                text-align: center;
-                font-size: $font-size-body;
-                font-weight: 400;
-                color: $clr-gray-500;
-            }
-        }
-
-        & .create-btn {
-            font-size: $font-size-subtitle-2;
-            height: 5.5rem;
-        }
-    } // No cohorts div ends here
 
     .container-with-list { 
-        width: 976px;
+        width: 100%;
 
         & app-search {
             margin-bottom: 16.5px;
@@ -96,10 +106,12 @@
 
             & .headers {
                 display: flex;
+                justify-content: space-between;
                 margin-bottom: 44px;
                 font-size: $font-size-subtitle-2;
                 font-weight: 600;
                 color: $clr-gray-700;
+                font-family: $font-lato;
 
                 & div:nth-child(1) {
                     width: 20rem;
@@ -120,15 +132,19 @@
                 & div:nth-child(5) {
                     width: 16rem;
                 }
+                
+                & div:nth-child(6) {
+                    width: 30px;
+                }
             }
 
             & .scroll-list-wrapper {
                 height: 50vh;
-                overflow-y: scroll;
 
                 & .list {
                     height: 40px;
                     display: flex;
+                    justify-content: space-between;
                     background: $clr-white;
                     font-size: $font-size-xbody;
                     font-weight: 400;
@@ -140,7 +156,6 @@
                         width: 20rem;
                         display: flex;
                         align-items: center;
-                        overflow-x: hidden;
                     }
     
                     & .status {
@@ -172,7 +187,7 @@
                         display: flex;
                         align-items: center;
                         position: relative;
-                        padding-left: 2rem;
+                        // padding-left: 2rem;
     
                         & span {
                             color: $clr-gray-500;
@@ -189,9 +204,17 @@
                     }
     
                     & .ellipsis {
-                        display: flex;
-                        align-items: center;
+                        width: 30px;
+                        height: 30px;
+                        display: grid;
+                        place-items: center;
                         position: relative;
+                        border-radius: 50%;
+                        transition: $btn-transition;
+                    }
+
+                    & .ellipsis:hover {
+                        background: $clr-gray-50;
                     }
                 }
             }

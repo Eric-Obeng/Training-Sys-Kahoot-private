@@ -2,8 +2,10 @@ import { UserManagementTraineeService } from '@core/services/user-management/tra
 import { Injectable } from '@angular/core';
 import { curriculum } from '@core/models/curriculum.interface';
 import { BehaviorSubject,combineLatest, map,tap,catchError, Observable } from 'rxjs';
-import { ErrorHandleService } from '../error-handle/error-handle.service';
+
 import { CurriculumCrudService } from '../curriculum-crud/curriculum-crud.service';
+import { ErrorHandleService } from '../error-handle/error-handle.service';
+
 
 
 

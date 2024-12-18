@@ -41,7 +41,6 @@
                 [placeholder]="'Name'" 
                 [hide]="true"
                 (addButtonClicked)="goToCreateCohort()"
-                (searchChanged)="onSearchChange($event)"
                 (sortClicked)="onSortList()" 
             />
             <div class="divider"></div>
@@ -114,12 +113,14 @@
                     }
                 </div>
             </div>
-            <app-paginator 
-                [currentPage$]="currentPage$"
-                [totalPages]="totalPages"
-                [pageSize]="pageSize"
-                (pageChange)="onPageChange($event)"
-            />
+            <div class="paginator"  *ngIf="listEmptyCheck === false">
+                <app-paginator
+                    [currentPage$]="currentPage$"
+                    [totalPages]="totalPages"
+                    [pageSize]="pageSize"
+                    (pageChange)="onPageChange($event)"
+                />
+            </div>
         </div>
 
 </div>

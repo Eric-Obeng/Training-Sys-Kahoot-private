@@ -8,45 +8,54 @@ import { Router, } from '@angular/router';
 import { ModalComponent } from "../../../core/shared/modal/modal.component";
 import { ModalService } from '../../../core/services/modal/modal.service';
 import { PaginatorComponent } from '@core/shared/paginator/paginator.component';
+import { SearchbarService } from '@core/services/searchbar/searchbar.service';
 
 @Component({
   selector: 'app-list-cohorts',
   standalone: true,
-  imports: [AsyncPipe, NgFor, NgIf, SearchbarComponent, ModalComponent, PaginatorComponent],
+  imports: [AsyncPipe, NgIf, SearchbarComponent, ModalComponent, PaginatorComponent],
   templateUrl: './list-cohorts.component.html',
   styleUrl: './list-cohorts.component.scss'
 })
 export class ListCohortsComponent {
-
-  cohortsList$!: Observable<CohortList[]>;
+  
+  cohortsList$!: Observable<CohortList[]>; 
   filteredCohorts$!: Observable<CohortList[]>;
-  private searchTerm$ = new BehaviorSubject<string>('');
+  private searchTerm$!: Observable<string>;
   deleteCohortById: string = '';
 
   ellipsisClicked: boolean = false;
-  selectedCohortId: string | null = '';
+  selectedCohortId: string | null = ''; 
   hideDeleteModal: boolean = true;
 
   listEmptyCheck: boolean = true;
 
-  //Pagination
+  //Pagination 
   private pageSubject = new BehaviorSubject<number>(1);
   currentPage$ = this.pageSubject.asObservable();
   pageSize = 4;
   totalPages = 1;
 
   constructor(
-    private cohortDataService: CohortDataService,
+    private cohortDataService: CohortDataService, 
     private router: Router,
-    public modalService: ModalService
-
+    public modalService: ModalService,
+    private searchService: SearchbarService,
   ) {}
 
   ngOnInit() {
+
+    this.onSearchChange();
     this.cohortsList$ = this.cohortDataService.getAllCohorts()
 
-    this.cohortsList$.subscribe(data => {
-      this.listEmptyCheck = false;
+    this.cohortsList$.subscribe({
+      next: (response) => {
+        this.listEmptyCheck = false;
+      },
+      error: (err) => {
+        console.error("cohort list error: ", err)
+      }
+
     })
 
     this.filteredCohorts$ = combineLatest([this.cohortsList$, this.searchTerm$, this.currentPage$]).pipe(
@@ -69,8 +78,8 @@ export class ListCohortsComponent {
   }
 
   // Update search term on changes from the search bar
-  onSearchChange(searchTerm: string): void {
-    this.searchTerm$.next(searchTerm);
+  onSearchChange(): void {
+    this.searchTerm$ = this.searchService.searchTerm$;
   }
 
   onSortList() {
@@ -80,9 +89,15 @@ export class ListCohortsComponent {
   }
 
   //Get the Id of selected Cohort from list and make http request to get all details for cohort
-  getSelectedCohortDetails(selectedCohortId: string) {
+  getSelectedCohortDetails(selectedCohortId: string) { 
     this.cohortDataService.selectedCohortId = selectedCohortId;
+    this.storeSelectedCohortId(selectedCohortId)
+    console.log(selectedCohortId)
     this.goToTraineesList()
+  }
+
+  storeSelectedCohortId(value: string) {
+    localStorage.setItem('selectedCohortIdForTrainee', JSON.stringify(value));
   }
 
 
@@ -99,7 +114,7 @@ export class ListCohortsComponent {
 
   // Set data into form and route to edit cohort component
   setSelectedCohortId(id: string) {
-    this.cohortDataService.selectedCohortForUpdate = id;
+    this.cohortDataService.selectedCohortId = id;
     this.goToUpdateCohort();
   }
 
@@ -119,7 +134,9 @@ export class ListCohortsComponent {
       next: (response) => {
         window.location.reload();
       },
-      error: (error) => {}
+      error: (error) => {
+        console.error("error deleting cohort: ", error)
+      }
     })
     this.toggleHideDeleteModal();
     this.modalService.toggleSuccessModal();
@@ -144,7 +161,7 @@ export class ListCohortsComponent {
   }
 
 
-  // Pagination
+  // Pagination 
   onPageChange(page: number) {
     this.pageSubject.next(page);
   }

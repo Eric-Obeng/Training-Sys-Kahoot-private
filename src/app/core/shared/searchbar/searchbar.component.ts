@@ -58,8 +58,7 @@ export class SearchbarComponent implements OnInit {
 
   onSearchInput(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
-    this.searchbarService.updateSearchTerm(inputElement.value)
-    this.searchChanged.emit(this.searchValue);
+    this.searchbarService.setSearchTerm(inputElement.value);
   }
 
   onSortClicked(): void {
