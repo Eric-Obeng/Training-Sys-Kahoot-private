@@ -5,8 +5,11 @@
     background: #fcfcfc;
     margin-right: 2.6rem;
     width: 100%;
-    max-width: 900px; // Set a max-width to maintain consistency
-    min-height: 700px; // Ensure consistent container height
+    min-width: 1220px;
+    // max-width: 900px;
+    height: 700px;
+    min-height: 700px; 
+    padding: 0 8rem;
 }
 
 .quiz-title {
@@ -67,7 +70,9 @@ button.current-question-indicator {
 
 .main-question {
     margin-bottom: 5.7rem;
-    min-height: 350px; // Ensure consistent question area height
+    height: 350px;
+    min-height: 350px; 
+
 
     & p.question {
         font-size: $font-size-subtitle-2;
@@ -92,10 +97,15 @@ button.current-question-indicator {
 }
 
 .btns {
+    width: 100%;
+
     span {
+        width: 100%;
+        // position: absolute;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        // bottom: -5rem;
 
         & button.back {
             width: 20rem;
@@ -141,17 +151,17 @@ button.current-question-indicator {
     align-items: center;
     margin: 10px 0;
   
-    label {
-      width: 789px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: $font-size-body;
-      font-family: $font-lato;
-      color: $clr-gray-500;
-      padding-left: 16px;
+    & label.answer-wrapper {
+        width: 789px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: $font-size-body;
+        font-family: $font-lato;
+        color: $clr-gray-500;
+        padding-left: 16px;
   
       input[type="radio"] {
         display: none; /* Hide default radio button */
@@ -200,7 +210,7 @@ button.current-question-indicator {
     }
   
     /* Highlight container when selected */
-    input[type="radio"]:checked + .radio-custom + label {
+    input[type="radio"]:checked + .radio-custom {
       font-weight: 600;
       color: #f28500; /* Highlighted text color */
       background: #fef2e6;
@@ -209,4 +219,18 @@ button.current-question-indicator {
     label:hover{
       background-color: #fef2e6;
     }
+}
+
+.isFocused {
+    width: 789px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: $font-size-body;
+    font-family: $font-lato;
+    color: $clr-gray-500;
+    padding-left: 16px;
+    background: #fef2e6;
 }

@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Assignment } from '@core/models/trainee.interface';
+import { Assignment, QuizSubmission } from '@core/models/trainee.interface';
+import { TokenService } from '@core/services/token/token.service';
+import { UserRoleService } from '@core/services/user-role/user-role.service';
 import { Observable, map, of } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 
@@ -10,10 +12,13 @@ import { environment } from 'src/environments/environment.development';
 export class QuizService {
   private quizesUrl = environment.BaseUrl;
   questionId = 1; 
-  public quizId: number | null = null; 
+  public quizId: string | null = null; 
   public selectedAssessment$: Observable<Assignment | null> = of(null); 
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private tokenService: TokenService
+  ) {}
 
   // Fetch questions for a specific quiz by ID
   getQuizQuestionsById(): Observable<any> {
@@ -29,7 +34,7 @@ export class QuizService {
     const assessment = localStorage.getItem('assessment');
 
     if (quizId) {
-      this.quizId = parseInt(quizId, 10); 
+      this.quizId = quizId; 
     } else {
       console.warn('quizId not found in localStorage');
     }
@@ -43,5 +48,11 @@ export class QuizService {
     } else {
       console.warn('assessment not found in localStorage');
     }
+  }
+
+  submitQuiz(quizSubmission: QuizSubmission) {
+    // const quizSubmissionObject = 
+    // console.log("object: ", quizSubmissionObject)
+    return this.http.post<QuizSubmission[]>(`${this.quizesUrl}/quiz-submissions/trainee/${this.quizId}`, {...quizSubmission, traineeEmail: this.tokenService.getDecodedTokenValue()?.email} ); 
   }
 }

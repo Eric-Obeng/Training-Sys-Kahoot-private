@@ -7,9 +7,9 @@ import { QuizService } from '@core/services/trainee/quiz-questions/quiz.service'
 import { Observable, map, first, combineLatest } from 'rxjs';
 
 interface QuizQuestion {
-  id: number;
+  id: string;
   text: string;
-  answersDTO: { id: number; text: string }[];
+  answersDTO: { id: string; text: string }[];
 }
 
 @Component({
@@ -23,9 +23,11 @@ export class TakeQuizComponent implements OnInit {
   currentQuestionIndex = 0;
   currentQuestion$!: Observable<QuizQuestion>;
   quizQuestions$!: Observable<QuizQuestion[]>;
-  selectedAnswerId: number | null = null;
+  selectedAnswerId: string | null = null;
   quizForm: FormGroup;
   totalQuestionCount: number = 0;
+
+  currentSelectedAnswer!: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -50,13 +52,15 @@ export class TakeQuizComponent implements OnInit {
         return questions[this.currentQuestionIndex];
       })
     );
+
+    console.log("currentQuestion: ", this.currentQuestionIndex, "lastquestion: ", this.totalQuestionCount)
   }
 
   get submittedAnswers(): FormArray {
     return this.quizForm.get('submittedAnswers') as FormArray;
   }
 
-  addAnswer(questionId: number, selectedAnswerId: number): void {
+  addAnswer(questionId: string, selectedAnswerId: string): void {
     const answerIndex = this.submittedAnswers.value.findIndex(
       (a: any) => a.questionId === questionId
     );
@@ -72,14 +76,19 @@ export class TakeQuizComponent implements OnInit {
 
   submitQuiz() {
     const quizSubmission: QuizSubmission = this.quizForm.value;
-    console.log('Quiz Submission', quizSubmission);
+    this.quizService.submitQuiz(quizSubmission).subscribe({
+      next: (res) => {console.log(res)},
+      error: (error) => {console.log(error)}
+    })
+    // console.log('Quiz Submission', quizSubmission);
   }
 
-  checkSelectedAnswer(id: number) {
+  checkSelectedAnswer(id: string) {
     this.selectedAnswerId = id;
   }
 
-  isAnswerSelected(id: number): boolean {
+  isAnswerSelected(id: string): boolean {
+    this.currentSelectedAnswer = id;
     return this.selectedAnswerId === id;
   }
 

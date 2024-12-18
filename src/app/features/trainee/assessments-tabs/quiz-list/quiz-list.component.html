@@ -27,7 +27,7 @@
                 </div>
         </div>
     </div>
-    <p class="show-more" *ngIf="showmore === true" (click)="toggleShowMore()">Show more...</p>
+    <p class="show-more" *ngIf="showmore === true && quizCount > 4" (click)="toggleShowMore()">Show more...</p>
     <p class="show-less" *ngIf="showmore === false" (click)="toggleShowMore()">Show less...</p>
 
 </div>

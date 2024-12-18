@@ -42,7 +42,9 @@ export class TraineesListComponent {
   ) {}
 
   ngOnInit() {
+
     this.onSearchChange()
+    
     // Get cohort details with trainees list from service
     this.cohort$ = this.cohortDataService.getSelectedCohortDetails(); 
     this.cohort$.subscribe({
@@ -90,6 +92,7 @@ export class TraineesListComponent {
   // Update search term on changes from the search bar
   onSearchChange(): void {
     this.searchTerm$ = this.searchService.searchTerm$;
+    this.searchTerm$.subscribe(data => {console.log(data)})
   }
 
 
