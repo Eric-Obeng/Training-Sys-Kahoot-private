@@ -139,7 +139,7 @@ export class UserCreationComponent implements OnInit, OnDestroy {
             this.errorMessage = 'An error occurred while parsing the response. Please try again!';
           } else {
             this.errorMessage =
-              'An error occurred while processing your request. Please try again!';
+              `${err.message}` || 'An error occurred while creating the user. Please try again!';
           }
           console.error('Error creating user:', err);
         },
