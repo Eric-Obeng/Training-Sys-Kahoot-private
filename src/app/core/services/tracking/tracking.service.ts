@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { progress } from '@core/models/progress.interface';
 import { ErrorHandleService } from '../error-handle/error-handle.service';
 
+
 @Injectable({
   providedIn: 'root'
 })

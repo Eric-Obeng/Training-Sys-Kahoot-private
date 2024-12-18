@@ -10,7 +10,7 @@ export interface Assignment {
     createdAt: string | null;
     description: string;
     focusArea: string;
-    id: number;
+    id: string;
     title: string;
     questionsCount: number;
   }

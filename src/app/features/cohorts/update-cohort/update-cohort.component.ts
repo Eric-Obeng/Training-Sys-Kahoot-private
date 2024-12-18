@@ -9,11 +9,12 @@ import { ModalComponent } from '../../../core/shared/modal/modal.component';
 import { InputFieldComponent } from '../../../core/shared/input-field/input-field.component';
 import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
 import { UserManagementTraineeService } from '@core/services/user-management/trainee/user-management-trainee.service';
+import { SnackbarService } from '@core/services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-update-cohort',
   standalone: true,
-  imports: [ModalComponent, InputFieldComponent, ReactiveFormsModule, NgIf, NgFor, AsyncPipe, JsonPipe],
+  imports: [ModalComponent, InputFieldComponent, ReactiveFormsModule, NgIf, NgFor, AsyncPipe],
   templateUrl: './update-cohort.component.html',
   styleUrl: './update-cohort.component.scss'
 })
@@ -37,6 +38,7 @@ export class UpdateCohortComponent {
     public modalService: ModalService,
     public cohortDataService: CohortDataService,
     public usermanagementService: UserManagementTraineeService,
+    private snackBar: SnackbarService,
   ) {}
 
   ngOnInit() {
@@ -120,7 +122,8 @@ export class UpdateCohortComponent {
         next: (res) => {
           this.modalService.toggleSuccessModal()
           this.newCohortForm.reset();  
-        }
+          console.log(res)
+        },
       })
        
     }

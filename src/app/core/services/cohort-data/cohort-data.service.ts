@@ -14,8 +14,9 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-import { ErrorHandlerService } from './error-handling/error-handler.service';
 import { environment } from '../../../../environments/environment.development';
+import { ErrorHandleService } from '../error-handle/error-handle.service';
+
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +39,7 @@ export class CohortDataService {
 
   constructor(
     private http: HttpClient,
-    public errorhandlerService: ErrorHandlerService
+    public errorhandlerService: ErrorHandleService,
   ) {}
 
   //(HTTP Request) Retriev a list of cohorts from backend
@@ -87,7 +88,7 @@ export class CohortDataService {
 
   updateCohort(formData: Cohort) {
     console.log(formData)
-    return this.http.put<Cohort>(`${this.cohortsListUrl}/${this.selectedCohortForUpdate}`, {
+    return this.http.put<Cohort>(`${this.cohortsListUrl}/${this.selectedCohortId}`, {
       ...formData,
     }).pipe(
       catchError(error => this.errorhandlerService.handleError(error))

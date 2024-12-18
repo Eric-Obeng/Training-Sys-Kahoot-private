@@ -56,6 +56,8 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    console.log("add-user-form is working !")
+
     this.initializeFormData();
     this.createForm();
     this.setupEmailSubscriptions();

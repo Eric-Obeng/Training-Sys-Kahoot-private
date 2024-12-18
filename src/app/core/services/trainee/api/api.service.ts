@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ErrorHandleService } from '../../error-handle/error-handle.service';
 import { catchError } from 'rxjs';
 import { learningMaterial } from '../../../models/courses.interface';
+import { ErrorHandleService } from '@core/services/error-handle/error-handle.service';
 
 @Injectable({
   providedIn: 'root',

@@ -1,12 +1,11 @@
-<div class="container">
+<div class="container" *ngIf="!traineesListEmpty">
 
     <div class="container-with-list">
         <app-searchbar 
             [title]="'Cohort'" 
             [placeholder]="'Name, email'" 
             [hide]="false"
-            (addCohortClicked)="goToCreateCohort()"
-            (searchChanged)="onSearchChange($event)"
+            (addCohortClicked)="goToUserManagement()"
             (sortClicked)="onSortList()" 
             (activeStatus)="filterByActive()"
             (inactiveStatus)="filterByInactive()"
@@ -14,6 +13,7 @@
             (resetStatus)="clearStatusFilter()"
             (specializationFilter)="filterBySpecialization($event)"
             (resetSpecialization)="clearSpecializationFilter()"
+            [showAddButton]="false"
         />
         <div class="divider"></div>
 
@@ -43,9 +43,9 @@
                                 <div class="trainee-name">{{trainee.fullName}}</div>
                                 <div class="status">
                                     <!-- <span class="traineeActive">{{trainee.status}}</span> -->
-                                    <span *ngIf="trainee.status === 'Active'" class="traineeActive">{{trainee.status}}</span>
-                                    <span *ngIf="trainee.status === 'Inactive'" class="traineeInactive">{{trainee.status}}</span>
-                                    <span *ngIf="trainee.status === 'Deactivated'" class="traineeDeactivated">{{trainee.status}}</span>
+                                    <span *ngIf="trainee.status === 'ACTIVE'" class="traineeActive">{{trainee.status | titlecase}}</span>
+                                    <span *ngIf="trainee.status === 'INACTIVE'" class="traineeInactive">{{trainee.status | titlecase}}</span>
+                                    <span *ngIf="trainee.status === 'DEACTIVATED'" class="traineeDeactivated">{{trainee.status | titlecase}}</span>
                                 </div>
                                 <div class="contact">
                                     <div class="email">
@@ -70,10 +70,10 @@
                                     </div>
                                 </div>
                                 <div class="specialization">
-                                    <span>{{ trainee.specialization }}</span>
+                                    <span>{{ trainee.specializationName }}</span>
                                 </div>
                                 <div class="date-added">
-                                    {{trainee.date_added}}
+                                    {{trainee.dateCreated}}
                                 </div>
                                 <div class="ellipsis" (click)="toggleEllipsis(trainee.fullName, $event)">
                                     <svg width="16" height="4" viewBox="0 0 16 4" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -113,4 +113,16 @@
             />
     </div>
 
+</div>
+
+<div class="no-trainees-container">
+    <div class="no-cohorts" *ngIf="traineesListEmpty">
+        <div class="content">
+            <img src="../../../../assets/Images/png/Conference.png" alt="conference image">
+            <span>No Trainees Available</span>
+            <p>No trainees have been assigned to this cohort yet. All assigned trainees to this cohort will be shown here</p>
+        </div>
+    
+        <button class="btn create-btn" (click)="goToUserManagement()">Assign Trainee to Cohort</button>
+    </div> 
 </div>

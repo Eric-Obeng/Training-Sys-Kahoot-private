@@ -182,8 +182,11 @@ export class QuizListComponent {
 
     this.assessments$ = this.traineeAssessentsService.getAllAssignments(this.traineeEmail)
     this.assessments$.subscribe({
-      next: () => {
+      next: (res) => {
         this.loading = false;
+      },
+      error: (error) => {
+        this.loading = true;
       }
     })
 
@@ -216,7 +219,11 @@ export class QuizListComponent {
   }
 
   
-  takeAssessment(id: number, quizType: string, assessment: Assignment) {
+  takeAssessment(id: string, quizType: string, assessment: Assignment) {
+    console.log(assessment)
+
+    this.setQuizIdAndAssessmentInLocalStorage(id, assessment)
+    
     if(quizType === 'QUIZ') {
       this.quizService.quizId = id;
       this.quizService.selectedAssessment$ = of(assessment);
@@ -233,4 +240,10 @@ export class QuizListComponent {
       this.router.navigate([`home/trainee/assessments/presentation/${id}`]);
     }
   }
+
+  setQuizIdAndAssessmentInLocalStorage(id: string, assessment: Assignment) {
+    localStorage.setItem('quizId', id);
+    localStorage.setItem('assessment', JSON.stringify(assessment))
+  }
+
 }

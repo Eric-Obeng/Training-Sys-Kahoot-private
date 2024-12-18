@@ -8,7 +8,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    overflow-x: scroll;
+    min-width: 1220px;
     overflow-x: hidden;
     background: #fdfdfc;
 
@@ -21,6 +21,7 @@
         padding-left: 8rem;
         padding-right: 8rem;
         scrollbar-width: none;
+        overflow-y: scroll;
 
         & .back-button {
             width: fit-content;
@@ -60,8 +61,7 @@
         }
 
         & form {
-            height: 80vh;
-            overflow-y: scroll;
+            // height: 80vh;
             padding-bottom: 14rem;
 
             & .first-last-name {

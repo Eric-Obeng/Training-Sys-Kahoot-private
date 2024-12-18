@@ -14,8 +14,13 @@ export class ErrorHandleService {
     let errorMessage = 'An error occurred. Please try again.';
 
     if (error.error instanceof ErrorEvent) {
+      // Client-side error
       errorMessage = error.error.message;
+    } else if (typeof error.error === 'object' && error.error.error) {
+      // Specific case: error object with an "error" property
+      errorMessage = error.error;
     } else {
+      // Server-side error
       errorMessage = error.error?.message || `Error: ${error.status} ${error.statusText}`;
     }
 

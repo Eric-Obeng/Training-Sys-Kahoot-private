@@ -1,10 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { content, curriculum } from '@core/models/curriculum.interface';
-import { ErrorHandleService } from '../error-handle/error-handle.service';
+
 import { catchError, map, Observable, tap } from 'rxjs';
 import { TokenService } from '../token/token.service';
 import { environment } from 'src/environments/environment.development';
+import { ErrorHandleService } from '../error-handle/error-handle.service';
+
 
 @Injectable({
   providedIn: 'root',

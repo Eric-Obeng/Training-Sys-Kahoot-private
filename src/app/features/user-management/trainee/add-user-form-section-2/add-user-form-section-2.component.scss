@@ -5,18 +5,19 @@
 
 
 .container {
+    width: 100%;
     display: flex;
     justify-content: center;
-    overflow-x: scroll;
-    padding-left: 12rem;
-    padding-right: 12rem;
+    min-width: 1220px;
+    padding-left: 8rem;
+    padding-right: 8rem;
     background: #fdfdfc;
 
     & .wrapper {
-        height: 85vh;
-        overflow-y: scroll;
+        height: 80vh;
         margin-top: 2.6rem;
         padding-bottom: 8rem;
+        overflow-y: scroll;
 
         & .back-button {
             width: fit-content;
@@ -110,6 +111,9 @@ div.cohort {
 
 .error {
     text-align: right;
-    color: $clr-red-500;
-}
-
+  
+    span {
+      color: $clr-red-500;
+      font-size: $font-size-xbody;
+    }
+  }

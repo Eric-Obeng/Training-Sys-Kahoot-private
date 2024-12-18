@@ -62,9 +62,9 @@
 .container {
     display: flex;
     justify-content: center;
-    overflow-x: scroll;
-    padding-left: 12rem;
-    padding-right: 12rem;
+    min-width: 1220px;
+    padding-left: 8rem;
+    padding-right: 8rem;
     background: #fdfdfc;
 
     & .wrapper {
