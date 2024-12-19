@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { SearchbarComponent } from '../../../../core/shared/searchbar/searchbar.component';
 import { AsyncPipe, NgFor, NgIf, TitleCasePipe } from '@angular/common';
@@ -46,6 +46,8 @@ export class AddUserComponent {
 
   deleteModalSuccess = false;
 
+  @ViewChild(TraineeListComponent) traineeListComponent!: TraineeListComponent;
+
   constructor(
     private router: Router,
     private traineesInsystemService: TraineeInsystemService,
@@ -70,12 +72,11 @@ export class AddUserComponent {
   }
 
   onSortList() {
-    this.filteredTrainees$ = this.filteredTrainees$.pipe(
-      map((trainees: User[]) =>
-        trainees.sort((a, b) => a.firstName.localeCompare(b.firstName))
-      )
+    this.traineeListComponent.filteredTrainees$ = this.traineeListComponent.filteredTrainees$.pipe(
+      map((trainees: User[]) => [...trainees].sort((a, b) => a.firstName.localeCompare(b.firstName)))
     );
   }
+  
 
   // Set the filter for each status and trigger re-evaluation
   filterByActive() {
