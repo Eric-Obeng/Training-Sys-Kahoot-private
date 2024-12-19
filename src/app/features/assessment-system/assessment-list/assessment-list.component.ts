@@ -50,11 +50,9 @@ export class AssessmentListComponent {
   }
 
   fetchAssessments() {
-    console.log('about to fetch');
     this.isLoading = true;
     this.assessments$ = this.assessmentService.getAssessments().pipe(
       tap((data) => {
-        console.log('checking data', data);
         this.isAssessmentsEmpty = data.every(
           (assessment) =>
             assessment.quizzes.length === 0 &&
@@ -70,8 +68,7 @@ export class AssessmentListComponent {
     );
 
     this.assessments$.subscribe({
-      next: (data) => {
-        console.log('Assessments fetched in component:', data);
+      next: () => {
         this.isLoading = false;
       },
       error: (error) => {
@@ -79,9 +76,8 @@ export class AssessmentListComponent {
         this.isLoading = false;
       },
       complete: () => {
-        console.log('Subscription completed');
         this.isLoading = false;
-      }
+      },
     });
   }
 

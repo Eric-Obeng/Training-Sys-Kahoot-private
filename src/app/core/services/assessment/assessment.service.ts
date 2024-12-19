@@ -27,15 +27,7 @@ export class AssessmentService {
   private assessmentsSubject = new BehaviorSubject<AssessmentData[]>([]);
   assessments$ = this.assessmentsSubject.asObservable();
 
-  constructor(private http: HttpClient) {
-    // Ensure no redundant calls to loadAssessments
-  }
-
-  private loadAssessments() {
-    this.getAssessments().subscribe((data) => {
-      console.log('Assessments loaded in service:', data);
-    });
-  }
+  constructor(private http: HttpClient) {}
 
   getAssessmentType() {
     return this.http.get<CreateAssessment[]>(this.getAsessmentTypeUrl);
@@ -51,9 +43,6 @@ export class AssessmentService {
         headers,
       })
       .pipe(
-        tap((response) => {
-          console.log('API response:', response);
-        }),
         map((response: AssessmentData) => {
           const assessments: AssessmentData[] = [
             {
@@ -65,13 +54,12 @@ export class AssessmentService {
           return assessments;
         }),
         tap((data) => {
-          console.log('Assessments fetched successfully:', data);
           this.assessmentsSubject.next(data);
         }),
         catchError((error) => {
           console.error('Error fetching assessments:', error);
           return throwError(() => error);
-        }),
+        })
       );
   }
 
@@ -99,21 +87,36 @@ export class AssessmentService {
   }
 
   // create lab or presentation
-  createLabOrPresentation(data: FormData, type: 'lab' | 'presentation'): Observable<Lab> {
-    const url = type === 'presentation' ? `${environment.BaseUrl}/assessments/presentation` : `${environment.BaseUrl}/assessments/lab`;
+  createLabOrPresentation(
+    data: FormData,
+    type: 'lab' | 'presentation'
+  ): Observable<Lab> {
+    const url =
+      type === 'presentation'
+        ? `${environment.BaseUrl}/assessments/presentation`
+        : `${environment.BaseUrl}/assessments/lab`;
     return this.http.post<Lab>(url, data);
   }
 
   assignAssessment(data: AssignAssessment) {
-    return this.http.post(`${environment.BaseUrl}/assignments/batch`, data, {responseType: 'text'});
+    return this.http.post(`${environment.BaseUrl}/assignments/batch`, data, {
+      responseType: 'text',
+    });
   }
 
-  assignAssessmentToCohort(assessmentId: number, cohortId: number, deadline: string) {
+  assignAssessmentToCohort(
+    assessmentId: number,
+    cohortId: number,
+    deadline: string
+  ) {
     const params = {
       assessmentId: assessmentId.toString(),
       cohortId: cohortId.toString(),
       deadline: deadline,
     };
-    return this.http.post(`${environment.BaseUrl}/assignments/cohort`, null, { params, responseType: 'text' });
+    return this.http.post(`${environment.BaseUrl}/assignments/cohort`, null, {
+      params,
+      responseType: 'text',
+    });
   }
 }

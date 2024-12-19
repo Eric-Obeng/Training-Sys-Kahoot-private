@@ -149,7 +149,6 @@ export class QuizCreationComponent {
       .addAssessment(quizData, this.quizForm.value.timeFrame)
       .subscribe({
         next: (response) => {
-          console.log('Quiz submitted successfully', response);
           this.showFeedback(
             `Quiz Saved Successfully`,
             `Your Quiz assignment has been successfully created. You can now proceed to assign it to the relevant trainees or cohorts when ready!`,

@@ -157,7 +157,6 @@ export class AssignAssessmentComponent implements OnInit {
 
   onCohortSelectionChange(cohortIds: number[]) {
     this.selectedCohortIds = cohortIds;
-    console.log('Selected Cohort IDs:', this.selectedCohortIds);
   }
 
   onAssign() {
@@ -169,7 +168,6 @@ export class AssignAssessmentComponent implements OnInit {
     );
 
     if (this.selectedCohortIds.length > 0) {
-      console.log('Submitting to cohort with IDs:', this.selectedCohortIds);
       this.selectedCohortIds.forEach((cohortId) => {
         this.assessmentService
           .assignAssessmentToCohort(
@@ -184,7 +182,6 @@ export class AssignAssessmentComponent implements OnInit {
                 `Your quiz has been successfully assigned to the selected cohorts. They can now access and complete it within the given time-frame`,
                 'assets/Images/svg/add-spec.svg'
               );
-              console.log('Assessment assigned to cohort successfully');
             },
             error: (error) => {
               console.error('Error assigning assessment to cohort:', error),
@@ -212,7 +209,6 @@ export class AssignAssessmentComponent implements OnInit {
             `Your quiz has been successfully assigned to the selected trainees. They can now access and complete it within the given time-frame`,
             'assets/Images/svg/add-spec.svg'
           );
-          console.log('Assessment assigned successfully');
         },
         error: (error) => {
           console.error('Error assigning assessment:', error),
