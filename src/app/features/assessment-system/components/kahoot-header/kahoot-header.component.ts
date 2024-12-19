@@ -4,12 +4,18 @@ import { GenerateByAiComponent } from '../../kahoot-page/generate-by-ai/generate
 import { RouterLink, RouterModule } from '@angular/router';
 import { Question } from '@core/models/kahoot-questions';
 import { KahootService } from '@core/services/assessment/kahoot/kahoot.service';
-import { ShareComponent } from "../share/share.component";
+import { ShareComponent } from '../share/share.component';
 
 @Component({
   selector: 'app-kahoot-header',
   standalone: true,
-  imports: [CommonModule, GenerateByAiComponent, RouterModule, RouterLink, ShareComponent],
+  imports: [
+    CommonModule,
+    GenerateByAiComponent,
+    RouterModule,
+    RouterLink,
+    ShareComponent,
+  ],
   templateUrl: './kahoot-header.component.html',
   styleUrl: './kahoot-header.component.scss',
 })
@@ -61,11 +67,8 @@ export class KahootHeaderComponent {
         };
       });
 
-      console.log('Normalized Questions:', normalizedQuestions);
-
       this.kahootService.createKahootQuiz(normalizedQuestions).subscribe({
         next: (response) => {
-          console.log('Quiz created successfully', response);
           this.showShareModal = true;
         },
         error: (error) => {

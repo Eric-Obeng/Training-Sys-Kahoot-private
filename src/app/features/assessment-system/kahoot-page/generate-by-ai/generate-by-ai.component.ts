@@ -29,8 +29,8 @@ import { LoaderComponent } from '../../../../core/shared/loader/loader.component
     ReactiveFormsModule,
     QuestionCardComponent,
     CommonModule,
-    LoaderComponent
-],
+    LoaderComponent,
+  ],
   templateUrl: './generate-by-ai.component.html',
   styleUrl: './generate-by-ai.component.scss',
 })
@@ -58,12 +58,6 @@ export class GenerateByAiComponent implements OnInit {
     this.questionType = dropdownOptions.questionType;
     this.includeCode = dropdownOptions.includeCode;
     this.onGenerateQuizForm();
-
-    this.kahootService.getGenerateQuiz().subscribe({
-      next: (response) => {
-        this.quizzes = response;
-      },
-    });
   }
 
   onGenerateQuizForm(): void {
@@ -116,8 +110,8 @@ export class GenerateByAiComponent implements OnInit {
 
   onAddAllQuestions() {
     this.quizzes.forEach((quiz) => {
-      quiz.timeLimit = { name: '15 seconds', value: 15 },
-      quiz.points = { name: 'Standard', value: 50 };
+      (quiz.timeLimit = { name: '15 seconds', value: 15 }),
+        (quiz.points = { name: 'Standard', value: 50 });
     });
     this.addedQuestions.push(...this.quizzes);
   }
