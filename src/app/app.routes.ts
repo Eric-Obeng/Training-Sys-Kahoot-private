@@ -3,6 +3,8 @@ import { authRoutes } from './core/routes/auth.routes';
 import { trainerRoutes } from './core/routes/trainer.routes';
 import { traineeRoutes } from './core/routes/trainee.routes';
 import { adminRoutes } from '@core/routes/admin.routes';
+import { AuthGuard } from '@core/guards/auth.guard';
+import { RoleGuard } from '@core/guards/role.guard';
 
 export const routes: Routes = [
   {
@@ -22,6 +24,8 @@ export const routes: Routes = [
     children: [
       {
         path: 'admin',
+        canActivate: [AuthGuard, RoleGuard],
+        data: { roles: ['ADMIN'] },
         children: adminRoutes,
       },
       {
@@ -30,13 +34,19 @@ export const routes: Routes = [
           import('./views/trainer/trainer.component').then(
             (m) => m.TrainerComponent
           ),
+        canActivate: [AuthGuard, RoleGuard],
+        data: { roles: ['TRAINER'] },
         children: trainerRoutes,
       },
       {
-        path:'trainee',
-        loadComponent:() => import('./views/trainee/home/home.component')
-        .then(m => m.HomeComponent),
-        children: traineeRoutes
+        path: 'trainee',
+        loadComponent: () =>
+          import('./views/trainee/home/home.component').then(
+            (m) => m.HomeComponent
+          ),
+        canActivate: [AuthGuard, RoleGuard],
+        data: { roles: ['TRAINEE'] },
+        children: traineeRoutes,
       },
     ],
   },
