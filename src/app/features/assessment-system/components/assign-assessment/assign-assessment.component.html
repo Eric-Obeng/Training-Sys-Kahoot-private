@@ -47,11 +47,7 @@
       </div>
     </div>
     <div class="actions-container">
-      <form
-        [formGroup]="assignAssessmentForm"
-        class="expires"
-        (ngSubmit)="onAssign()"
-      >
+      <form [formGroup]="assignAssessmentForm" class="expires">
         <p-dropdown
           [options]="selectedExpiry"
           placeholder="Expires in"
@@ -66,6 +62,7 @@
           class="btn assign"
           [class.disabled]="assignAssessmentForm.invalid"
           [disabled]="assignAssessmentForm.invalid"
+          (click)="onAssign()"
         >
           Assign
         </button>

@@ -108,9 +108,9 @@
             color: $clr-white;
 
             &.disabled {
-              background: $clr-gray-300;
+              background: $clr-gray-200;
               cursor: not-allowed;
-              pointer-events: none;
+              // pointer-events: none;
             }
           }
 
