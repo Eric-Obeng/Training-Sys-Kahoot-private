@@ -49,7 +49,9 @@ export class AuthService {
           }
         }),
         catchError((error) => {
-          return throwError(() => new Error(error.error.message || 'Login failed'));
+          return throwError(
+            () => new Error(error.error.message || 'Login failed')
+          );
         })
       );
   }
@@ -61,8 +63,10 @@ export class AuthService {
 
   verifyOtp(otp: string): Observable<any> {
     const url = `${environment.BaseUrl}/auth/verify-otp?otp=${otp}`;
-    return this.http.post(url, {}, { responseType: 'text' }).pipe(
-      map((response) => {
+    return this.http.post(url, {}, { responseType: 'json' }).pipe(
+      map((response: any) => {
+        this.tokenService.setToken(response.token);
+
         try {
           return JSON.parse(response);
         } catch (e) {
