@@ -79,7 +79,7 @@
                 <textarea formControlName="description" name="description-text-area" id="description-text-area"></textarea>
             </div>
             <button type="submit" class="btn" 
-                [disabled]="buttonDisabled"
+                [disabled]="checkFormValidity()"
             >
                 Add
             </button>

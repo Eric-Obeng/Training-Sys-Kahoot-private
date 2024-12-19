@@ -29,8 +29,6 @@ export class EditCohortComponent {
   startDateMin!: string;
   endDateMin!: string;
 
-  buttonDisabled = true;
-
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -40,6 +38,7 @@ export class EditCohortComponent {
   ) {}
 
   ngOnInit() {
+    // this.findErrors()
     this.setMinMaxDates()
 
     this.allSpecializations$ = this.usermanagementservice.getAllspecializations();
@@ -174,14 +173,23 @@ export class EditCohortComponent {
   formatDate(date: Date): string {
     return date.toISOString().split('T')[0];
   }
-  
+
+  // findErrors(): void {
+  //   Object.keys(this.newCohortForm.controls).forEach((key) => {
+  //     const controlErrors = this.newCohortForm.get(key)?.errors;
+  //     if (controlErrors) {
+  //       console.log(`Field "${key}" has the following errors:`, controlErrors);
+  //     }
+  //   });
+  // }
+
   
   checkFormValidity() {
     if(this.newCohortForm.valid) {
-      this.buttonDisabled = true;
+      return false;
     }
     else{
-      this.buttonDisabled = false;
+      return true;
     }
   }
 

@@ -24,8 +24,6 @@ export class CreateNewCohortComponent {
   startDateMin!: string;
   endDateMin!: string;
 
-  buttonDisabled: boolean = true;
-
 
   constructor(
     private fb: FormBuilder,
@@ -96,11 +94,12 @@ export class CreateNewCohortComponent {
 
   checkFormValidity() {
     if(this.newCohortForm.valid) {
-      this.buttonDisabled = true;
+      return false;
     }
     else{
-      this.buttonDisabled = false;
+      return true;
     }
   }
+  
 
 }
