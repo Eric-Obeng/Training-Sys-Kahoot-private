@@ -92,7 +92,6 @@ export class ListCohortsComponent {
   getSelectedCohortDetails(selectedCohortId: string) { 
     this.cohortDataService.selectedCohortId = selectedCohortId;
     this.storeSelectedCohortId(selectedCohortId)
-    console.log(selectedCohortId)
     this.goToTraineesList()
   }
 

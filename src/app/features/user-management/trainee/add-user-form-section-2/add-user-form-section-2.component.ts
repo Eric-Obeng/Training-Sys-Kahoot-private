@@ -98,15 +98,6 @@ export class AddUserFormSection2Component {
       this.newUserFormSecTwo.markAllAsTouched();
     }
   }
-
-  checkFormValidity() {
-    if(this.newUserFormSecTwo.valid) {
-      return false;
-    }
-    else{
-      return true;
-    }
-  }
   
   setSecondFormState() {
     this.traineeInSystemService.setSecondFormState(this.newUserFormSecTwo.value)
@@ -128,6 +119,16 @@ export class AddUserFormSection2Component {
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  
+  checkFormValidity() {
+    if(this.newUserFormSecTwo.valid) {
+      return false;
+    }
+    else{
+      return true;
+    }
   }
 
 }

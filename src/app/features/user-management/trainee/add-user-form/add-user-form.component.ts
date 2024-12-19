@@ -168,6 +168,7 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
       map(response => {
         if(response) {
           this.traineeInsystemService.emailAsyncValidatoryResponseObtained = response ? true : false;
+          this.traineeInsystemService.emailAsyncReturnedEmail = response.email;
           return null;
         }
         else {

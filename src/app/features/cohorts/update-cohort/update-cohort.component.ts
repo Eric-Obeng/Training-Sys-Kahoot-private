@@ -122,7 +122,6 @@ export class UpdateCohortComponent {
         next: (res) => {
           this.modalService.toggleSuccessModal()
           this.newCohortForm.reset();  
-          console.log(res)
         },
       })
        

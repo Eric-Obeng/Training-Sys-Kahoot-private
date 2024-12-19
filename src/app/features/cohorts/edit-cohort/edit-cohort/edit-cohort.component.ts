@@ -174,16 +174,6 @@ export class EditCohortComponent {
     return date.toISOString().split('T')[0];
   }
 
-  // findErrors(): void {
-  //   Object.keys(this.newCohortForm.controls).forEach((key) => {
-  //     const controlErrors = this.newCohortForm.get(key)?.errors;
-  //     if (controlErrors) {
-  //       console.log(`Field "${key}" has the following errors:`, controlErrors);
-  //     }
-  //   });
-  // }
-
-  
   checkFormValidity() {
     if(this.newCohortForm.valid) {
       return false;

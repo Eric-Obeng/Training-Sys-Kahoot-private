@@ -56,6 +56,7 @@ export class TraineeListComponent {
 
     // Get cohort details with trainees list from service
     this.traineeUsers$ = this.traineesInsystemService.getAllTrainees();
+    this.traineeUsers$.subscribe(data => console.log("trainees: ", data))
 
     this.filteredTrainees$ = combineLatest([
       this.traineeUsers$, 
@@ -141,7 +142,16 @@ export class TraineeListComponent {
   }
 
   goToCreateUser() {
+    this.resetFormFields()
     this.router.navigate(['/home/admin/user-management/add-user-form'])
+  }
+
+  resetFormFields() {
+    // Reset service-related states
+    // this.traineesInsystemService.selectedEmailSubject.next(null);
+    this.traineesInsystemService.setFirstFormState(null);
+    this.traineesInsystemService.setSecondFormState(null);
+    this.traineesInsystemService.retreivedUserDataSubject.next(null)
   }
 
   deleteUser(email: string) {

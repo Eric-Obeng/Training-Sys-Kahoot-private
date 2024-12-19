@@ -46,6 +46,7 @@ export class TraineeInsystemService {
 
   public selectedTraineeId: number = 0;
   emailAsyncValidatoryResponseObtained!: boolean;
+  emailAsyncReturnedEmail!: string;
 
 
   constructor(
@@ -122,8 +123,7 @@ export class TraineeInsystemService {
         this.secondFormStateSubject.next(null);
       }),
       catchError((error) => {
-        console.error('Error creating user:', error);
-        return throwError(() => new Error("Failed to create user"));
+        return throwError(() => this.errorHandlerService.handleError(error));
       })
     );
   }
@@ -137,8 +137,7 @@ export class TraineeInsystemService {
         this.secondFormStateSubject.next(null);
       }),
       catchError((error) => {
-        console.error('Error creating user:', error);
-        return throwError(() => new Error("Failed to create user"));
+        return throwError(() => this.errorHandlerService.handleError(error));
       })
     );
   }

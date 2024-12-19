@@ -71,14 +71,14 @@
                 <button 
                     class="btn" 
                     type="submit" 
-                    *ngIf="!traineeInSystemService.emailAsyncValidatoryResponseObtained" 
+                    *ngIf="newUserFormSecTwo.get('email')?.value !== traineeInSystemService.emailAsyncReturnedEmail" 
                     (click)="submitCreateNewUSer()"
                     [disabled]="checkFormValidity()"
                 >Submit</button>
                 <button 
                     class="btn" 
                     type="submit" 
-                    *ngIf="traineeInSystemService.emailAsyncValidatoryResponseObtained === true" 
+                    *ngIf="traineeInSystemService.emailAsyncValidatoryResponseObtained === true && newUserFormSecTwo.get('email')?.value === traineeInSystemService.emailAsyncReturnedEmail" 
                     (click)="submitUpdate()"
                     [disabled]="checkFormValidity()"
                 >Update</button>
