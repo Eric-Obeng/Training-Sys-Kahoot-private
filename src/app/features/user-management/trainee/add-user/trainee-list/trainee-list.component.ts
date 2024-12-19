@@ -7,6 +7,7 @@ import { AsyncPipe, DatePipe, NgIf, TitleCasePipe } from '@angular/common';
 import { PaginatorComponent } from '@core/shared/paginator/paginator.component';
 import { SearchbarService } from '@core/services/searchbar/searchbar.service';
 import { AddUserComponent } from '../add-user.component';
+import { FilterService } from '@core/services/user-management/filter/filter.service';
 
 @Component({
   selector: 'app-trainee-list',
@@ -18,14 +19,13 @@ import { AddUserComponent } from '../add-user.component';
 export class TraineeListComponent {
   traineeUsers$!: Observable<User[]>;
   filteredTrainees$!: Observable<User[]>;
+  filter$!: Observable<string | null>;
   trainerTabClicked: boolean = true;
   deleteTraineeEmail: string = '';
 
   public searchTermSubject = new BehaviorSubject<string>('');
   private searchTerm$ = this.searchTermSubject.asObservable(); 
-  private statusFilterSubject = new BehaviorSubject<string | null>('');
-  private statusFilter$: Observable<string | null> = this.statusFilterSubject.asObservable();
-  private specializationFilter$ = new BehaviorSubject<string | null>(null);
+
 
   ellipsisClicked: boolean = false;
   selectedTraineeId: number | null = 0;
@@ -39,20 +39,19 @@ export class TraineeListComponent {
   pageSize = 3;
   totalPages = 1;
 
-
-  // Get access into add user componet elements
-  // @ViewChild('addUser', { static: true }) addUser!: ElementRef;
   
   constructor(
     private router: Router,
     private traineesInsystemService: TraineeInsystemService,
     private searchService: SearchbarService,
+    private filterService: FilterService,
   ) {}
 
 
 
   ngOnInit() {
     this.onSearchChange()
+    this.filterBySpecialization()
 
     // Get cohort details with trainees list from service
     this.traineeUsers$ = this.traineesInsystemService.getAllTrainees();
@@ -61,26 +60,25 @@ export class TraineeListComponent {
     this.filteredTrainees$ = combineLatest([
       this.traineeUsers$, 
       this.searchTerm$, 
-      this.statusFilter$, 
-      this.specializationFilter$, 
+      this.filter$,
       this.currentPage$ // Add current page observable
     ]).pipe(
-      map(([trainees, searchTerm, statusFilter, specFilter, currentPage]) => {
+      map(([trainees, searchTerm, filter, currentPage]) => {
         const lowerSearchTerm = searchTerm.toLowerCase();
     
         // Filter trainees based on search term, status, and specialization
         const filteredTrainees = trainees.filter((trainee: User) => {
-          const matchesSearch = 
-            trainee.firstName.toLowerCase().includes(lowerSearchTerm) || 
-            trainee.lastName.toLowerCase().includes(lowerSearchTerm) || 
-            trainee.email.toLowerCase().includes(lowerSearchTerm) || 
-            trainee.phoneNumber.includes(lowerSearchTerm);
-    
-          const matchesStatus = statusFilter ? trainee.status === statusFilter : true;
-          const matchesSpecialization = specFilter ? trainee.specialization === specFilter : true;
-    
-          return matchesSearch && matchesStatus && matchesSpecialization;
-        });
+        const matchesSearch = 
+          trainee.firstName.toLowerCase().includes(lowerSearchTerm) || 
+          trainee.lastName.toLowerCase().includes(lowerSearchTerm) || 
+          trainee.email.toLowerCase().includes(lowerSearchTerm) || 
+          trainee.phoneNumber.includes(lowerSearchTerm);
+  
+        const matchesStatus = filter ? trainee.status === filter : true;
+        const matchesSpecialization = filter ? trainee.specialization === filter : true;
+  
+        return matchesSearch && matchesStatus && matchesSpecialization;
+      });
     
         // Calculate total pages
         this.totalPages = Math.ceil(filteredTrainees.length / this.pageSize);
@@ -116,12 +114,8 @@ export class TraineeListComponent {
   }
 
 
-  filterBySpecialization(spec: string) {
-    this.specializationFilter$.next(spec)
-  }
-
-  clearSpecializationFilter() {
-    this.specializationFilter$.next(null);
+  filterBySpecialization() {
+    this.filter$ = this.filterService.filterValue$;
   }
 
   toggleEllipsis(selectedTrainee: number, event:Event) {
@@ -147,8 +141,6 @@ export class TraineeListComponent {
   }
 
   resetFormFields() {
-    // Reset service-related states
-    // this.traineesInsystemService.selectedEmailSubject.next(null);
     this.traineesInsystemService.setFirstFormState(null);
     this.traineesInsystemService.setSecondFormState(null);
     this.traineesInsystemService.retreivedUserDataSubject.next(null)

@@ -12,6 +12,7 @@ import { TrainerListComponent } from '../../trainer/trainer-list/trainer-list.co
 import { Trainer } from '@core/models/trainer.interface';
 import { TrainerService } from '@core/services/user-management/trainer/trainer.service';
 import { SearchbarService } from '@core/services/searchbar/searchbar.service';
+import { FilterService } from '@core/services/user-management/filter/filter.service';
 
 @Component({
   selector: 'app-add-user',
@@ -38,7 +39,6 @@ export class AddUserComponent {
   private searchTerm$ = new BehaviorSubject<string>('');
   private statusFilterSubject = new BehaviorSubject<string | null>(null);
   public statusFilter$: Observable<string | null> = this.statusFilterSubject.asObservable();
-  private specializationFilter$ = new BehaviorSubject<string | null>(null);
 
   ellipsisClicked: boolean = false;
   selectedTraineeName: string | null = '';
@@ -53,6 +53,7 @@ export class AddUserComponent {
     private traineesInsystemService: TraineeInsystemService,
     private trainersService: TrainerService,
     private searchbarService: SearchbarService,
+    private filterService: FilterService,
   ) {}
 
   ngOnInit(): void {
@@ -80,27 +81,27 @@ export class AddUserComponent {
 
   // Set the filter for each status and trigger re-evaluation
   filterByActive() {
-    this.statusFilterSubject.next('active');
+    this.filterService.filterSubject.next('ACTIVE');
   }
 
   filterByInactive() {
-    this.statusFilterSubject.next('inactive');
+    this.filterService.filterSubject.next('INACTIVE');
   }
 
   filterByDeactivated() {
-    this.statusFilterSubject.next('deactivated');
+    this.filterService.filterSubject.next('DEACTIVATED');
   }
 
   clearStatusFilter() {
-    this.statusFilterSubject.next(null);
+    this.filterService.filterSubject.next(null);
   }
 
   filterBySpecialization(spec: string) {
-    this.specializationFilter$.next(spec);
+    this.filterService.filterSubject.next(spec);
   }
 
   clearSpecializationFilter() {
-    this.specializationFilter$.next(null);
+    this.filterService.filterSubject.next(null);
   }
 
   toggleEllipsis(selectedTrainee: string, event: Event) {
