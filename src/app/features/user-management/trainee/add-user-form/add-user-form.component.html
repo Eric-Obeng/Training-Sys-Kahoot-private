@@ -114,10 +114,17 @@
                     <label for="address">Phone Number</label>
                     <span>*</span>
                 </div>
-                <input type="tel" formControlName="phoneNumber">
+                <input 
+                    type="tel" 
+                    formControlName="phoneNumber"
+                    (input)="onPhoneNumberInput($event)"
+                >
                 <div class="error" *ngIf="newUserForm.controls['phoneNumber'].invalid && (newUserForm.controls['phoneNumber'].touched || newUserForm.controls['phoneNumber'].dirty)">
                     <span>Field is required</span>
                 </div>
+                <div class="error" *ngIf="newUserForm.controls['phoneNumber'].hasError('invalidPhoneNumber') && (newUserForm.controls['phoneNumber'].touched || newUserForm.controls['phoneNumber'].dirty)">
+                    <span>Invalid Phone Number</span>
+                  </div>                  
             </div>
 
             <div class="form-field university-completed">
@@ -167,7 +174,11 @@
                 </div>
             </div>
 
-          <button type="submit" class="btn">Continue</button>
+          <button 
+            type="submit"
+            class="btn"
+            [disabled]="checkFormValidity()"
+        >Continue</button>
 
       </form>
   </div>

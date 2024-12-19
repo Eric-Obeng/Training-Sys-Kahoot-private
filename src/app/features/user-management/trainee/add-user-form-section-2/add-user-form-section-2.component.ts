@@ -98,6 +98,15 @@ export class AddUserFormSection2Component {
       this.newUserFormSecTwo.markAllAsTouched();
     }
   }
+
+  checkFormValidity() {
+    if(this.newUserFormSecTwo.valid) {
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
   
   setSecondFormState() {
     this.traineeInSystemService.setSecondFormState(this.newUserFormSecTwo.value)

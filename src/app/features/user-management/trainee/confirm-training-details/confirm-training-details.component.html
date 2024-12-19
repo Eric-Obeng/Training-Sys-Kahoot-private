@@ -68,8 +68,20 @@
             
             <div class="btn-wrapper">
                 <button class="btn" (click)="cancel()">Cancel</button>
-                <button class="btn" type="submit" *ngIf="!traineeInSystemService.selectedTraineeId" (click)="submitCreateNewUSer()">Submit</button>
-                <button class="btn" type="submit" *ngIf="traineeInSystemService.selectedTraineeId> 0" (click)="submitUpdate()">Update</button>
+                <button 
+                    class="btn" 
+                    type="submit" 
+                    *ngIf="!traineeInSystemService.selectedTraineeId" 
+                    (click)="submitCreateNewUSer()"
+                    [disabled]="checkFormValidity()"
+                >Submit</button>
+                <button 
+                    class="btn" 
+                    type="submit" 
+                    *ngIf="traineeInSystemService.selectedTraineeId> 0" 
+                    (click)="submitUpdate()"
+                    [disabled]="checkFormValidity()"
+                >Update</button>
             </div>
         </form> 
     </div>

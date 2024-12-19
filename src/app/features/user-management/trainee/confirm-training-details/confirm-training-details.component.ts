@@ -173,6 +173,15 @@ export class ConfirmTrainingDetailsComponent implements OnDestroy {
     return formData;
   }
 
+  checkFormValidity() {
+    if(this.newUserFormSecTwo.valid) {
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();

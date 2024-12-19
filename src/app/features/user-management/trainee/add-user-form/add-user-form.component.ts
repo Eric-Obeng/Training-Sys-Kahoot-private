@@ -13,6 +13,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
   ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -46,6 +47,8 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
 
   maxDate!: string;
 
+  // buttonDisabled: boolean = true;
+
   private unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -56,7 +59,6 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    console.log("add-user-form is working !")
 
     this.initializeFormData();
     this.createForm();
@@ -89,7 +91,11 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
       gender: ['', Validators.required],
       country: ['', Validators.required],
       address: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
+      phoneNumber: [
+        '',
+        [Validators.required],
+        // [this.phoneNumberValidator()],
+      ],
       universityCompleted: ['', Validators.required],
       userProfilePhoto: ['']
     });
@@ -137,17 +143,9 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
 
   onSubmit() {
 
+    const formValid = this.newUserForm.valid;
 
-    const formData = this.newUserForm;
-
-    const otherFieldsValid = Object.keys(formData.controls)
-      .filter(key => key !== 'email')
-      .every(key => {
-        const control = formData.get(key);
-        return control?.valid;
-      })
-
-    if(otherFieldsValid) {
+    if(formValid) {
       this.setFirstFormState();
       this.goToSecondSection();
     }
@@ -177,6 +175,16 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
     );
   }
 
+
+  onPhoneNumberInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+  
+    const filteredValue = value.replace(/[^0-9+]/g, '');
+  
+    input.value = filteredValue;
+  }
+  
 
 
   goToSecondSection() {
@@ -235,6 +243,16 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
   formatDate(date: Date): string {
     return date.toISOString().split('T')[0];
   }
+
+  checkFormValidity() {
+    if(this.newUserForm.valid) {
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
