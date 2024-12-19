@@ -14,6 +14,8 @@ import { curriculum, module, moduleFile } from '@core/models/curriculum.interfac
 import { FileUploadService } from '@core/services/file-upload/file-upload.service';
 import { convertISODurationToMinutes,  } from "@core/utils/duration";
 import { getFileTypeFromUrl, extractFileNameFromUrl,  } from "@core/utils/urlToFile";
+import { truncateFileName  } from "@core/utils/filename";
+import { ErrorHandleService } from '@core/services/error-handle/error-handle.service';
 
 
 @Component({
@@ -46,7 +48,9 @@ export class ModuleComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private curriculumService: CurriculumFacadeService,
-    private fileUploadService: FileUploadService
+    private fileUploadService: FileUploadService,
+    private errorHandleService: ErrorHandleService
+
   ) {
     this.parentForm = this.fb.group({
       modules: this.fb.array([])
@@ -58,8 +62,7 @@ export class ModuleComponent implements OnInit {
       if (params['id']) {
         this.curriculumId = params['id'];
         this.isUpdate = true;
-
-        this.curriculumService.getSelectedCurriculum(this.curriculumId).subscribe(curriculum => {
+          this.curriculumService.getSelectedCurriculum(this.curriculumId).subscribe(curriculum => {
           if (curriculum) {
             while (this.modules.length) {
               this.modules.removeAt(0);
@@ -101,6 +104,10 @@ export class ModuleComponent implements OnInit {
     this.curriculumService.curriculum$.subscribe((curriculums: curriculum[]) => {
       this.curriculums = curriculums;
     });
+  }
+
+  shortFileName(name: string){
+    return truncateFileName(name);
   }
 
   private createModuleGroup(existingModule?: module) {
@@ -181,7 +188,6 @@ export class ModuleComponent implements OnInit {
           file: file.file
         })) || []
       }));
-      
 
       const curriculumData: curriculum = {
         ...formData,
@@ -192,37 +198,30 @@ export class ModuleComponent implements OnInit {
         this.curriculumService.update(this.curriculumId, curriculumData).subscribe({
           next: () => {
             this.isLoading = false;
-            this.showFeedback = true;
-            setTimeout(() => {
-              this.showFeedback = false;
-              this.router.navigate(['home', 'admin', 'curriculum-management']);
-            }, 2000);
+            this.errorHandleService.showSuccessSnackbar('Curriculum updated successfully');
+            this.navigateToCreateCurriculum()
           },
           error: (error) => {
             this.isLoading = false;
-            this.showFeedback = false;
-            console.error('Error updating curriculum:', error);
+            this.errorHandleService.handleError(error);
           }
         });
       } else {
         this.curriculumService.create(curriculumData).subscribe({
           next: () => {
             this.isLoading = false;
-            this.showFeedback = true;
-            setTimeout(() => {
-              this.showFeedback = false;
-              this.router.navigate(['home', 'admin', 'curriculum-management']);
-            }, 3000);
+            this.errorHandleService.showSuccessSnackbar('Curriculum created successfully');
+            this.navigateToCreateCurriculum();
           },
           error: (error) => {
             this.isLoading = false;
-            this.showFeedback = false;
-            console.error('Error creating curriculum:', error);
+            this.errorHandleService.handleError(error);
           }
         });
       }
     } else {
       this.markFormGroupTouched(this.parentForm);
+      this.errorHandleService.showErrorSnackbar('Please fill in all required fields');
     }
   }
 

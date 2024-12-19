@@ -61,16 +61,15 @@ export class AuthService {
     const headers = new HttpHeaders({
       'ngrok-skip-browser-warning': '69420',
     });
-    return this.http.post(url, {},{headers});
+    return this.http.post(url, {}, { headers });
   }
 
   verifyOtp(otp: string): Observable<any> {
     const url = `${environment.BaseUrl}/auth/verify-otp?otp=${otp}`;
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
-    return this.http.post(url, {}, { responseType: 'text',headers }).pipe(
-      map((response) => {
+    return this.http.post(url, {}, { responseType: 'json' }).pipe(
+      map((response: any) => {
+        this.tokenService.setToken(response.token);
+
         try {
           return JSON.parse(response);
         } catch (e) {

@@ -31,7 +31,7 @@
           [required]="true"
           formControlName="email"
           placeholder="Enter email name here"
-        />
+        ></app-input-field>
       </div>
 
       <div class="first-last-name">
@@ -41,7 +41,7 @@
             [required]="true"
             formControlName="firstName"
             placeholder="Enter first name here"
-          />
+          ></app-input-field>
         </div>
         <div class="form-field last-name">
           <app-input-field
@@ -49,7 +49,7 @@
             [required]="true"
             formControlName="lastName"
             placeholder="Enter last name here"
-          />
+          ></app-input-field>
         </div>
       </div>
 
@@ -73,7 +73,7 @@
           <select name="country" id="country" formControlName="country">
             <option
               *ngFor="let country of restCountries"
-              [value]="country.id"
+              [value]="country.name"
             >
               {{ country.name }}
             </option>
@@ -87,11 +87,14 @@
           label="Phone number"
           [required]="true"
           formControlName="phoneNumber"
-        />
+        ></app-input-field>
       </div>
 
-      <div class="specialization">
-        <label for="specialization">Assign Specialization</label>
+      <div class="form-field">
+        <div class="label-wrapper">
+          <label for="gender">Assign Specialization</label>
+          <span>*</span>
+        </div>
         <select
           formControlName="assignSpecialization"
           id="specialization-select-list"
@@ -120,7 +123,7 @@
             formControlName="profilePhoto"
           />
           <mat-icon svgIcon="add-image"></mat-icon>
-          <p *ngIf="!selectedFileName">Add image here</p>
+          <p class="name" *ngIf="!selectedFileName">Add image here</p>
           <p *ngIf="selectedFileName">{{ selectedFileName }}</p>
           <p>Supports: PNG, JPG, JPEG</p>
         </div>

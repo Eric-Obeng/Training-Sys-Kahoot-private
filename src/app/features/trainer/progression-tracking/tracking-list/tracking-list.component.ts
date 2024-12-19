@@ -76,38 +76,6 @@ export class TrackingListComponent implements OnInit {
 
 
   updateTraineePhase(trainee: progress, newPhase: phaseOption) {
-    let progressValue: number;
-    switch (newPhase) {
-      case 'foundation':
-        progressValue = (trainee.progress >= 1 && trainee.progress <= 33)
-          ? trainee.progress
-          : 33;
-        break;
-      case 'advance':
-        progressValue = (trainee.progress > 33 && trainee.progress <= 66)
-          ? trainee.progress
-          : 66;
-        break;
-      case 'capstone':
-        progressValue = (trainee.progress > 66 && trainee.progress <= 100)
-          ? trainee.progress
-          : 100;
-        break;
-      default:
-        return;
-    }
-
-    const updatedTrainee = {
-      ...trainee,
-      currentPhase: newPhase,
-      progress: progressValue
-    };
-
-    this.progressService.updateTraineeProgress(updatedTrainee).subscribe({
-      error: (error) => {
-        console.error('Error updating trainee phase:', error);
-        
-      }
-    });
+    this.progressService.updateTraineePhase(trainee.id, newPhase);
   }
 }

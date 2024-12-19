@@ -47,12 +47,10 @@ export class CurriculumCrudService {
       })
     );
   }
-
-  updateCurriculum(id: string, curriculum: Partial<curriculum>): Observable<curriculum> {
+  updateCurriculum(id: string, curriculum: curriculum): Observable<curriculum> {
     const formData = this.createFormData(curriculum);
     const url = `${this.hostedServer}/${id}`;
     return this.http.put<curriculum>(url, formData, { headers: this.headers }).pipe(
-      tap((res) => console.log('updating curriculum happening:' + res)),
       catchError(this.errorService.handleError)
     );
   }
@@ -65,16 +63,16 @@ export class CurriculumCrudService {
   private createFormData(curriculum: Partial<curriculum>): FormData {
     const userEmail = this.tokenService.getDecodedTokenValue()?.email
     const formData = new FormData();
+
+
     if (userEmail) formData.append('createdBy', userEmail);
     if (curriculum.id) formData.append('id', curriculum.id);
     if (curriculum.title) formData.append('title', curriculum.title);
     if (curriculum.description) formData.append('description', curriculum.description);
     if (curriculum.specialization) formData.append('specialization', curriculum.specialization);
     if (curriculum.thumbnailImage) {
-      const isFile = (value: any): value is File => value instanceof File;
-      if (isFile(curriculum.thumbnailImage)) {
-        formData.append('thumbnailImage', curriculum.thumbnailImage, curriculum.thumbnailImage.name);
-      } else if (typeof curriculum.thumbnailImage === 'string') {
+      const isFile = curriculum.thumbnailImage instanceof File;
+      if (isFile) {
         formData.append('thumbnailImage', curriculum.thumbnailImage);
       }
     }
@@ -109,6 +107,12 @@ export class CurriculumCrudService {
         }
       });
     }
+
+
+
     return formData;
   }
+
+
+
 }

@@ -37,24 +37,26 @@
           formControlName="confirmPassword"
         />
 
-        @if (userCreationForm.errors?.['mismatch'] &&
-        (userCreationForm.get('confirmPassword')?.touched ||
-        userCreationForm.get('confirmPassword')?.dirty)) {
-
         <app-message
+          *ngIf="userCreationForm.errors?.['mismatch'] &&
+          (userCreationForm.get('confirmPassword')?.touched ||
+          userCreationForm.get('confirmPassword')?.dirty)"
           type="error"
           title="Error"
           message="The password entered doesn't match"
         />
-        } @if (successMessage) {
         <app-message
+          *ngIf="successMessage"
           type="success"
           title="Success"
           [message]="successMessage"
         />
-        } @if (errorMessage) {
-        <app-message title="Error" type="error" [message]="errorMessage" />
-        }
+        <app-message
+          *ngIf="errorMessage"
+          title="Error"
+          type="error"
+          [message]="errorMessage"
+        />
       </div>
 
       <div class="button-div">

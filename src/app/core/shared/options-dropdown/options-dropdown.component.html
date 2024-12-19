@@ -1,13 +1,14 @@
 <div class="options-container">
   <button type="button" class="options" (click)="onToggle($event)">
-    <img [src]="optionsIcon" alt="options">
+    <img [src]="optionsIcon">
   </button>
   <div class="options-dropdown" *ngIf="isActive">
     <button
       type="button"
       *ngFor="let option of options"
-      (click)="onOptionSelect($event, option.action)">
-      <img [src]="option.icon" [alt]="option.label">
+      (click)="onOptionSelect($event, option.action)"
+    >
+      <img [src]="option.icon" />
       {{ option.label }}
     </button>
   </div>

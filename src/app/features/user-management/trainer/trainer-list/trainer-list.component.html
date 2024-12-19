@@ -21,12 +21,19 @@
           <div class="menu">
             <mat-icon svgIcon="dots" (click)="openMenu(i, $event)"></mat-icon>
 
-            <div *ngIf="selectedTrainerId === i" class="menu-popup">
-              <div class="menu-item"><mat-icon>edit</mat-icon> Update</div>
-              <div class="menu-item">
-                <mat-icon>delete</mat-icon> Deactivate
-              </div>
-            </div>
+            <app-options-dropdown
+              *ngIf="selectedTrainerId === i"
+              [isActive]="true"
+              [optionsIcon]="''"
+              [options]="[
+                {
+                  icon: 'assets/Images/svg/update.svg',
+                  label: 'Update',
+                  action: 'update'
+                }
+              ]"
+              (optionSelected)="handleOptionSelected($event, trainer)"
+            ></app-options-dropdown>
           </div>
         </div>
       </div>
