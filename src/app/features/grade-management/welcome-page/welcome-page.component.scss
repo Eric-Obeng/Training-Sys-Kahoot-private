@@ -2,17 +2,25 @@
 @import '../../../../styleSheet/user_management_dashboard';
 
 .container {
-    // display: flex;
-    // justify-content: center;
+    // height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 100%;
     min-width: 1220px;
     padding: 0 8rem;
-    display: flex;
 
-    .modal-like-card {
-      justify-content: center;
-      @include modal-like-card;
-      margin-top: auto 8rem;
+    & .welcome-card-wrapper {
+        width: 100%;
+        height: 80vh;
+        display: grid;
+        place-items: center;
+
+        .modal-like-card {
+          justify-content: center;
+          @include modal-like-card;
+          margin-top: auto 8rem;
+        }
     }
 }
 
@@ -114,8 +122,8 @@
                     align-items: center;
 
                     & span {
-                        font-size: $font-size-xbody;
-                        font-weight: 700;
+                        font-size: $font-size-body;
+                        font-weight: 600;
                         color: $clr-gray-500;
                         cursor: pointer;
                     }

@@ -46,8 +46,8 @@
 .assessment-card-list {
     width: 100%;
     height: 35.6rem;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Default to 4 columns */
+    display: flex;
+    flex-wrap: wrap;
     gap: 5rem;
     overflow-x: hidden;
     overflow-y: hidden;
