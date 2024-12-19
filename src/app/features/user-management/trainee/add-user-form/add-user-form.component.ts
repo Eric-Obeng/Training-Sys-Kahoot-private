@@ -142,6 +142,7 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
 
 
   onSubmit() {
+    this.findErrors()
 
     const formValid = this.newUserForm.valid;
 
@@ -169,7 +170,12 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
       debounceTime(1000),
       distinctUntilChanged(),
       map(response => {
-        return response ? { emailExists: true } : null;
+        if(response) {
+          return null;
+        }
+        else {
+          return null;
+        }
       }),
       catchError(() => of(null))
     );
