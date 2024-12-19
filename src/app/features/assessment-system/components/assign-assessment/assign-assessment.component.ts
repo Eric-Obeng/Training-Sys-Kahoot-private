@@ -135,7 +135,7 @@ export class AssignAssessmentComponent implements OnInit {
 
   initAssignAssessmentForm() {
     this.assignAssessmentForm = this.fb.group({
-      deadline: [this.selectedExpiry, [Validators.required]],
+      deadline: [null, [Validators.required]],
     });
   }
 
