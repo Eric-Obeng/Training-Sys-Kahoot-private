@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
   catchError,
   Observable,
@@ -18,6 +18,7 @@ import {
   Quiz,
 } from '@core/models/assessment-form.interface';
 import { environment } from 'src/environments/environment.development';
+import { cachingInterceptor } from '@core/interceptors/caching.interceptor';
 
 @Injectable({
   providedIn: 'root',
