@@ -21,7 +21,7 @@
           *ngIf="showErrorMessage"
           type="error"
           title="Error"
-          message="Please check, you entered a wrong code"
+          [message]="message"
         />
         <app-message
           *ngIf="showSuccessMessage"
