@@ -142,7 +142,6 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
 
 
   onSubmit() {
-    this.findErrors()
 
     const formValid = this.newUserForm.valid;
 
