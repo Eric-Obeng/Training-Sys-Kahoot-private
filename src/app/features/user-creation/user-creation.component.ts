@@ -116,10 +116,15 @@ export class UserCreationComponent implements OnInit, OnDestroy {
     }
 
     const { password, confirmPassword } = this.userCreationForm.value;
+    const token = localStorage.getItem('token');
+    if (!token) {
+      this.isLoading = false;
+      return;
+    }
 
 
     this.userCreationService
-      .createUser(password, confirmPassword)
+      .createUser(password, confirmPassword, token)
       .pipe(
         switchMap(() => timer(2000)),
         switchMap(() => {
