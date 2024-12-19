@@ -1,20 +1,5 @@
 <div class="container">
   <div class="list-wrapper" *ngIf="trainersData$ | async as trainers">
-    <div class="trainers-length">
-      <div class="col-1">
-        <h3>Trainers</h3>
-        <mat-icon svgIcon="info"></mat-icon>
-      </div>
-      <div>
-        <ng-container *ngIf="trainers?.length === 0">
-          No Trainer Created
-        </ng-container>
-        <ng-container *ngIf="trainers.length >= 1">
-          {{ trainers?.length }} Trainers
-        </ng-container>
-      </div>
-    </div>
-
     <div class="trainers" *ngIf="trainers.length > 0; else noTrainers">
       <div class="headers">
         <div>No.</div>
@@ -36,12 +21,19 @@
           <div class="menu">
             <mat-icon svgIcon="dots" (click)="openMenu(i, $event)"></mat-icon>
 
-            <div *ngIf="selectedTrainerId === i" class="menu-popup">
-              <div class="menu-item"><mat-icon>edit</mat-icon> Update</div>
-              <div class="menu-item">
-                <mat-icon>delete</mat-icon> Deactivate
-              </div>
-            </div>
+            <app-options-dropdown
+              *ngIf="selectedTrainerId === i"
+              [isActive]="true"
+              [optionsIcon]="''"
+              [options]="[
+                {
+                  icon: 'assets/Images/svg/update.svg',
+                  label: 'Update',
+                  action: 'update'
+                }
+              ]"
+              (optionSelected)="handleOptionSelected($event, trainer)"
+            ></app-options-dropdown>
           </div>
         </div>
       </div>

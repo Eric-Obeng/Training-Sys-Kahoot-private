@@ -8,12 +8,12 @@ import { SvgService } from '@core/services/svg/svg.service';
 import { TraineeInsystemService } from '@core/services/user-management/trainee/trainee-insystem.service';
 import { TrainerService } from '@core/services/user-management/trainer/trainer.service';
 import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
-import { SearchbarComponent } from '../../../../core/shared/searchbar/searchbar.component';
+import { OptionsDropdownComponent } from '@core/shared/options-dropdown/options-dropdown.component';
 
 @Component({
   selector: 'app-trainer-list',
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule, MatIconModule, OptionsDropdownComponent],
   templateUrl: './trainer-list.component.html',
   styleUrl: './trainer-list.component.scss',
 })
@@ -22,7 +22,6 @@ export class TrainerListComponent {
   filteredTrainees$!: Observable<User[]>;
   trainerTabClicked: boolean = true;
   deleteTraineeEmail: string = '';
-
   selectedTrainerId: number | null = null;
 
   private searchTerm$ = new BehaviorSubject<string>('');
@@ -101,15 +100,10 @@ export class TrainerListComponent {
     this.specializationFilter$.next(null);
   }
 
-  toggleEllipsis(selectedTrainee: string, event: Event) {
+  toggleMenu(trainerId: number, event: Event) {
     event.stopPropagation();
-    this.selectedTraineeName =
-      this.selectedTraineeName === selectedTrainee ? null : selectedTrainee;
-    if (this.selectedTraineeName === null) {
-      this.ellipsisClicked = false;
-    } else if (this.selectedTraineeName === selectedTrainee) {
-      this.ellipsisClicked = true;
-    }
+    this.selectedTrainerId =
+      this.selectedTrainerId === trainerId ? null : trainerId;
   }
 
   getSelectedUser(traineeId: string, trainee: User) {
@@ -151,5 +145,26 @@ export class TrainerListComponent {
     event.stopPropagation(); // Prevent unwanted bubbling
     // Toggle the selected trainer's menu
     this.selectedTrainerId = this.selectedTrainerId === index ? null : index;
+  }
+
+  handleOptionSelected(
+    event: { event: Event; action: string },
+    trainer: Trainer
+  ) {
+    if (event.action === 'update') {
+      this.navigateToTrainerForm(trainer);
+    }
+  }
+
+  navigateToTrainerForm(trainer: Trainer) {
+    this.trainersService.getTrainerByEmail(trainer.email).subscribe({
+      next: (detailedTrainer) => {
+        this.trainersService.setSelectedTrainer(detailedTrainer);
+        this.router.navigate(['/home/admin/user-management/add-trianer']);
+      },
+      error: (error) => {
+        console.error('Error fetching trainer details:', error);
+      },
+    });
   }
 }
