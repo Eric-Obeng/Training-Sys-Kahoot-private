@@ -25,6 +25,7 @@
         display: flex;
         gap: 3.801rem;
         margin-bottom: 3.8rem;
+        cursor: pointer;
 
         & .add-quiz {
             @include addAssessmentBtns;
@@ -223,8 +224,8 @@
         border-radius: .8rem;
         overflow-y: scroll;
         padding: 2.4rem;
-        
-        
+
+
         & .card-title {
             @include cardTitle;
             margin-bottom: 1.6rem;
