@@ -17,10 +17,10 @@
                     <span>*</span>
                 </div>
                 <p>A unique name for the cohort that clearly identifies the group (e.g., "Cohort 2024 - Web Development")</p>
-                <app-input-field type="text"formControlName='name' />
-                <div class="error" *ngIf="newCohortForm.controls['name'].invalid && (newCohortForm.controls['name'].touched || newCohortForm.controls['name'].dirty)">
+                <app-input-field type="text" formControlName='name' />
+                <div class="error" *ngIf="newCohortForm.get('name')?.invalid && newCohortForm.get('name')?.touched">
                     <span>Field is required</span>
-                </div>
+                </div>                
             </div>
             <div class="specialization">
                 <div class="specialization-wrapper">
@@ -78,7 +78,11 @@
                 <p>A brief overview or notes about the cohort's objectives, schedule, or any specific focus areas</p>
                 <textarea formControlName="description" name="description-text-area" id="description-text-area"></textarea>
             </div>
-            <button type="submit" class="btn">Add</button>
+            <button type="submit" class="btn" 
+                [disabled]="buttonDisabled"
+            >
+                Add
+            </button>
         </form>
     </div>
 

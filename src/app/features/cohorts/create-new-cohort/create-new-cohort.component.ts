@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { InputFieldComponent } from "../../../core/shared/input-field/input-field.component";
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
 import { CohortDataService } from '../../../core/services/cohort-data/cohort-data.service';
 import { Specialization } from '@core/models/cohort.interface';
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { SnackbarService } from '@core/services/snackbar/snackbar.service';
 @Component({
   selector: 'app-create-new-cohort',
   standalone: true,
-  imports: [InputFieldComponent, ReactiveFormsModule, NgIf, NgFor, AsyncPipe],
+  imports: [InputFieldComponent, ReactiveFormsModule, NgIf, NgFor, AsyncPipe, JsonPipe],
   templateUrl: './create-new-cohort.component.html',
   styleUrl: './create-new-cohort.component.scss'
 })
@@ -23,6 +23,8 @@ export class CreateNewCohortComponent {
 
   startDateMin!: string;
   endDateMin!: string;
+
+  buttonDisabled: boolean = true;
 
 
   constructor(
@@ -90,6 +92,15 @@ export class CreateNewCohortComponent {
 
   formatDate(date: Date): string {
     return date.toISOString().split('T')[0];
+  }
+
+  checkFormValidity() {
+    if(this.newCohortForm.valid) {
+      this.buttonDisabled = true;
+    }
+    else{
+      this.buttonDisabled = false;
+    }
   }
 
 }

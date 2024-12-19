@@ -29,6 +29,8 @@ export class EditCohortComponent {
   startDateMin!: string;
   endDateMin!: string;
 
+  buttonDisabled = true;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -173,4 +175,15 @@ export class EditCohortComponent {
     return date.toISOString().split('T')[0];
   }
   
+  
+  checkFormValidity() {
+    if(this.newCohortForm.valid) {
+      this.buttonDisabled = true;
+    }
+    else{
+      this.buttonDisabled = false;
+    }
+  }
+
+
 }
