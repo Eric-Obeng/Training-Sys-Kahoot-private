@@ -9,6 +9,7 @@ import { TraineeInsystemService } from '@core/services/user-management/trainee/t
 import { TrainerService } from '@core/services/user-management/trainer/trainer.service';
 import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 import { OptionsDropdownComponent } from '@core/shared/options-dropdown/options-dropdown.component';
+import { SearchbarService } from '@core/services/searchbar/searchbar.service';
 
 @Component({
   selector: 'app-trainer-list',
@@ -19,6 +20,7 @@ import { OptionsDropdownComponent } from '@core/shared/options-dropdown/options-
 })
 export class TrainerListComponent {
   trainersData$!: Observable<Trainer[]>;
+  filteredTrainers$!: Observable<Trainer[]>;
   filteredTrainees$!: Observable<User[]>;
   trainerTabClicked: boolean = true;
   deleteTraineeEmail: string = '';
@@ -38,12 +40,15 @@ export class TrainerListComponent {
     private router: Router,
     private traineesInsystemService: TraineeInsystemService,
     private svgService: SvgService,
-    private trainersService: TrainerService
+    private trainersService: TrainerService,
+    private searchbarService: SearchbarService
   ) {}
 
   ngOnInit() {
-    this.trainersData$ = combineLatest([
-      this.trainersService.getAllTrainers(),
+    this.trainersData$ = this.trainersService.getAllTrainers();
+
+    this.filteredTrainers$ = combineLatest([
+      this.trainersData$,
       this.searchTerm$,
     ]).pipe(
       map(([trainers, searchTerm]) => {
@@ -56,6 +61,10 @@ export class TrainerListComponent {
         );
       })
     );
+
+    this.searchbarService.searchTerm$.subscribe(term => {
+      this.searchTerm$.next(term);
+    });
   }
 
   tabClicked() {
@@ -115,18 +124,6 @@ export class TrainerListComponent {
     this.router.navigate(['/home/admin/user-management/user-profile/']);
   }
 
-  deleteUser(email: string) {
-    this.deleteTraineeEmail = email;
-    this.toggleConfirmDeleteModal();
-  }
-
-  confirmDelete() {
-    this.traineesInsystemService.deleteSelectedTrainee(this.deleteTraineeEmail);
-    this.toggleConfirmDeleteModal();
-    if (this.traineesInsystemService.deleteModalSuccessful) {
-      this.toggleDeleteModalSuccess();
-    }
-  }
 
   toggleConfirmDeleteModal() {
     this.isConfirmDeleteModalOpen = !this.isConfirmDeleteModalOpen;

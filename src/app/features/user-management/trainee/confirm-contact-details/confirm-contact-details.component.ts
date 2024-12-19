@@ -84,6 +84,15 @@ export class ConfirmContactDetailsComponent {
     }
   }
 
+  checkFormValidity() {
+    if(this.newUserFormConfirm.valid) {
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
   setFirstFormData() {
     this.traineeInsystemService.setFirstFormState(this.newUserFormConfirm.value)
   }

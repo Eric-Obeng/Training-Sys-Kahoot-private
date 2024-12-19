@@ -107,8 +107,10 @@
             background: $clr-primary-500;
             color: $clr-white;
 
-            & .disabled {
+            &.disabled {
+              background: $clr-gray-200;
               cursor: not-allowed;
+              // pointer-events: none;
             }
           }
 

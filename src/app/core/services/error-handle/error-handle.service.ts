@@ -16,9 +16,9 @@ export class ErrorHandleService {
     if (error.error instanceof ErrorEvent) {
       // Client-side error
       errorMessage = error.error.message;
-    } else if (typeof error.error === 'object' && error.error.error) {
+    } else if (typeof error.error === 'object' && error.error.message) {
       // Specific case: error object with an "error" property
-      errorMessage = error.error;
+      errorMessage = error.error.message
     } else {
       // Server-side error
       errorMessage = error.error?.message || `Error: ${error.status} ${error.statusText}`;

@@ -28,6 +28,7 @@ export class ResetPasswordComponent {
   isLoading = false;
   showError = false;
   showSuccess = false;
+  message = '';
   resetPasswordForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
   });
@@ -42,7 +43,6 @@ export class ResetPasswordComponent {
     this.isLoading = true;
     this.showError = false;
 
-
     if (this.resetPasswordForm.valid) {
       this.isLoading = true;
       const { email } = this.resetPasswordForm.value;
@@ -54,6 +54,7 @@ export class ResetPasswordComponent {
           switchMap(() => {
             this.isLoading = false;
             this.showSuccess = true;
+
             return timer(1000);
           })
         )
@@ -65,6 +66,7 @@ export class ResetPasswordComponent {
             console.error(err);
             this.isLoading = false;
             this.showError = true;
+            this.message = `${err.error.message}`;
           },
         });
     }

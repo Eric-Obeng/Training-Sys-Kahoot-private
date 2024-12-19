@@ -22,8 +22,21 @@ export class TokenService {
       const decodedToken = jwtDecode<DecodedToken>(token);
       this.tokenSubject.next(decodedToken);
     } catch (error) {
-      console.error('Invalid token specified:', error);
       this.clearToken();
+    }
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  isTokenExpired(token: string): boolean {
+    try {
+      const decodedToken = jwtDecode<DecodedToken>(token);
+      const currentTime = Math.floor(Date.now() / 1000);
+      return decodedToken.exp ? decodedToken.exp < currentTime : true;
+    } catch (error) {
+      return true;
     }
   }
 

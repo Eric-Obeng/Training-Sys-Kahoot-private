@@ -37,6 +37,8 @@ export class ResetCodeComponent {
   showSuccessMessage = false;
   isLoading = false;
 
+  message = ''
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -113,6 +115,7 @@ export class ResetCodeComponent {
             this.showErrorMessage = true;
             this.isLoading = false;
             console.error(err);
+            this.message = `${err.error.message}`;
           },
         });
     }

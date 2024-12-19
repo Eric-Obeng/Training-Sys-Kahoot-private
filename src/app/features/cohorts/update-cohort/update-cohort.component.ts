@@ -122,7 +122,6 @@ export class UpdateCohortComponent {
         next: (res) => {
           this.modalService.toggleSuccessModal()
           this.newCohortForm.reset();  
-          console.log(res)
         },
       })
        
@@ -176,4 +175,16 @@ export class UpdateCohortComponent {
   formatDate(date: Date): string {
     return date.toISOString().split('T')[0];
   }
+
+  checkFormValidity() {
+    if(this.newCohortForm.valid) {
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
+
 }
+

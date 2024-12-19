@@ -144,7 +144,7 @@ export class UserCreationComponent implements OnInit, OnDestroy {
             this.errorMessage = 'An error occurred while parsing the response. Please try again!';
           } else {
             this.errorMessage =
-              `${err.message}` || 'An error occurred while creating the user. Please try again!';
+              `${err.error}` || 'An error occurred while creating the user. Please try again!';
           }
           console.error('Error creating user:', err);
         },

@@ -121,4 +121,14 @@ export class AddUserFormSection2Component {
     this.unsubscribe$.complete();
   }
 
+  
+  checkFormValidity() {
+    if(this.newUserFormSecTwo.valid) {
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
 }

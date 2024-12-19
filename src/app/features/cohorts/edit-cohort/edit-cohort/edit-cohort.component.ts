@@ -38,6 +38,7 @@ export class EditCohortComponent {
   ) {}
 
   ngOnInit() {
+    // this.findErrors()
     this.setMinMaxDates()
 
     this.allSpecializations$ = this.usermanagementservice.getAllspecializations();
@@ -172,5 +173,15 @@ export class EditCohortComponent {
   formatDate(date: Date): string {
     return date.toISOString().split('T')[0];
   }
-  
+
+  checkFormValidity() {
+    if(this.newCohortForm.valid) {
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
+
 }

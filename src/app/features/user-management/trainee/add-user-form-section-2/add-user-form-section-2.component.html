@@ -36,7 +36,11 @@
                 </div>
             </div>
             
-            <button type="submit" class="btn">Continue</button>
+            <button 
+                type="submit" 
+                class="btn"
+                [disabled]="checkFormValidity()"
+            >Continue</button>
 
         </form> 
     </div>

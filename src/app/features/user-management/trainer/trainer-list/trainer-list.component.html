@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="list-wrapper" *ngIf="trainersData$ | async as trainers">
+  <div class="list-wrapper" *ngIf="filteredTrainers$ | async as trainers">
     <div class="trainers" *ngIf="trainers.length > 0; else noTrainers">
       <div class="headers">
         <div>No.</div>

@@ -184,6 +184,7 @@ export class QuizListComponent {
     this.assessments$.subscribe({
       next: (res) => {
         this.loading = false;
+        console.log(res)
       },
       error: (error) => {
         this.loading = true;
@@ -192,9 +193,8 @@ export class QuizListComponent {
 
 
     this.filteredAssessment$ = combineLatest([
-      this.assessments$, // Observable of all assessments
-      this.searchQuiz.searchTerm$, // Observable of the search term
-      // of(this.assessmentType) // Observable of the assessment type
+      this.assessments$, 
+      this.searchQuiz.searchTerm$, 
     ]).pipe(
       map(([assessments, searchTerm]) => {
         return assessments.filter((quiz: any) => {

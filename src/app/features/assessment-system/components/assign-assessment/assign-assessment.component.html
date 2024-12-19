@@ -58,7 +58,14 @@
       </form>
       <div class="actions">
         <button class="btn cancel" (click)="onCancel()">Cancel</button>
-        <button class="btn assign" [disabled]="assignAssessmentForm.invalid" (click)="onAssign()">Assign</button>
+        <button
+          class="btn assign"
+          [class.disabled]="assignAssessmentForm.invalid"
+          [disabled]="assignAssessmentForm.invalid"
+          (click)="onAssign()"
+        >
+          Assign
+        </button>
       </div>
     </div>
   </div>
