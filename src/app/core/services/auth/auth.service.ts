@@ -32,8 +32,9 @@ export class AuthService {
       })
       .pipe(
         map((response: LoginResponse) => {
-          if (response) {
+          if (response && response.token) {
             this.tokenService.setToken(response.token);
+
             const decodedToken = this.tokenService.decodeToken(response.token);
 
             this.userRoleService.setUserRole(decodedToken.role as UserRole);
@@ -84,19 +85,49 @@ export class AuthService {
     return { role: decoded.role, email: decoded.email };
   }
 
+  isAuthenticated(): boolean {
+    const token = this.tokenService.getToken();
+    if (token) {
+      const isExpired = this.tokenService.isTokenExpired(token);
+      if (!isExpired) {
+        return true;
+      }
+    }
+    this.handleTokenExpiration();
+    return false;
+  }
+
+  handleTokenExpiration() {
+    this.logout();
+  }
+
+  logout(): void {
+    this.tokenService.clearToken();
+    this.router.navigate(['/auth/login']);
+  }
+
+  getUserRole(): string {
+    const token = this.tokenService.getToken();
+    if (token) {
+      const decodedToken = this.tokenService.decodeToken(token);
+      return decodedToken.role;
+    }
+    return '';
+  }
+
   private routeUser(role: string): void {
     switch (role) {
       case 'TRAINER':
-        this.router.navigate(['/home/trainer']);
+        this.router.navigate(['/home/trainer']).catch(() => {});
         break;
       case 'TRAINEE':
-        this.router.navigate(['/home/trainee']);
+        this.router.navigate(['/home/trainee']).catch(() => {});
         break;
       case 'ADMIN':
-        this.router.navigate(['/home/admin']);
+        this.router.navigate(['/home/admin']).catch(() => {});
         break;
       default:
-        this.router.navigate(['/auth/login']);
+        this.router.navigate(['/auth/login']).catch(() => {});
         break;
     }
   }
