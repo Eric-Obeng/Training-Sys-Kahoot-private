@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, map, of, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, first, map, of, tap, throwError } from 'rxjs';
 import { User } from '../../../models/cohort.interface';
 import { environment } from 'src/environments/environment.development';
 import { TraineeList } from '@core/models/trainee.interface';
@@ -45,6 +45,7 @@ export class TraineeInsystemService {
   public selectedEmail$: Observable<string | null> = this.selectedEmailSubject.asObservable();
 
   public selectedTraineeId: number = 0;
+  emailAsyncValidatoryResponseObtained!: boolean;
 
 
   constructor(
@@ -63,6 +64,7 @@ export class TraineeInsystemService {
     return this.http.post<User>(`${this.baseUrl}/profiles/trainees/find`, { email }, {
       headers: this.getHeaders(),
     }).pipe(
+      first(),
       tap(response => {
         // Only update if the response is different from the current value
         if (response !== this.retreivedUserDataSubject.getValue()) {

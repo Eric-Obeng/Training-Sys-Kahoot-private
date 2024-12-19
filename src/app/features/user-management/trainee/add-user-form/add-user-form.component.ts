@@ -5,7 +5,6 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { InputFieldComponent } from '../../../../core/shared/input-field/input-field.component';
 import {
   AbstractControl,
   FormBuilder,
@@ -46,8 +45,6 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
   selectedFile: File | null = null;
 
   maxDate!: string;
-
-  // buttonDisabled: boolean = true;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -170,6 +167,7 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
       distinctUntilChanged(),
       map(response => {
         if(response) {
+          this.traineeInsystemService.emailAsyncValidatoryResponseObtained = response ? true : false;
           return null;
         }
         else {
