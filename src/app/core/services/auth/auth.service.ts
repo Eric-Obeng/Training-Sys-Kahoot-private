@@ -66,12 +66,8 @@ export class AuthService {
 
   verifyOtp(otp: string): Observable<any> {
     const url = `${environment.BaseUrl}/auth/verify-otp?otp=${otp}`;
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
-    return this.http.post(url, {}, { responseType: 'json', headers }).pipe(
+    return this.http.post(url, {}, { responseType: 'json' }).pipe(
       map((response: any) => {
-        console.log(response);
         this.tokenService.setToken(response.token);
 
         try {

@@ -24,7 +24,14 @@
             <app-options-dropdown
               *ngIf="selectedTrainerId === i"
               [isActive]="true"
-              [options]="[{ icon: 'assets/Images/svg/update.svg', label: 'Update', action: 'update' }]"
+              [optionsIcon]="''"
+              [options]="[
+                {
+                  icon: 'assets/Images/svg/update.svg',
+                  label: 'Update',
+                  action: 'update'
+                }
+              ]"
               (optionSelected)="handleOptionSelected($event, trainer)"
             ></app-options-dropdown>
           </div>

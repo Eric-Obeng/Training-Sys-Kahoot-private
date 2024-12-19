@@ -147,7 +147,10 @@ export class TrainerListComponent {
     this.selectedTrainerId = this.selectedTrainerId === index ? null : index;
   }
 
-  handleOptionSelected(event: { event: Event; action: string }, trainer: Trainer) {
+  handleOptionSelected(
+    event: { event: Event; action: string },
+    trainer: Trainer
+  ) {
     if (event.action === 'update') {
       this.navigateToTrainerForm(trainer);
     }
