@@ -16,11 +16,12 @@ import {
 } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { cachingInterceptor } from '@core/interceptors/caching.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes,withViewTransitions()),
-    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+    provideRouter(routes, withViewTransitions()),
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor, cachingInterceptor])),
     provideStore(),
     provideEffects(),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
