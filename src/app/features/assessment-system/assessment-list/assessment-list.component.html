@@ -5,23 +5,34 @@
 </ng-container>
 
 <ng-template #loadedContent>
-  <ng-container *ngIf="!isAssessmentsEmpty; else noDataTemplate">
-    <div class="wrapper">
-      <div class="col-1">
-        <app-searchbar
-          [title]="'Assessment'"
-          [placeholder]="'Name'"
-          [hide]="true"
-          [showAddButton]="false"
-        />
-      </div>
-      <div class="assessments">
-        <div *ngFor="let assessment of assessments$ | async">
-          <app-assessment-card [assessment]="assessment"></app-assessment-card>
-        </div>
-      </div>
+  <div class="wrapper">
+    <div class="col-1">
+      <app-searchbar
+        [title]="'Assessment'"
+        [placeholder]="'Name'"
+        [hide]="true"
+        [showAddButton]="false"
+        (searchChanged)="onSearchTermChange($event)"
+      />
     </div>
-  </ng-container>
+    <div class="assessments">
+      <ng-container *ngIf="assessments$ | async as assessments; else noResults">
+        <div *ngIf="assessments.length > 0; else noResults">
+          <div *ngFor="let assessment of assessments$ | async">
+            <app-assessment-card
+              [assessment]="assessment"
+            ></app-assessment-card>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noResults>
+  <div class="no-results">
+    <p>No assessments match your search criteria.</p>
+  </div>
 </ng-template>
 
 <ng-template #noDataTemplate>
