@@ -57,7 +57,20 @@ export class AddUserComponent {
     console.log("add-user is working!!!")
 
     this.traineeUsers$ = this.traineesInsystemService.getAllTrainees();
-    this.trainersData$ = this.trainersService.getAllTrainers();
+    this.trainersData$ = combineLatest([
+      this.trainersService.getAllTrainers(),
+      this.searchTerm$,
+    ]).pipe(
+      map(([trainers, searchTerm]) => {
+        const lowerSearchTerm = searchTerm.toLowerCase();
+        return trainers.filter(
+          (trainer) =>
+            trainer.firstName.toLowerCase().includes(lowerSearchTerm) ||
+            trainer.lastName.toLowerCase().includes(lowerSearchTerm) ||
+            trainer.email.toLowerCase().includes(lowerSearchTerm)
+        );
+      })
+    );
   }
 
   tabClicked() {
