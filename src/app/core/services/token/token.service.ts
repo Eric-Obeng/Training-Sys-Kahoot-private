@@ -17,9 +17,14 @@ export class TokenService {
   }
 
   setToken(token: string) {
-    localStorage.setItem('token', token);
-    const decodedToken = jwtDecode<DecodedToken>(token);
-    this.tokenSubject.next(decodedToken);
+    try {
+      localStorage.setItem('token', token);
+      const decodedToken = jwtDecode<DecodedToken>(token);
+      this.tokenSubject.next(decodedToken);
+    } catch (error) {
+      console.error('Invalid token specified:', error);
+      this.clearToken();
+    }
   }
 
   getDecodedToken() {
