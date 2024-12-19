@@ -5,14 +5,18 @@ import {
   HttpRequest,
   HttpHeaders,
   HttpResponse,
+  HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, catchError, throwError } from 'rxjs';
+import { inject } from '@angular/core';
+import { AuthService } from '@core/services/auth/auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (
   req: HttpRequest<any>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<any>> => {
   const token = localStorage.getItem('token');
+  const authService = inject(AuthService);
 
   // Add Authorization header if token exists
   const modifiedReq = req.clone({
@@ -21,12 +25,6 @@ export const authInterceptor: HttpInterceptorFn = (
       .set('Authorization', token ? `Bearer ${token}` : ''),
   });
 
-  // Skip token refresh logic for login URL
-  if (!req.url.includes('/login')) {
-    return next(modifiedReq);
-  }
-
-  // Add token persistence logic for login endpoint responses
   return next(modifiedReq).pipe(
     tap({
       next: (event) => {
@@ -36,14 +34,20 @@ export const authInterceptor: HttpInterceptorFn = (
             try {
               localStorage.setItem('token', token);
             } catch (e) {
-              console.error('Failed to store token:', e);
+              // Handle error silently
             }
           }
         }
       },
       error: (err) => {
-        console.error('Error in response:', err);
+        // Handle error silently
       },
+    }),
+    catchError((error: HttpErrorResponse) => {
+      if (error.status === 401) {
+        authService.handleTokenExpiration();
+      }
+      return throwError(error);
     })
   );
 };
