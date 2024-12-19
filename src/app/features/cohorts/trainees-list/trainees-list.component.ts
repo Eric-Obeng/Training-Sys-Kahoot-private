@@ -50,7 +50,6 @@ export class TraineesListComponent {
     this.cohort$.subscribe({
       next: (res) => {
         this.traineesListEmpty = res.trainees.length ? false : true;
-        console.log(res)
       }
     })
 
@@ -92,7 +91,6 @@ export class TraineesListComponent {
   // Update search term on changes from the search bar
   onSearchChange(): void {
     this.searchTerm$ = this.searchService.searchTerm$;
-    this.searchTerm$.subscribe(data => {console.log(data)})
   }
 
 

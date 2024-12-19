@@ -112,6 +112,13 @@ export class ConfirmTrainingDetailsComponent implements OnDestroy {
   }
 
   submitCreateNewUSer() {
+
+    this.traineeInSystemService.secondFormState$.subscribe(data => {
+      console.log("second form state: ", data)
+    })
+    this.traineeInSystemService.firstFormState$.subscribe(data => console.log("first form state: ", data))
+    this.traineeInSystemService.secondFormState$.subscribe(data => console.log("second form state: ", data))
+
     combineLatest([
       this.traineeInSystemService.firstFormState$,
       this.traineeInSystemService.secondFormState$,
@@ -171,6 +178,15 @@ export class ConfirmTrainingDetailsComponent implements OnDestroy {
       }
     });
     return formData;
+  }
+
+  checkFormValidity() {
+    if(this.newUserFormSecTwo.valid) {
+      return false;
+    }
+    else{
+      return true;
+    }
   }
 
   ngOnDestroy() {

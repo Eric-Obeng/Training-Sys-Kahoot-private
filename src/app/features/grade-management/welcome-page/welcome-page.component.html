@@ -1,15 +1,17 @@
 <div class="container">
-  <div *ngIf="welcometimeUp === false" class="modal-like-card">
-    <img
-      src="../../../../assets/Images/png/grade-welcome-pic.png"
-      alt="welcome icon"
-    />
-    <h2>Welcome to TrainingSuite!</h2>
-    <p>
-      Your account has been created successfully. A cohort will be assigned to
-      you soon, and you’ll be ready to begin managing your training sessions.
-      Stay tuned for further updates
-    </p>
+  <div class="welcome-card-wrapper" *ngIf="welcometimeUp === false">
+    <div class="modal-like-card">
+      <img
+        src="../../../../assets/Images/png/grade-welcome-pic.png"
+        alt="welcome icon"
+      />
+      <h2>Welcome to TrainingSuite!</h2>
+      <p>
+        Your account has been created successfully. A cohort will be assigned to
+        you soon, and you’ll be ready to begin managing your training sessions.
+        Stay tuned for further updates
+      </p>
+    </div>
   </div>
 
   <div *ngIf="welcometimeUp" class="main-list">
