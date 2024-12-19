@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import {
   catchError,
   Observable,
@@ -77,7 +81,7 @@ export class AssessmentService {
       .post<AssessmentData>(
         `${environment.BaseUrl}/quizzes/trainer/${quizId}/questions/batch?quizDuration=${timeFrame}`,
         assessment,
-        { responseType: 'text' as 'json' }
+        { responseType: 'json' }
       )
       .pipe(
         catchError((error) => {
@@ -101,7 +105,7 @@ export class AssessmentService {
 
   assignAssessment(data: AssignAssessment) {
     return this.http.post(`${environment.BaseUrl}/assignments/batch`, data, {
-      responseType: 'text',
+      responseType: 'json',
     });
   }
 
@@ -117,7 +121,7 @@ export class AssessmentService {
     };
     return this.http.post(`${environment.BaseUrl}/assignments/cohort`, null, {
       params,
-      responseType: 'text',
+      responseType: 'json',
     });
   }
 }
