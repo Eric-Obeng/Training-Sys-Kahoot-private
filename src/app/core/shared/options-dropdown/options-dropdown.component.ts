@@ -11,18 +11,18 @@ interface DropdownOption {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './options-dropdown.component.html',
-  styleUrl: './options-dropdown.component.scss'
+  styleUrl: './options-dropdown.component.scss',
 })
-
-
-
 export class OptionsDropdownComponent {
   @Input() isActive = false;
-  @Input() optionsIcon = '';
+  @Input() optionsIcon = '../../../../../assets/Images/svg/options-icon.svg';
   @Input() options: DropdownOption[] = [];
 
   @Output() toggle = new EventEmitter<Event>();
-  @Output() optionSelected = new EventEmitter<{event: Event, action: string}>();
+  @Output() optionSelected = new EventEmitter<{
+    event: Event;
+    action: string;
+  }>();
 
   onToggle(event: Event): void {
     event.stopPropagation();
