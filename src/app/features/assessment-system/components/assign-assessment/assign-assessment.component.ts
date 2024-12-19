@@ -187,7 +187,7 @@ export class AssignAssessmentComponent implements OnInit {
               console.error('Error assigning assessment to cohort:', error),
                 this.showFeedback(
                   `Failed to Assign Assessment`,
-                  `Your quiz has been successfully assigned to the selected trainees. They can now access and complete it within the given time-frame`,
+                  `${error.error.message}`,
                   'assets/Images/svg/add-spec.svg'
                 );
             },
@@ -214,7 +214,7 @@ export class AssignAssessmentComponent implements OnInit {
           console.error('Error assigning assessment:', error),
             this.showFeedback(
               `Failed to Assign Assessment`,
-              `Your quiz has been successfully assigned to the selected trainees. They can now access and complete it within the given time-frame`,
+              `${error.error.message}`,
               'assets/Images/svg/add-spec.svg'
             );
         },
