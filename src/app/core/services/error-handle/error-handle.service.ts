@@ -41,7 +41,7 @@ export class ErrorHandleService {
 
   showSuccessSnackbar(message: string): void {
     this.snackBar.open(message, 'Close', {
-      duration: 3000,
+      duration: 5000,
       panelClass: ['success-snackbar'],
       horizontalPosition: 'center',
       verticalPosition: 'bottom'
