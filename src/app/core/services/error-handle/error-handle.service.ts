@@ -15,8 +15,15 @@ export class ErrorHandleService {
 
     if (error.error instanceof ErrorEvent) {
       errorMessage = error.error.message;
-    } else {
-      errorMessage = error.error?.message || `Error: ${error.status} ${error.statusText}`;
+    } else {      if (error.error) {
+        if (error.error.code === 'RESOURCE_EXISTS') {
+          errorMessage = error.error.details || error.error.message;
+        } else {
+          errorMessage = error.error.message || error.error.details || `Error: ${error.status} ${error.statusText}`;
+        }
+      } else {
+        errorMessage = `Error: ${error.status} ${error.statusText}`;
+      }
     }
 
     this.showErrorSnackbar(errorMessage);
