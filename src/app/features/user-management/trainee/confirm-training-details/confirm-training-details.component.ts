@@ -37,6 +37,8 @@ export class ConfirmTrainingDetailsComponent implements OnDestroy {
   ngOnInit() {
     this.initForm();
     this.loadFormData();
+    this.traineeInSystemService.firstFormState$.subscribe(data => console.log("FFS: ", data)) 
+    this.traineeInSystemService.secondFormState$.subscribe(data => console.log("SFS: ", data)) 
     
   }
 
@@ -89,7 +91,10 @@ export class ConfirmTrainingDetailsComponent implements OnDestroy {
         ...firstFormState, 
         ...secondFormState,
         cohortId: secondFormState.cohort,
+        assignSpecialization: secondFormState.specialization,
       };
+
+      console.log("newForm before submission: ", newForm)
 
       delete (newForm as any).cohort;
 
@@ -140,6 +145,7 @@ export class ConfirmTrainingDetailsComponent implements OnDestroy {
         ...firstFormState, 
         ...secondFormState,
         cohortId: secondFormState.cohort,
+        specialization: secondFormState.specialization,
       };
 
       delete (newForm as any).cohort;
