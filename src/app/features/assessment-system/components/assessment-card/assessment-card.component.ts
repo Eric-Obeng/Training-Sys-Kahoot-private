@@ -17,7 +17,6 @@ export class AssessmentCardComponent {
   showAssignAssessmentModal = false;
 
   onShowAssignAssessmentModal(id: number | undefined) {
-    console.log(id);
     this.showAssignAssessmentModal = true;
     this.assessmentId = id;
   }
