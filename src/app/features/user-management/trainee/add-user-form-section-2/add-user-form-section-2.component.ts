@@ -34,7 +34,6 @@ export class AddUserFormSection2Component {
 
   ngOnInit() {
     this.traineeInSystemService.firstFormState$.subscribe(data => {
-      console.log("first form data: ", data)
     })
 
     this.newUserFormSecTwo = this.fb.group({
@@ -81,7 +80,6 @@ export class AddUserFormSection2Component {
             status: this.traineeStatus,
           });
   
-          console.log(this.newUserFormSecTwo.value)
           // Submit the form after updating
           this.finalizeFormSubmission();
         } else {

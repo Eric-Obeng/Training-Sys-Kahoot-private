@@ -55,7 +55,6 @@ export class TraineeListComponent {
 
     // Get cohort details with trainees list from service
     this.traineeUsers$ = this.traineesInsystemService.getAllTrainees();
-    this.traineeUsers$.subscribe(data => console.log("trainees: ", data))
 
     this.filteredTrainees$ = combineLatest([
       this.traineeUsers$, 

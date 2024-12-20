@@ -13,6 +13,7 @@ import { ButtonStateService } from '../../core/services/buttonState/buttonstate.
 import { ActiveNavService } from '@core/services/active-nav/active-nav.service';
 import { TokenService } from '@core/services/token/token.service';
 import { DecodedToken } from '@core/models/iuser';
+import { User } from '@core/models/cohort.interface';
 
 @Component({
   selector: 'app-header',
@@ -29,7 +30,7 @@ export class HeaderComponent implements OnInit {
   userName!: string;
 
   decodedToken!: DecodedToken | null;
-  traineeEmail!: string | undefined;
+  userEmail!: string | undefined;
 
   @Output() activatePlusBtn = new EventEmitter<void>();
 
@@ -46,6 +47,11 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Subscribe to the currentNavSubject$ observable
+    this.activeNav.currentNavSubject$.subscribe(data => {
+      this.routeName = data;
+    });
+
     this.decodeToken();
     // Get user role
     this.userRole = this.userRoleService.getUserRole();
@@ -66,19 +72,20 @@ export class HeaderComponent implements OnInit {
 
   decodeToken() {
     this.decodedToken = this.tokenService.getDecodedTokenValue()
-    this.traineeEmail = this.decodedToken?.email;
+    this.userEmail = this.decodedToken?.email;
   }
 
   getUserDetails() {
     if(this.userRole === 'TRAINEE') {
-      this.userRoleService.getTraineeInfo(this.traineeEmail || '').subscribe({
+      this.userRoleService.getTraineeInfo(this.userEmail || '').subscribe({
         next: (res: any) => { 
           this.userName = res.firstName;
+          this.activeNav.userFirstName = res.firsName;
         }
       })
     }
     else if(this.userRole === 'TRAINER') {
-      this.userRoleService.getTraineeInfo(this.traineeEmail || '').subscribe({
+      this.userRoleService.getTrainerInfo(this.userEmail || '').subscribe({
         next: (res: any) => { 
           this.userName = res.firstName;
         }
@@ -86,7 +93,6 @@ export class HeaderComponent implements OnInit {
     }
     else if(this.userRole === 'ADMIN') {
       this.userName = 'Admin'
-      console.log(this.userName)
     }
   }
 
@@ -112,7 +118,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/auth/login']);
   }
 
-  getUserName() {
-
+  goToProfile() {
+    this.router.navigate(['/home/admin/user-management/user-profile'])
   }
 }

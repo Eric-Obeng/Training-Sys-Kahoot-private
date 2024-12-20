@@ -15,18 +15,22 @@
             <span class="circle"></span>
             <p class="quiz-duration">Time frame</p>
         </div>
-        
         <!-- Current Question Indicator -->
         <p class="current-question" *ngIf="currentQuestion$ | async as question">
             <span>
                 {{ currentQuestionIndex + 1 }}/{{ totalQuestionCount }} Questions
             </span>
         </p>
+        
+        <p class="current-question" *ngIf="currentQuestion$ | async as question">
+        </p>
     </div>
 
-    <button class="current-question-indicator" *ngIf="currentQuestion$ | async as question">
-        Question {{ currentQuestionIndex + 1 }}
-    </button>
+    <div class="current-question-container">
+        <button class="current-question-indicator" *ngIf="currentQuestion$ | async as question">
+            Question {{ currentQuestionIndex + 1 }}
+        </button>
+    </div>
 
     <form [formGroup]="quizForm" (ngSubmit)="submitQuiz()">
         <!-- Current Question Display -->
