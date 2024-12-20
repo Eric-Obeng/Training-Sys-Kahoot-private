@@ -80,6 +80,7 @@ export class HeaderComponent implements OnInit {
       this.userRoleService.getTraineeInfo(this.userEmail || '').subscribe({
         next: (res: any) => { 
           this.userName = res.firstName;
+          this.activeNav.userFirstName = res.firsName;
         }
       })
     }
