@@ -6,6 +6,7 @@ import {
   FormGroup,
   ReactiveFormsModule,
   Validators,
+  ValidatorFn,
 } from '@angular/forms';
 import {
   catchError,
@@ -32,6 +33,13 @@ import { UserManagementTraineeService } from '@core/services/user-management/tra
 import { FeedbackComponent } from '../../../core/shared/modal/feedback/feedback.component';
 import { Router } from '@angular/router';
 import { TraineeInsystemService } from '@core/services/user-management/trainee/trainee-insystem.service';
+
+// Custom validator to check if assignSpecialization is selected
+function specializationValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    return control.value ? null : { 'specializationRequired': true };
+  };
+}
 
 @Component({
   selector: 'app-trainer',
@@ -157,9 +165,16 @@ export class TrainerComponent {
       lastName: ['', Validators.required],
       gender: [this.allGenders[0].sex, Validators.required],
       country: [null, Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      phoneNumber: [
+        '',
+        [
+          Validators.required, 
+          Validators.minLength(5),
+          Validators.maxLength(15),
+        ],
+      ],
       profilePhoto: [null],
-      assignSpecialization: ['', Validators.required],
+      assignSpecialization: [null, [Validators.required, specializationValidator()]],
     });
   }
 
@@ -273,6 +288,16 @@ export class TrainerComponent {
       this.selectedFile = file;
     }
   }
+
+  onPhoneNumberInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+  
+    const filteredValue = value.replace(/[^0-9+]/g, '');
+  
+    input.value = filteredValue;
+  }
+  
 
   onCloseFeedback(): void {
     this.feedbackVisible = false;

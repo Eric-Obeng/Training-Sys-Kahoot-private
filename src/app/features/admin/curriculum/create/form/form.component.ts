@@ -79,20 +79,20 @@ export class FormComponent implements OnInit {
           title: curriculum.title,
           description: curriculum.description,
           specialization: curriculum.specialization,
-          thumbnailImage: curriculum.thumbnailImageUrl, 
+          thumbnailImage: null
         });
-  
-        
+
+
         if (curriculum.thumbnailImageUrl) {
           this.previewImage = curriculum.thumbnailImageUrl;
         }
-  
+
         const learningObjectivesArray = this.curriculumForm.get('learningObjectives') as FormArray;
         learningObjectivesArray.clear();
         curriculum.learningObjectives.forEach(objective => {
           learningObjectivesArray.push(this.fb.control(objective, Validators.required));
         });
-  
+
         this.curriculumStateService.setCurriculumForm(this.curriculumForm);
       },
       error: (error: any) => {

@@ -81,7 +81,7 @@ export class AssessmentService {
       .post<AssessmentData>(
         `${environment.BaseUrl}/quizzes/trainer/${quizId}/questions/batch?quizDuration=${timeFrame}`,
         assessment,
-        { responseType: 'json' }
+        { responseType: 'text' as 'json' }
       )
       .pipe(
         catchError((error) => {
@@ -105,7 +105,7 @@ export class AssessmentService {
 
   assignAssessment(data: AssignAssessment) {
     return this.http.post(`${environment.BaseUrl}/assignments/batch`, data, {
-      responseType: 'json',
+      responseType: 'text' as 'json',
     });
   }
 
@@ -121,7 +121,7 @@ export class AssessmentService {
     };
     return this.http.post(`${environment.BaseUrl}/assignments/cohort`, null, {
       params,
-      responseType: 'json',
+      responseType: 'text' as 'json',
     });
   }
 }

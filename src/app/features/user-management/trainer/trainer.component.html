@@ -87,7 +87,22 @@
           label="Phone number"
           [required]="true"
           formControlName="phoneNumber"
+          (input)="onPhoneNumberInput($event)"
         ></app-input-field>
+        <div class="error" 
+          *ngIf="
+              trainerForm.controls['phoneNumber'].errors?.['minlength'] &&
+              (trainerForm.controls['phoneNumber'].touched || trainerForm.controls['phoneNumber'].dirty)
+          ">
+              <span>Must be more than {{ trainerForm.controls['phoneNumber'].errors?.['minlength'].requiredLength }} digits long</span>
+          </div>                  
+          <div class="error" 
+          *ngIf="
+              trainerForm.controls['phoneNumber'].errors?.['maxlength'] &&
+              (trainerForm.controls['phoneNumber'].touched || trainerForm.controls['phoneNumber'].dirty)
+          ">
+              <span>Must be less than {{ trainerForm.controls['phoneNumber'].errors?.['maxlength'].requiredLength }} digits long</span>
+          </div> 
       </div>
 
       <div class="form-field">
@@ -129,7 +144,7 @@
         </div>
       </div>
 
-      <button type="submit" class="btn" [disabled]="trainerForm.invalid">
+      <button type="submit" class="btn" [class.disabled]="trainerForm.invalid" [disabled]="trainerForm.invalid">
         Continue
       </button>
     </form>

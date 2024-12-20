@@ -34,8 +34,6 @@ export class AssessmentsTabsComponent {
   handleChildEmpty(isEmpty: boolean, index: number) {
     this.childEmptyStates[index] = isEmpty;
     this.empty = this.childEmptyStates.every(state => state);
-
-    console.log(this.childEmptyStates)
   }
 
   setFinalChildStates() {

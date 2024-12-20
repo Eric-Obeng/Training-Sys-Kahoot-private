@@ -52,8 +52,6 @@ export class TakeQuizComponent implements OnInit {
         return questions[this.currentQuestionIndex];
       })
     );
-
-    console.log("currentQuestion: ", this.currentQuestionIndex, "lastquestion: ", this.totalQuestionCount)
   }
 
   get submittedAnswers(): FormArray {
@@ -76,11 +74,7 @@ export class TakeQuizComponent implements OnInit {
 
   submitQuiz() {
     const quizSubmission: QuizSubmission = this.quizForm.value;
-    this.quizService.submitQuiz(quizSubmission).subscribe({
-      next: (res) => {console.log(res)},
-      error: (error) => {console.log(error)}
-    })
-    // console.log('Quiz Submission', quizSubmission);
+    this.quizService.submitQuiz(quizSubmission).subscribe()
   }
 
   checkSelectedAnswer(id: string) {

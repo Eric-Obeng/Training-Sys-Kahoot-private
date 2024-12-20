@@ -13,14 +13,14 @@ export class ErrorHandleService {
   handleError = (error: HttpErrorResponse): Observable<never> => {
     let errorMessage = 'An error occurred. Please try again.';
 
-    if (error.error instanceof ErrorEvent) {
-      // Client-side error
+    if (error.error && typeof error.error === 'object' && error.error.message) {
+      errorMessage = error.error.message;
+    } else if (error.error instanceof ErrorEvent) {
       errorMessage = error.error.message;
     } else if (typeof error.error === 'object' && error.error.message) {
       // Specific case: error object with an "error" property
       errorMessage = error.error.message
     } else {
-      // Server-side error
       errorMessage = error.error?.message || `Error: ${error.status} ${error.statusText}`;
     }
 
@@ -39,7 +39,7 @@ export class ErrorHandleService {
 
   showSuccessSnackbar(message: string): void {
     this.snackBar.open(message, 'Close', {
-      duration: 3000,
+      duration: 5000,
       panelClass: ['success-snackbar'],
       horizontalPosition: 'center',
       verticalPosition: 'bottom'

@@ -57,8 +57,6 @@ export class AddUserComponent {
   ) {}
 
   ngOnInit(): void {
-    console.log("add-user is working!!!")
-
     this.traineeUsers$ = this.traineesInsystemService.getAllTrainees();
     this.trainersData$ = combineLatest([
       this.trainersService.getAllTrainers(),

@@ -113,6 +113,7 @@
     <button class="save" type="button" (click)="save()">Save</button>
     <button
       class="submit"
+      [class.disabled]="isSubmitDisabled()"
       type="submit"
       [disabled]="isSubmitDisabled()"
     >
