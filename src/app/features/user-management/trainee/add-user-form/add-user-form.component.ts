@@ -90,8 +90,11 @@ export class AddUserFormComponent implements OnInit, OnDestroy {
       address: ['', Validators.required],
       phoneNumber: [
         '',
-        [Validators.required],
-        // [this.phoneNumberValidator()],
+        [
+          Validators.required, 
+          Validators.minLength(5),
+          Validators.maxLength(15),
+        ],
       ],
       universityCompleted: ['', Validators.required],
       userProfilePhoto: ['']

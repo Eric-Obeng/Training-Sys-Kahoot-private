@@ -184,7 +184,6 @@ export class QuizListComponent {
     this.assessments$.subscribe({
       next: (res) => {
         this.loading = false;
-        console.log(res)
       },
       error: (error) => {
         this.loading = true;
@@ -220,7 +219,6 @@ export class QuizListComponent {
 
   
   takeAssessment(id: string, quizType: string, assessment: Assignment) {
-    console.log(assessment)
 
     this.setQuizIdAndAssessmentInLocalStorage(id, assessment)
     
