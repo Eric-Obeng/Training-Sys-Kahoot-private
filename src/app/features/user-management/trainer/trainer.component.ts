@@ -157,7 +157,14 @@ export class TrainerComponent {
       lastName: ['', Validators.required],
       gender: [this.allGenders[0].sex, Validators.required],
       country: [null, Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      phoneNumber: [
+        '',
+        [
+          Validators.required, 
+          Validators.minLength(5),
+          Validators.maxLength(15),
+        ],
+      ],
       profilePhoto: [null],
       assignSpecialization: ['', Validators.required],
     });
@@ -273,6 +280,16 @@ export class TrainerComponent {
       this.selectedFile = file;
     }
   }
+
+  onPhoneNumberInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+  
+    const filteredValue = value.replace(/[^0-9+]/g, '');
+  
+    input.value = filteredValue;
+  }
+  
 
   onCloseFeedback(): void {
     this.feedbackVisible = false;

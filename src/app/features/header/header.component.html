@@ -20,7 +20,7 @@
         </div>
         <div class="divider"></div>
         <div class="user-details">
-            <img src="../../../assets/Images/userprofile.jpg" alt="user-image" class="profile-image">
+            <img src="../../../assets/Images/userprofile.jpg" alt="user-image" class="profile-image" (click)="goToProfile()">
             <div class="user-name-role">
                 <span id="user-name">{{ userName }}</span>
                 <span id="user-role">{{ userRole | titlecase }}</span>

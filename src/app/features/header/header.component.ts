@@ -118,7 +118,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/auth/login']);
   }
 
-  getUserName() {
-
+  goToProfile() {
+    this.router.navigate(['/home/admin/user-management/user-profile'])
   }
 }
