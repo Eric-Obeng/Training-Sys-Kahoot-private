@@ -29,7 +29,6 @@ export class CurriculumCrudService {
     return this.http.get<content>(this.hostedServer, { headers: this.headers })
       .pipe(
         map((res: content) => ({ content: res.content })),
-        tap((data) => console.log(data)),
         catchError(this.errorService.handleError)
       );
   }
@@ -63,8 +62,6 @@ export class CurriculumCrudService {
   private createFormData(curriculum: Partial<curriculum>): FormData {
     const userEmail = this.tokenService.getDecodedTokenValue()?.email
     const formData = new FormData();
-
-
     if (userEmail) formData.append('createdBy', userEmail);
     if (curriculum.id) formData.append('id', curriculum.id);
     if (curriculum.title) formData.append('title', curriculum.title);

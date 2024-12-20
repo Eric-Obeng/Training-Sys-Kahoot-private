@@ -230,5 +230,12 @@
     </app-module-list>
   </div>
 
-  <app-feedback-modal/>
+  <app-feedback-modal
+  [visible]="showFeedback"
+  [isUpdate]="isUpdate"
+  [customTitle]="'Curriculum ' + (isUpdate ? 'updated' : 'created') + ' successfully'"
+  [customMessage]="'Your curriculum has been ' + (isUpdate ? 'updated' : 'created') + ' 
+  successfully! You can now view and manage it from the curriculum list.'"
+  
+/>
 </section>

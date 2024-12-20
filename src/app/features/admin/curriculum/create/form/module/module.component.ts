@@ -145,6 +145,10 @@ export class ModuleComponent implements OnInit {
   navigateToCreateCurriculum(){
     this.router.navigate(['home', 'admin', 'curriculum-management', 'create-curriculum']);
   }
+  
+  navigateToList(){
+    this.router.navigate(['home', 'admin', 'curriculum-management', ]);
+  }
 
   getTopics(moduleIndex: number): FormArray {
     return this.modules.at(moduleIndex).get('topics') as FormArray;
@@ -198,8 +202,12 @@ export class ModuleComponent implements OnInit {
         this.curriculumService.update(this.curriculumId, curriculumData).subscribe({
           next: () => {
             this.isLoading = false;
+            this.showFeedback = true;
+            setTimeout(()=>{
+              this.showFeedback = false;
+              this.navigateToList();
+            },2000) 
             this.errorHandleService.showSuccessSnackbar('Curriculum updated successfully');
-            this.navigateToCreateCurriculum()
           },
           error: (error) => {
             this.isLoading = false;
@@ -210,8 +218,12 @@ export class ModuleComponent implements OnInit {
         this.curriculumService.create(curriculumData).subscribe({
           next: () => {
             this.isLoading = false;
+            this.showFeedback = true;
+            setTimeout(()=>{
+              this.showFeedback = false;
+              this.navigateToList();
+            },2000) 
             this.errorHandleService.showSuccessSnackbar('Curriculum created successfully');
-            this.navigateToCreateCurriculum();
           },
           error: (error) => {
             this.isLoading = false;
