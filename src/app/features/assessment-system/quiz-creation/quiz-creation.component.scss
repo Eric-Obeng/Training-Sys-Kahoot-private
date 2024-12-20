@@ -274,6 +274,11 @@
       &.submit {
         color: $clr-white;
         background: $clr-primary-500;
+
+        &.disabled {
+          background: $clr-gray-200;
+          cursor: not-allowed;
+        }
       }
     }
   }

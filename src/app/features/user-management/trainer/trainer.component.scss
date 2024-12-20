@@ -76,6 +76,11 @@
         width: 100%;
         height: 5.4rem;
         border-radius: 0.8rem;
+
+        .disabled {
+          background: $clr-gray-300;
+          cursor: not-allowed;
+        }
       }
     }
   }
@@ -118,7 +123,8 @@ select:focus {
   position: relative;
   cursor: pointer;
 
-  &:focus, &:hover {
+  &:focus,
+  &:hover {
     border: 1.5px dashed $clr-primary-500;
   }
 
@@ -144,4 +150,10 @@ select:focus {
 .error {
   text-align: right;
   color: $clr-red-500;
+}
+
+.form {
+  & .btn {
+    background-color: red;
+  }
 }
