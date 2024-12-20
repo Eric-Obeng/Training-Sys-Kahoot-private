@@ -47,9 +47,22 @@
 
         ::ng-deep {
           .p-datatable {
+            height: calc(62vh - 6rem); 
+            display: flex;
+            flex-direction: column;
+            .p-datatable-wrapper {
+              flex: 1;
+              overflow-y: auto;
+            }
             .p-datatable-header {
               background-color: transparent;
               border: none;
+            }
+
+            .p-datatable-thead {
+              position: sticky;
+              top: 0;
+              z-index: 1;
             }
 
             .p-datatable-thead > tr > th {
@@ -66,11 +79,16 @@
               }
             }
 
+            .p-datatable-tbody {
+              flex: 1;
+            }
+
             .p-datatable-tbody > tr {
               cursor: pointer;
               border: none;
               color: $clr-gray-500;
               position: relative;
+              
 
               &:hover {
                 background-color: #f8f8f8;
