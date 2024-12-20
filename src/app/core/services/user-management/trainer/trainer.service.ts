@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
   BehaviorSubject,
   catchError,
@@ -13,6 +13,7 @@ import { environment } from '../../../../../environments/environment.development
 
 import { ErrorHandleService } from '@core/services/error-handle/error-handle.service';
 import { Trainer, TrainerList } from '@core/models/trainer.interface';
+import { cachingInterceptor } from '@core/interceptors/caching.interceptor';
 
 @Injectable({
   providedIn: 'root',
@@ -89,3 +90,4 @@ export class TrainerService {
     this.selectedTrainerSubject.next(trainer);
   }
 }
+
