@@ -6,6 +6,7 @@ import {
   FormGroup,
   ReactiveFormsModule,
   Validators,
+  ValidatorFn,
 } from '@angular/forms';
 import {
   catchError,
@@ -32,6 +33,13 @@ import { UserManagementTraineeService } from '@core/services/user-management/tra
 import { FeedbackComponent } from '../../../core/shared/modal/feedback/feedback.component';
 import { Router } from '@angular/router';
 import { TraineeInsystemService } from '@core/services/user-management/trainee/trainee-insystem.service';
+
+// Custom validator to check if assignSpecialization is selected
+function specializationValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    return control.value ? null : { 'specializationRequired': true };
+  };
+}
 
 @Component({
   selector: 'app-trainer',
@@ -159,7 +167,7 @@ export class TrainerComponent {
       country: [null, Validators.required],
       phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       profilePhoto: [null],
-      assignSpecialization: ['', Validators.required],
+      assignSpecialization: [null, [Validators.required, specializationValidator()]],
     });
   }
 
